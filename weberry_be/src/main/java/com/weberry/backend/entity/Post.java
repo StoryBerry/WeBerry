@@ -15,12 +15,21 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name="POST")
+@Builder @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @ToString
 public class Post {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long index;
 	
 	private String content;
@@ -30,7 +39,7 @@ public class Post {
 	private Date createdAt;
 	
 	@ColumnDefault("0")
-	private long like;
+	private long likes;
 	
 	@ManyToOne
 	@JoinTable(name="PROFILE_POST",
