@@ -28,5 +28,11 @@ public class ProfileServiceImpl implements ProfileService {
 		
 		return profile;
 	}
+
+	@Override
+	public Profile signIn(User user) {
+		
+		return profileRepository.findByUser(user);
+	}
 	
 }

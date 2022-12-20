@@ -1,5 +1,7 @@
 package com.weberry.backend.service.user;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import com.weberry.backend.entity.Farm;
@@ -13,4 +15,7 @@ public interface UserService {
 	
 	void connectUserAndFarm(Farm farmInfo, User user);
 	
+	String signIn(User user);
+	
+	Map<String, Object> checkToken(String token);
 }

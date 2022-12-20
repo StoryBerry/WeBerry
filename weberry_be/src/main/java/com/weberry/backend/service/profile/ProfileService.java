@@ -12,4 +12,6 @@ public interface ProfileService {
 	
 	Profile connectUserAndProfile(User user, Profile profile);
 	
+	Profile signIn(User user);
+	
 }

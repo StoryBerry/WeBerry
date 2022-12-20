@@ -38,8 +38,6 @@ public class User {
 	@Column(columnDefinition="boolean default false")
 	private boolean admin;
 	
-	private String login;
-	
 	@ManyToOne
 	@JoinTable(name="FARM_USER",
 			   joinColumns=@JoinColumn(name="USER_INDEX"),
@@ -69,24 +67,19 @@ public class User {
 	
 	@Builder @NoArgsConstructor @AllArgsConstructor
 	@Getter @Setter @ToString
-	public static class Response {
+	public static class SignIn {
 		
 		private String userid;
-		private String password;
-		private Farm farm;
+		private Farm.SignIn farm;
 		private Profile.BasicResponse profile;
 		
+		public static User.SignIn toSignIn(User user) {
+			
+			return User.SignIn.builder()
+					.userid(user.getUserid())
+					.farm(Farm.SignIn.toSignIn(user.getFarm()))
+					.profile(Profile.BasicResponse.toBasicResponse(user.getProfile())).build();
+		}
 	}
-	
-//	@Builder @NoArgsConstructor @AllArgsConstructor
-//	@Getter @Setter @ToString
-//	public static class Response {
-//		
-//		private String userid;
-//		private String password;
-//		private Farm farm;
-//		private ProfileBasicResponseProjection profile;
-//		
-//	}
 	
 }

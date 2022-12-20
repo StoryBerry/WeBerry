@@ -47,18 +47,22 @@ public class Profile {
 	private User user;
 	
 	@OneToMany(mappedBy="profile")
+	@JsonIgnore
 	private List<Post> posts;
 	
 	@OneToMany(mappedBy="profile")
+	@JsonIgnore
 	private List<Comment> comments;
 	
 	@ManyToMany
 	@JoinTable(name="CHATSPACE_PROFILE",
 			   joinColumns=@JoinColumn(name="PROFILE_INDEX"),
 			   inverseJoinColumns=@JoinColumn(name="CHATSPACE_INDEX"))
+	@JsonIgnore
 	private List<ChatSpace> chatSpaces;
 	
 	@OneToMany(mappedBy="profile")
+	@JsonIgnore
 	private List<Chat> chats;
 	
 	@Builder @NoArgsConstructor @AllArgsConstructor
@@ -90,10 +94,18 @@ public class Profile {
 	@Getter @Setter @ToString
 	public static class BasicResponse {
 		
+		private long index;
 		private String name;
 		private String nickName;
 		private String farmName;
 		
+		public static BasicResponse toBasicResponse(Profile profile) {
+			
+			return BasicResponse.builder().index(profile.getIndex())
+										  .name(profile.getName())
+										  .nickName(profile.getNickName())
+										  .farmName(profile.getFarmName()).build();
+		}
 	}
 	
 }

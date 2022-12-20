@@ -68,14 +68,22 @@ public class Farm {
 	
 	@Builder @NoArgsConstructor @AllArgsConstructor
 	@Getter @Setter @ToString
-	public static class Response {
+	public static class SignIn {
 		
+		private long index;
 		private String farmName;
 		private String local;
 		private String city;
 		private String address;
-		private List<User.Response> users;
-		private List<Data> datas;
+		
+		public static SignIn toSignIn(Farm farm) {
+			
+			return SignIn.builder().index(farm.getIndex())
+								   .farmName(farm.getFarmName())
+								   .local(farm.getLocal())
+								   .city(farm.getCity())
+								   .address(farm.getAddress()).build();
+		}
 		
 	}
 	
