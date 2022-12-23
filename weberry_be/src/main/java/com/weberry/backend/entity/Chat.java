@@ -35,10 +35,10 @@ public class Chat {
 	private Date createdAt;
 	
 	@ManyToOne
-	@JoinTable(name="PROFILE_CHAT",
+	@JoinTable(name="USER_CHAT",
 			   joinColumns=@JoinColumn(name="CHAT_INDEX"),
-			   inverseJoinColumns=@JoinColumn(name="PROFILE_INDEX"))
-	private Profile profile;
+			   inverseJoinColumns=@JoinColumn(name="USERID"))
+	private User user;
 	
 	@ManyToOne
 	@JoinTable(name="CHATSPACE_CHAT",

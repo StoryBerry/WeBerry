@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.weberry.backend.entity.Farm;
-import com.weberry.backend.entity.Profile;
 import com.weberry.backend.entity.User;
 import com.weberry.backend.entity.User.Request;
 import com.weberry.backend.repository.FarmRepository;
@@ -32,14 +31,14 @@ public class UserServiceImpl implements UserService {
 	private FarmRepository farmRepository;
 	
 	@Override
-	public User createUser(Request request) {
-		userRepository.save(User.Request.toCreate(request));
+	public User.SignIn createUser(Request request, Farm farm) {
+		userRepository.save(User.Request.toCreate(request, farm));
 		
-		return userRepository.findByUserid(request.getUserid());
+		return User.SignIn.toSignIn(userRepository.findByUserid(request.getUserid()));
 	}
 	
 	public void connectUserAndFarm(Farm farmInfo, User user) {
-		Farm toSave = farmRepository.findByFarmNameAndAddress(farmInfo.getFarmName(), farmInfo.getAddress());
+		Farm toSave = farmRepository.findByFarmId(farmInfo.getFarmId());
 		user.setFarm(toSave);
 	}
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.weberry.backend.entity.Post;
 import com.weberry.backend.service.post.PostService;
 import com.weberry.backend.service.user.UserService;
@@ -38,6 +39,12 @@ public class PostController {
 		return postService.writePost(request);
 	}
 	
+//	@PostMapping(path="/write")
+//	public Post writePost(@RequestBody Post.Request request) {
+//		
+//		return postService.writePost(request);
+//	}
+//	
 	@GetMapping()
 	public List<Post> getListOfPosts() {
 		

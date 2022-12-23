@@ -26,8 +26,7 @@ import lombok.ToString;
 public class Farm {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long index;
+	private String farmId;
 	
 	@Column(name="FARM_NAME")
 	private String farmName;
@@ -48,6 +47,7 @@ public class Farm {
 	@Getter @Setter @ToString
 	public static class Request {
 		
+		private String farmId;
 		private String farmName;
 		private String local;
 		private String city;
@@ -57,7 +57,8 @@ public class Farm {
 		
 		public static Farm toCreate(Request request) {
 			
-			return Farm.builder().farmName(request.getFarmName())
+			return Farm.builder().farmId(request.getCity() + "_" + request.getFarmName())
+								 .farmName(request.getFarmName())
 								 .local(request.getLocal())
 								 .city(request.getCity())
 								 .address(request.getAddress())
@@ -70,7 +71,7 @@ public class Farm {
 	@Getter @Setter @ToString
 	public static class SignIn {
 		
-		private long index;
+		private String farmId;
 		private String farmName;
 		private String local;
 		private String city;
@@ -78,7 +79,7 @@ public class Farm {
 		
 		public static SignIn toSignIn(Farm farm) {
 			
-			return SignIn.builder().index(farm.getIndex())
+			return SignIn.builder().farmId(farm.getFarmId())
 								   .farmName(farm.getFarmName())
 								   .local(farm.getLocal())
 								   .city(farm.getCity())

@@ -8,7 +8,7 @@ import com.weberry.backend.entity.Post;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 	
-	Post findFirstByProfileIndexOrderByIndexDesc(long index);
+	Post findFirstByUserUseridOrderByIndexDesc(String userid);
 	
 	List<Post> findAllByOrderByIndexDesc();
 	

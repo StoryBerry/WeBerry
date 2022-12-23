@@ -13,5 +13,5 @@ public interface FarmRepository extends JpaRepository<Farm, Long>{
 	
 	List<FarmProjection> findByFarmName(String farmName);
 	
-	Farm findByFarmNameAndAddress(String farmName, String address);
+	Farm findByFarmId(String farmId);
 }

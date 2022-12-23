@@ -19,7 +19,7 @@ public class FarmServiceImpl implements FarmService {
 	@Override
 	public List<FarmProjection> checkFarm(String farmName) {
 		List<FarmProjection> farm = farmRepository.findByFarmName(farmName);
-//		System.out.println(farm.get(0).getUsers());
+
 		if (farm.isEmpty()) return null;
 		
 		return farm;
@@ -28,11 +28,9 @@ public class FarmServiceImpl implements FarmService {
 	@Override
 	public Farm createFarm(Farm.Request request) {
 		Farm toSave = Farm.Request.toCreate(request);
-		System.out.println(toSave);
 		farmRepository.save(toSave);
-		Farm saved = farmRepository.findByFarmNameAndAddress(request.getFarmName(), request.getAddress());
 		
-		return saved;
+		return farmRepository.findByFarmId(toSave.getFarmId());
 	}
 	
 }

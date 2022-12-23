@@ -35,10 +35,10 @@ public class Comment {
 	private Date createdAt;
 	
 	@ManyToOne
-	@JoinTable(name="PROFILE_COMMENT",
+	@JoinTable(name="USER_COMMENT",
 			   joinColumns=@JoinColumn(name="COMMENT_INDEX"),
-			   inverseJoinColumns=@JoinColumn(name="PROFILE_INDEX"))
-	private Profile profile;
+			   inverseJoinColumns=@JoinColumn(name="USERID"))
+	private User user;
 	
 	@ManyToOne
 	@JoinTable(name="POST_COMMENT",

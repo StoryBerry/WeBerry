@@ -2,15 +2,21 @@ package com.weberry.backend.projection;
 
 import java.util.List;
 
-import com.weberry.backend.entity.Profile;
-import com.weberry.backend.entity.User;
-
 public interface FarmProjection {
 	
+	String getFarmId();
 	String getFarmName();
 	String getLocal();
 	String getCity();
 	String getAddress();
-	List<UserResponseProjection> getUsers();
+	List<UserBasicProjection> getUsers();
+	
+	interface UserBasicProjection {
+		
+		String getUserid();
+		String getName();
+		String getNickName();
+		
+	}
 	
 }

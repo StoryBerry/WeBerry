@@ -31,7 +31,7 @@ public class ChatSpace {
 	private String spaceName;
 	
 	@ManyToMany(mappedBy="chatSpaces")
-	private List<Profile> profiles;
+	private List<User> users;
 	
 	@OneToMany(mappedBy="chatSpace")
 	private List<Chat> chats;

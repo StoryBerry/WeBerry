@@ -16,12 +16,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.weberry.backend.entity.Farm;
-import com.weberry.backend.entity.Profile;
 import com.weberry.backend.entity.User;
 import com.weberry.backend.projection.FarmProjection;
 import com.weberry.backend.service.farm.FarmService;
-import com.weberry.backend.service.farm.FarmServiceImpl;
-import com.weberry.backend.service.profile.ProfileService;
 import com.weberry.backend.service.user.UserService;
 
 @RestController
@@ -33,9 +30,6 @@ public class AuthController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private ProfileService profileService;
 	
 	@GetMapping(path="/sign-up/check")
 	public List<FarmProjection> checkFarm(@RequestParam("farmName") String farmName) {
@@ -50,18 +44,12 @@ public class AuthController {
 	}
 	
 	@PostMapping(path="/sign-up")
-	public Profile signUp(@RequestBody ObjectNode infos) throws JsonProcessingException, IllegalArgumentException {
+	public User.SignIn signUp(@RequestBody ObjectNode infos) throws JsonProcessingException, IllegalArgumentException {
 		ObjectMapper mapper = new ObjectMapper();
 		User.Request userInfo = mapper.treeToValue(infos.get("userInfo"), User.Request.class);
 		Farm farmInfo = mapper.treeToValue(infos.get("farmInfo"), Farm.class);
-		Profile.Request profileInfo = mapper.treeToValue(infos.get("profileInfo"), Profile.Request.class);
 		
-		User savedUser = userService.createUser(userInfo);
-		userService.connectUserAndFarm(farmInfo, savedUser);
-		Profile savedProfile = profileService.createProfile(profileInfo);
-		profileService.connectUserAndProfile(savedUser, savedProfile);
-		
-		return savedProfile;
+		return userService.createUser(userInfo, farmInfo);
 	}
 	
 	@PostMapping(path="/sign-in")

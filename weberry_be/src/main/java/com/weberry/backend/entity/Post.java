@@ -47,10 +47,10 @@ public class Post {
 	private long likes;
 	
 	@ManyToOne
-	@JoinTable(name="PROFILE_POST",
+	@JoinTable(name="USER_POST",
 			   joinColumns=@JoinColumn(name="POST_INDEX"),
-			   inverseJoinColumns=@JoinColumn(name="PROFILE_INDEX"))
-	private Profile profile;
+			   inverseJoinColumns=@JoinColumn(name="USERID"))
+	private User user;
 	
 	@OneToMany(mappedBy="post")
 	private List<Comment> comments;
@@ -61,13 +61,13 @@ public class Post {
 		
 		private String content;
 //		private ?? images;
-		private Profile profile;
+		private User user;
 		private LocalDateTime createdAt;
 		
 		public static Post toWrite(Request request) {
 			
 			return Post.builder().content(request.getContent())
-								 .profile(request.getProfile())
+								 .user(request.getUser())
 								 .createdAt(LocalDateTime.now())
 								 .build();
 		}
