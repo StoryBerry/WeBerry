@@ -39,12 +39,6 @@ public class PostController {
 		return postService.writePost(request);
 	}
 	
-//	@PostMapping(path="/write")
-//	public Post writePost(@RequestBody Post.Request request) {
-//		
-//		return postService.writePost(request);
-//	}
-//	
 	@GetMapping()
 	public List<Post> getListOfPosts() {
 		
