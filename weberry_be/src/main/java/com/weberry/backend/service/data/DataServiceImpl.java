@@ -4,6 +4,8 @@ package com.weberry.backend.service.data;
 import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,18 @@ public class DataServiceImpl implements DataService {
 	private DataRepository dataRepository;
 	
 	@Override
-	public Data transferData(MultipartFile imageFile, Request request) {
-		String basePath = "C://users/playdata/desktop";
-		System.out.println(request);
+	public List<Data> transferData(List<MultipartFile> imageFiles, Request request) {
+		List<Data> dataList = new ArrayList<Data>();
+		
+		for (MultipartFile imageFile : imageFiles) {
+			dataList.add(transferData(imageFile, request));
+		}
+		
+		return dataList;
+	}
+	
+	private Data transferData(MultipartFile imageFile, Request request) {
+		String basePath = "/home/weberry/Desktop/images";
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
 		String imageUrl = String.format("%s/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());
@@ -31,6 +42,7 @@ public class DataServiceImpl implements DataService {
 		file.mkdirs();
 		try {
 			imageFile.transferTo(file);
+			System.out.println("imageUrl: " + imageUrl);
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
