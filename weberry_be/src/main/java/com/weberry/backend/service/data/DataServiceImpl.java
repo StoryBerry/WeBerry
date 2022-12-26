@@ -21,7 +21,7 @@ public class DataServiceImpl implements DataService {
 	
 	@Override
 	public Data transferData(MultipartFile imageFile, Request request) {
-		String basePath = "C://users/Will.Lee/desktop";
+		String basePath = "C://users/playdata/desktop";
 		System.out.println(request);
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
