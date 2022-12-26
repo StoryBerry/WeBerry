@@ -11,4 +11,6 @@ public interface AlertService {
 
 	void disconnectToWebSocket(WebSocketSession session) throws Exception;
 	
+	void alterDailyReport(String farmId) throws Exception;
+	
 }

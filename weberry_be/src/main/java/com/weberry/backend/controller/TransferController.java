@@ -1,6 +1,8 @@
 package com.weberry.backend.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +21,11 @@ public class TransferController {
 	private DataService dataService;
 	
 	@PostMapping
-	public Data transferData(@ModelAttribute("imageFile") MultipartFile imageFile, @ModelAttribute Data.Request request) {
+	public List<Data> transferData(@ModelAttribute("imageFile") List<MultipartFile> imageFiles, @ModelAttribute Data.Request request) {
 		System.out.println(request.getFarm());
 		System.out.println(request.getMDate());
 		
-		return dataService.transferData(imageFile, request);
+		return dataService.transferData(imageFiles, request);
 	}
 	
 }

@@ -1,7 +1,9 @@
 package com.weberry.backend.service.alert;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,7 +26,7 @@ public class AlertServiceImpl implements AlertService {
 	@Autowired
 	UserService userService = new UserServiceImpl();
 	
-	private static Map<String, Set<WebSocketSession>> clients = new HashMap<String, Set<WebSocketSession>>();
+	private static Map<String, Set<WebSocketSession>> clientsOnFarm = new HashMap<String, Set<WebSocketSession>>();
 	private static Map<String, String> sessionAndFarmId = new HashMap<String, String>();
 	
 	@Override
@@ -34,8 +36,8 @@ public class AlertServiceImpl implements AlertService {
 		
 		if (farmId != null) {
 			sessionAndFarmId.put(session.getId(), farmId);
-			clients.put(farmId, new HashSet<WebSocketSession>());
-			clients.get(farmId).add(session);
+			clientsOnFarm.put(farmId, new HashSet<WebSocketSession>());
+			clientsOnFarm.get(farmId).add(session);
 			session.sendMessage(new TextMessage("WeBerry에 오신 것을 환영합니다."));
 			System.out.println("Session을 연결합니다: " + session);
 		} else {
@@ -48,12 +50,20 @@ public class AlertServiceImpl implements AlertService {
 		String sessionId = session.getId();
 		String farmId = sessionAndFarmId.get(sessionId);
 		sessionAndFarmId.remove(sessionId);
-		clients.get(farmId).remove(session);
+		clientsOnFarm.get(farmId).remove(session);
 		
 		System.out.printf("Session을 종료합니다: <%s> %s\n", farmId, session);
 	}
 
-	public String checkAuthorization(String token) {
+	@Override
+	public void alterDailyReport(String farmId) throws Exception {
+		Set<WebSocketSession> clients = clientsOnFarm.get(farmId);
+		for (WebSocketSession client : clients) {
+			client.sendMessage(new TextMessage("데일리 레포트가 작성되었습니다."));
+		}
+	}
+
+	private String checkAuthorization(String token) {
 		String farmId = null;
 		Map<String, Object> tokenInfo = userService.checkToken(token);
 		
