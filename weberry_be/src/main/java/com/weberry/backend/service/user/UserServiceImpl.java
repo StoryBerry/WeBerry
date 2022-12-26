@@ -72,7 +72,8 @@ public class UserServiceImpl implements UserService {
 		payloads.put("signIn", jsonObject.toString());
 		
 //		long expirationTime = 1000 * 60 * 60 * 24 * 1l; // 하루
-		long expirationTime = 1000 * 60 * 10l; // 10분
+//		long expirationTime = 1000 * 60 * 10l; // 10분
+		long expirationTime = 1000 * 30l; // 30초
 		
 		Date expirationDate = new Date();
 		expirationDate.setTime(expirationDate.getTime() + expirationTime);
