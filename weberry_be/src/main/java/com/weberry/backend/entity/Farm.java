@@ -43,6 +43,7 @@ public class Farm {
 	private List<User> users;
 	
 	@OneToMany(mappedBy="farm")
+	@JsonIgnore
 	private List<Data> datas;
 	
 	@Builder @NoArgsConstructor @AllArgsConstructor

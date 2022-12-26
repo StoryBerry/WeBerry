@@ -1,14 +1,9 @@
 package com.weberry.backend.service.alert;
 
-<<<<<<< HEAD
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-=======
-import java.util.HashMap;
-import java.util.HashSet;
->>>>>>> 79fc550 (making AlertController structure)
 import java.util.Map;
 import java.util.Set;
 
