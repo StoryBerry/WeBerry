@@ -81,7 +81,7 @@ public class Post {
 //		private ?? images;
 		private User.SignIn user;
 		private LocalDateTime createdAt;
-		private LocalDateTime modifiedAt;
+		private LocalDateTime modifiedAt; 
 		
 		public static ToShow toShow(Post post) {
 			
@@ -96,6 +96,10 @@ public class Post {
 		public static Post toPost(Post.ToShow post) {
 			
 			return Post.builder().id(post.getId())
+								 .content(post.getContent())
+								 .user(User.SignIn.toUser(post.getUser()))
+								 .createdAt(post.getCreatedAt())
+								 .modifiedAt(post.getModifiedAt())
 								 .build();
 		}
 	}
@@ -119,6 +123,26 @@ public class Post {
 								 .createdAt(toEdit.getCreatedAt())
 								 .modifiedAt(LocalDateTime.now())
 								 .build();
+		}
+	}
+	
+	@Builder @NoArgsConstructor @AllArgsConstructor
+	@Getter @Setter @ToString
+	public static class CommentIn {
+		
+		private long id;
+		private String content;
+//		private ?? images;
+		private LocalDateTime createdAt;
+		private LocalDateTime modifiedAt;
+		
+		public static CommentIn toCommentIn(Post post) {
+			
+			return CommentIn.builder().id(post.getId())
+									  .content(post.getContent())
+									  .createdAt(post.getCreatedAt())
+									  .modifiedAt(post.getModifiedAt())
+									  .build();
 		}
 	}
 	
