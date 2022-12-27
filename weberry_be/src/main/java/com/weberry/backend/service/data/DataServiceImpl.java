@@ -33,8 +33,8 @@ public class DataServiceImpl implements DataService {
 		return dataList;
 	}
 	
-	private Data.ToShow transferData(MultipartFile imageFile, Request request) {
-		String basePath = "C://users/Will.Lee/desktop/farm";
+	private Data transferData(MultipartFile imageFile, Request request) {
+		String basePath = "C://users/playdata/desktop";
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
 		String imageUrl = String.format("%s/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());
