@@ -8,10 +8,10 @@ import com.weberry.backend.entity.Post;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 	
-	Post findFirstByUserUseridOrderByIndexDesc(String userid);
+	Post findFirstByUserUseridOrderByIdDesc(String userid);
 	
-	List<Post> findAllByOrderByIndexDesc();
+	List<Post> findAllByOrderByIdDesc();
 	
-	Post findByIndex(long index);
+	Post findById(long id);
 	
 }
