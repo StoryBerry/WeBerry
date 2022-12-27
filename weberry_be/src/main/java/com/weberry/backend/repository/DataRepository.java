@@ -13,6 +13,6 @@ import com.weberry.backend.entity.Data;
 @Repository
 public interface DataRepository extends JpaRepository<Data, Long>{
 	
-	Data findFirstBymDateAndFarmFarmIdOrderByIndexDesc(LocalDate mDate, String farmId);
+	Data findFirstBymDateAndFarmFarmIdOrderByIdDesc(LocalDate mDate, String farmId);
 	
 }

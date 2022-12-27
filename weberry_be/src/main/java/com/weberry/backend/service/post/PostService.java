@@ -9,10 +9,13 @@ import com.weberry.backend.entity.Post;
 @Service
 public interface PostService {
 
-	Post writePost(Post.Request request);
+	Post.ToShow writePost(Post.Request request);
 	
-	List<Post> getListOfPosts();
+	List<Post.ToShow> getListOfPosts();
 	
-	Post getDetailOfPost(long index);
+	Post.ToShow getDetailOfPost(long id);
 	
+	Post.ToShow editPost(Post.ToEdit toEdit);
+	
+	String deletePost(long postId);
 }

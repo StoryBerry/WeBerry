@@ -33,7 +33,7 @@ public class Data {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long index; 
+	private long id; 
 	
 	private String imageUrl;
 	

@@ -33,7 +33,7 @@ public class DataServiceImpl implements DataService {
 	}
 	
 	private Data transferData(MultipartFile imageFile, Request request) {
-		String basePath = "/home/weberry/Desktop/images";
+		String basePath = "C://users/playdata/desktop";
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
 		String imageUrl = String.format("%s/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());
@@ -41,8 +41,9 @@ public class DataServiceImpl implements DataService {
 		File file = new File(imageUrl);
 		file.mkdirs();
 		try {
-			imageFile.transferTo(file);
 			System.out.println("imageUrl: " + imageUrl);
+			imageFile.transferTo(file);
+			System.out.println("after: " + imageUrl);
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +52,7 @@ public class DataServiceImpl implements DataService {
 		toSave.setImageUrl(imageUrl);
 		dataRepository.save(toSave);
 		
-		return dataRepository.findFirstBymDateAndFarmFarmIdOrderByIndexDesc(request.getMDate(), farm);
+		return dataRepository.findFirstBymDateAndFarmFarmIdOrderByIdDesc(request.getMDate(), farm);
 	}
 
 }
