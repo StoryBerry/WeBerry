@@ -24,6 +24,7 @@ public class TransferController {
 	public List<Data> transferData(@ModelAttribute("imageFile") List<MultipartFile> imageFiles, @ModelAttribute Data.Request request) {
 		System.out.println(request.getFarm());
 		System.out.println(request.getMDate());
+		System.out.println(imageFiles.size() + ": " + imageFiles);
 		
 		return dataService.transferData(imageFiles, request);
 	}
