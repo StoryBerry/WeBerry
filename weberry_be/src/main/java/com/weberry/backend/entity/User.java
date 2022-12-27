@@ -136,16 +136,18 @@ public class User {
 		public static User.CommentIn toCommentIn(User user) {
 			
 			return User.CommentIn.builder()
-					   .userid(user.getUserid())
-					   .name(user.getName())
-					   .nickName(user.getNickName())
-					   .build();
+							     .userid(user.getUserid())
+							     .name(user.getName())
+							     .nickName(user.getNickName())
+							     .build();
 		}
 		
 		public static User toUser(User.SignIn user) {
 			
 			return User.builder()
 					   .userid(user.getUserid())
+					   .name(user.getName())
+					   .nickName(user.getNickName())
 					   .build();
 		}
 	}
