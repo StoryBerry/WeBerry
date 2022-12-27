@@ -1,5 +1,6 @@
 package com.weberry.backend.entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +36,7 @@ public class Comment {
 	
 	private String content;
 	
-	private Date createdAt;
+	private LocalDateTime createdAt;
 	
 	@ManyToOne
 	@JoinTable(name="USER_COMMENT",
@@ -61,12 +62,15 @@ public class Comment {
 	public static class Request {
 		
 		private String content;
+		private LocalDateTime createdAt;
+		private User.SignIn user;
 		private Post.ToShow post;
 		
 		public static Comment toCreate(Request request) {
 			
 			return Comment.builder().content(request.getContent())
-									.user(User.CommentIn.toUser(request.getPost().getUser()))
+									.createdAt(LocalDateTime.now())
+									.user(User.CommentIn.toUser(request.getUser()))
 									.post(Post.ToShow.toPost(request.getPost()))
 									.reComments(new ArrayList<Comment>())
 									.build();
@@ -81,7 +85,7 @@ public class Comment {
 		private long id;
 		private String content;
 		private Date createdAt;
-		private Post.ToShow post;
+		private Post.CommentIn post;
 		private User.CommentIn user;
 		private List<Comment> reComments;
 		
@@ -91,7 +95,7 @@ public class Comment {
 						 .id(comment.getId())
 						 .content(comment.getContent())
 						 .user(User.CommentIn.toCommentIn(comment.getUser()))
-						 .post(Post.ToShow.toShow(comment.getPost()))
+						 .post(Post.CommentIn.toCommentIn(comment.getPost()))
 						 .reComments(comment.getReComments())
 						 .build();
 		}
