@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.weberry.backend.entity.Comment;
+import com.weberry.backend.entity.Comment.RecommentRequest;
 import com.weberry.backend.entity.Comment.Request;
 import com.weberry.backend.entity.Comment.ToShow;
 import com.weberry.backend.entity.Post;
@@ -26,6 +27,14 @@ public class CommentServiceImpl implements CommentService {
 		System.out.println(comment);
 		System.out.println(comment.getUser());
 		System.out.println(Post.ToShow.toShow(postRepository.findById(comment.getPost().getId())));
+		
+		return Comment.ToShow.toShow(comment);
+	}
+
+	@Override
+	public ToShow recommentOnComment(RecommentRequest request) {
+		commentRepository.save(Comment.RecommentRequest.toCreate(request));
+		Comment comment = commentRepository.findFirstByUserUseridOrderByIdDesc(request.getUser().getUserid());
 		
 		return Comment.ToShow.toShow(comment);
 	}
