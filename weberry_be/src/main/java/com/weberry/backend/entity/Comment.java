@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,14 +49,14 @@ public class Comment {
 	@ManyToOne
 	@JoinTable(name="POST_COMMENT",
 			   joinColumns=@JoinColumn(name="COMMENT_INDEX"),
-			   inverseJoinColumns=@JoinColumn(name="POST_INDEX"))
+			   inverseJoinColumns=@JoinColumn(name="POST_ID"))
 	private Post post;
 	
-	@ManyToMany
-	@JoinTable(name="COMMENT_RECOMMENT",
-			   joinColumns=@JoinColumn(name="COMMENT_INDEX"),
-			   inverseJoinColumns=@JoinColumn(name="RECOMMENT_INDEX"))
-	@JsonIgnore
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="COMMNENT_INDEX")
+	private Comment comment;
+	
+	@OneToMany(mappedBy="comment")
 	private List<Comment> reComments;
 	
 	@Builder @NoArgsConstructor @AllArgsConstructor
@@ -80,25 +82,83 @@ public class Comment {
 	
 	@Builder @NoArgsConstructor @AllArgsConstructor
 	@Getter @Setter @ToString
+	public static class RecommentRequest {
+		
+		private String content;
+		private LocalDateTime createdAt;
+		private User.SignIn user;
+		private Post.ToShow post;
+		private Comment.ToShow comment;
+		
+		public static Comment toCreate(RecommentRequest request) {
+			
+			return Comment.builder().content(request.getContent())
+									.createdAt(LocalDateTime.now())
+									.user(User.CommentIn.toUser(request.getUser()))
+									.post(Post.ToShow.toPost(request.getPost()))
+									.comment(Comment.ToShow.toComment(request.getComment()))
+									.build();
+		}
+		
+	}
+	
+	@Builder @NoArgsConstructor @AllArgsConstructor
+	@Getter @Setter @ToString
 	public static class ToShow {
 		
 		private long id;
 		private String content;
-		private Date createdAt;
+		private LocalDateTime createdAt;
 		private Post.CommentIn post;
 		private User.CommentIn user;
-		private List<Comment> reComments;
+		private long commentId;
+		private List<Long> reComments;
 		
 		public static ToShow toShow(Comment comment) {
-			
+				
 			return ToShow.builder()
-						 .id(comment.getId())
-						 .content(comment.getContent())
-						 .user(User.CommentIn.toCommentIn(comment.getUser()))
-						 .post(Post.CommentIn.toCommentIn(comment.getPost()))
-						 .reComments(comment.getReComments())
+					.id(comment.getId())
+					.content(comment.getContent())
+					.createdAt(comment.getCreatedAt())
+					.user(User.CommentIn.toCommentIn(comment.getUser()))
+					.post(Post.CommentIn.toCommentIn(comment.getPost()))
+					.commentId(getCommentId(comment))
+					.reComments(getRecommentIds(comment))
+					.build();
+		}
+		
+		public static Comment toComment(Comment.ToShow toShow) {
+			
+			return Comment.builder()
+					 	 .id(toShow.getId())
+						 .content(toShow.getContent())
+						 .createdAt(toShow.getCreatedAt())
 						 .build();
 		}
 		
+		private static long getCommentId(Comment comment) {
+			long commentId = 0;
+			
+			try {
+				commentId = comment.getComment().getId();
+			} catch (Exception e) {
+				commentId = 0;
+			}
+			
+			return commentId;
+		}
+		
+		private static List<Long> getRecommentIds(Comment comment) {
+			List<Long> recommentIds = new ArrayList<Long>();
+			
+			List<Comment> recomments = comment.getReComments();
+			if (recomments != null) {
+				recomments.stream().forEach(recomment -> recommentIds.add(recomment.getId()));
+				
+				return recommentIds;
+			}
+			
+			return null;
+		}
 	}
 }

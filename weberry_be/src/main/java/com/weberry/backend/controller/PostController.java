@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.weberry.backend.entity.Comment;
 import com.weberry.backend.entity.Post;
 import com.weberry.backend.service.comment.CommentService;
@@ -73,6 +72,12 @@ public class PostController {
 	public Comment.ToShow commentOnPost(@RequestBody Comment.Request request) {
 		
 		return commentService.commentOnPost(request);
+	}
+	
+	@PostMapping(path="/recomment")
+	public Comment.ToShow recommentOnComment(@RequestBody Comment.RecommentRequest request) {
+		
+		return commentService.recommentOnComment(request);
 	}
 	
 }
