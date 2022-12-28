@@ -10,4 +10,6 @@ public interface CommentService {
 
 	Comment.ToShow commentOnPost(Comment.Request request);
 	
+	Comment.ToShow recommentOnComment(Comment.RecommentRequest request);
+	
 }

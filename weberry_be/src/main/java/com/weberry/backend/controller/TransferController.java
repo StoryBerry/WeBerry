@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,10 +22,7 @@ public class TransferController {
 	private DataService dataService;
 	
 	@PostMapping
-	public List<Data> transferData(@ModelAttribute("imageFile") List<MultipartFile> imageFiles, @ModelAttribute Data.Request request) {
-		System.out.println(request.getFarm());
-		System.out.println(request.getMDate());
-		System.out.println(imageFiles.size() + ": " + imageFiles);
+	public List<Data> transferData(@RequestPart("imageFile") List<MultipartFile> imageFiles, @ModelAttribute Data.Request request) {
 		
 		return dataService.transferData(imageFiles, request);
 	}
