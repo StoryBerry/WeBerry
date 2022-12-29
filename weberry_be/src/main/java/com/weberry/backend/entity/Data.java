@@ -17,6 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,13 +42,9 @@ public class Data {
 	
 	private float humidity;
 	
-	private int co2;
-	
 	private LocalDate mDate;
 	
-	private int coordinateX;
-	
-	private int coordinateY;
+	private int point;
 	
 	@ManyToOne
 	@JoinTable(name="FARM_DATA",
@@ -61,22 +58,18 @@ public class Data {
 		
 		private float temperature;
 		private float humidity;
-		private int co2;
 		@DateTimeFormat(pattern="yyyy-MM-dd")
 	    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
 		private LocalDate mDate;
-		private int coordinateX;
-		private int coordinateY;
+		private int point;
 		private Farm farm;
 		
 		public static Data toCreate(Request request) {
 			
 			return Data.builder().temperature(request.getTemperature())
 								 .humidity(request.getHumidity())
-								 .co2(request.getCo2())
 								 .mDate(request.getMDate())
-								 .coordinateX(request.getCoordinateX())
-								 .coordinateY(request.getCoordinateY())
+								 .point(request.getPoint())
 								 .farm(request.getFarm()).build();
 		}
 		
