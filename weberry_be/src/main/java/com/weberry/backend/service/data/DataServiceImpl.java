@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.weberry.backend.entity.Data;
 import com.weberry.backend.entity.Data.Request;
+import com.weberry.backend.entity.DataRequestList;
 import com.weberry.backend.repository.DataRepository;
 
 @Service
@@ -22,9 +23,12 @@ public class DataServiceImpl implements DataService {
 	private DataRepository dataRepository;
 	
 	@Override
-	public List<Data> transferData(List<MultipartFile> imageFiles, Request request) {
+	public List<Data> transferData(List<MultipartFile> imageFiles, DataRequestList request) {
 		List<Data> dataList = new ArrayList<Data>();
-		imageFiles.stream().forEach(imageFile -> transferData(imageFile, request));
+		System.out.println(request);
+		for (int i = 0; i < imageFiles.size(); i++) {
+			dataList.add(transferData(imageFiles.get(i), request.getRequestList().get(i)));
+		}
 		
 		return dataList;
 	}
@@ -39,6 +43,7 @@ public class DataServiceImpl implements DataService {
 		file.mkdirs();
 		try {
 			imageFile.transferTo(file);
+			System.out.println(String.format("imageUrl: %s 로 저장합니다.\n", imageUrl));
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
@@ -46,8 +51,10 @@ public class DataServiceImpl implements DataService {
 		Data toSave = Data.Request.toCreate(request);
 		toSave.setImageUrl(imageUrl);
 		dataRepository.save(toSave);
+		Data saved = dataRepository.findFirstBymDateAndFarmFarmIdOrderByIdDesc(request.getMDate(), farm);
+		System.out.println(String.format("Data: %s 와 같이 저장되었습니다. \n", saved));
 		
-		return dataRepository.findFirstBymDateAndFarmFarmIdOrderByIdDesc(request.getMDate(), farm);
+		return saved;
 	}
 
 }
