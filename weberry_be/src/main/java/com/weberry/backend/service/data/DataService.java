@@ -11,6 +11,6 @@ import com.weberry.backend.entity.DataRequestList;
 @Service
 public interface DataService {
 
-	List<Data> transferData(List<MultipartFile> imageFiles, DataRequestList request);
+	List<Data.ToShow> transferData(List<MultipartFile> imageFiles, DataRequestList request);
 	
 }

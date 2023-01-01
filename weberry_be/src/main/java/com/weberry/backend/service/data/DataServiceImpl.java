@@ -23,9 +23,9 @@ public class DataServiceImpl implements DataService {
 	private DataRepository dataRepository;
 	
 	@Override
-	public List<Data> transferData(List<MultipartFile> imageFiles, DataRequestList request) {
-		List<Data> dataList = new ArrayList<Data>();
-		System.out.println(request);
+	public List<Data.ToShow> transferData(List<MultipartFile> imageFiles, DataRequestList request) {
+		List<Data.ToShow> dataList = new ArrayList<Data.ToShow>();
+
 		for (int i = 0; i < imageFiles.size(); i++) {
 			dataList.add(transferData(imageFiles.get(i), request.getRequestList().get(i)));
 		}
@@ -33,8 +33,8 @@ public class DataServiceImpl implements DataService {
 		return dataList;
 	}
 	
-	private Data transferData(MultipartFile imageFile, Request request) {
-		String basePath = "/home/weberry/Desktop/images/farm";
+	private Data.ToShow transferData(MultipartFile imageFile, Request request) {
+		String basePath = "C://users/Will.Lee/desktop/farm";
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
 		String imageUrl = String.format("%s/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());
@@ -51,7 +51,7 @@ public class DataServiceImpl implements DataService {
 		Data toSave = Data.Request.toCreate(request);
 		toSave.setImageUrl(imageUrl);
 		dataRepository.save(toSave);
-		Data saved = dataRepository.findFirstBymDateAndFarmFarmIdOrderByIdDesc(request.getMDate(), farm);
+		Data.ToShow saved = Data.ToShow.toShow(dataRepository.findById(toSave.getId()).get());
 		System.out.println(String.format("Data: %s 와 같이 저장되었습니다. \n", saved));
 		
 		return saved;
