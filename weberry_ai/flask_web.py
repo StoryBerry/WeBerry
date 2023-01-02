@@ -1,7 +1,6 @@
-# pip install flask -> localhost:5000 번으로 접속해보세요 
-# html 파일은 templates 안에 있습니다.
 from flask import Flask, jsonify
 from datetime import datetime
+from pathlib import Path
 import os
 import cv2
 import numpy as np
@@ -127,8 +126,11 @@ net = cv2.dnn.readNet(modelWeights)
 def analyze_image(farmId):
 	mDate = datetime.now().strftime('%y.%m.%d')
 	date = datetime.now().strftime('%y%m%d')
-	path = f'C://users/Will.Lee/desktop/farm/{mDate}/{farmId}/'
-	output_path = f'C://users/Will.Lee/desktop/disease/{mDate}/{farmId}'
+	path = f'/home/weberry/Desktop/images/farm/{mDate}/{farmId}/'
+	output_path = f'/home/weberry/Desktop/images/disease/{mDate}/{farmId}'
+	
+	if not Path(output_path).exists():
+		os.makedirs(output_path)
 	images = [path + fileName for fileName in os.listdir(path)]
 	
 	reports = {'requestList': []}
@@ -140,10 +142,14 @@ def analyze_image(farmId):
 		output_img, results = post_process(img, detections)
 		
 		if output_img is not None:
-			status = classes[results[0]]
+			status = classes[results[0]].replace(" ", "")
 			analayzedImageUrl = f'{output_path}/{status}_{idx + 1}.jpg'
-			cv2.imwrite(analayzedImageUrl, output_img)
-		
+			result, encoded_img = cv2.imencode('.jpg', output_img)
+ 
+			if result:
+					with open(analayzedImageUrl, mode='wb') as f:
+							encoded_img.tofile(f)
+
 		report = {'status': locals().get('status', 'Normal'),
 							'baseImageUrl': image,
 							'analyzedImageUrl': locals().get('analayzedImageUrl', None),

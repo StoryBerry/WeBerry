@@ -34,7 +34,7 @@ public class DataServiceImpl implements DataService {
 	}
 	
 	private Data.ToShow transferData(MultipartFile imageFile, Request request) {
-		String basePath = "C://users/Will.Lee/desktop/farm";
+		String basePath = "/home/weberry/Desktop/images/farm";
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
 		String imageUrl = String.format("%s/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());

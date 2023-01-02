@@ -31,6 +31,15 @@ public class UserServiceImpl implements UserService {
 	private FarmRepository farmRepository;
 	
 	@Override
+	public boolean checkUser(String userId) {
+		User user = userRepository.findByUserid(userId);
+
+		if (user != null) return false;
+		
+		else return true;
+	}
+	
+	@Override
 	public User.SignIn createUser(Request request, Farm farm) {
 		userRepository.save(User.Request.toCreate(request, farm));
 		
@@ -71,9 +80,7 @@ public class UserServiceImpl implements UserService {
 		JSONObject jsonObject = new JSONObject(signIn);
 		payloads.put("signIn", jsonObject.toString());
 		
-//		long expirationTime = 1000 * 60 * 60 * 24 * 1l; // 하루
-//		long expirationTime = 1000 * 60 * 10l; // 10분
-		long expirationTime = 1000 * 30l; // 30초
+		long expirationTime = 1000 * 60 * 60 * 24 * 1l; // 하루
 		
 		Date expirationDate = new Date();
 		expirationDate.setTime(expirationDate.getTime() + expirationTime);
