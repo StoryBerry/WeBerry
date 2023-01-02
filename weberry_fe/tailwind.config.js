@@ -20,6 +20,10 @@ module.exports = {
       'light_pink': "#ff8468",
       'black_600' :"#4B5563",
       'yello_100' : "#FDF6B2",
+<<<<<<< Updated upstream
+=======
+      'berry' : "#ff0033",
+>>>>>>> Stashed changes
     },
     extend: {
 
