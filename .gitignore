@@ -36,3 +36,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+######## FRONTEND ############
+
+weberry_fe/package-lock.json
+weberry_fe/yarn.lock
+weberry_fe/node_modules/
+weberry_fe/.next/

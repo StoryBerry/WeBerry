@@ -33,4 +33,4 @@ const CommuItemDetail = () => {
   )
 }
 
-export default CommuItem
+export default CommuItemDetail
