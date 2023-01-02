@@ -6,28 +6,21 @@ import styles from '../styles/Home.module.css'
 export default function Home() {
   return (
 
-    <div className={styles.container}>
-       <div>
-      <Body />
+    <div>
+      <div>
+        <Body />
       </div>
-      <main className>
-        
-        <p className={styles.description}>
-          데일리리포트내용{' '}
-        </p>
-
+      {/* <main className>
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
+          <a className={styles.card}>
             <h2>실내습도 &rarr;</h2>
             <p>60</p>
           </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
+          <a className={styles.card}>
             <h2>실외습도 &rarr;</h2>
             <p>80</p>
           </a>
           <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
             className={styles.card}
           >
             <h2>실내온도 &rarr;</h2>
@@ -44,7 +37,7 @@ export default function Home() {
             </p>
           </a>
         </div>
-      </main>
+      </main> */}
     </div>
   )
 }
