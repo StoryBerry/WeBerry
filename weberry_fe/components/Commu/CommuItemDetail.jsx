@@ -5,7 +5,6 @@ import Image from 'next/image'
 
 
 const CommuItemDetail = () => {
-
   return (
 
     <div className={styles.card_board}>
@@ -33,4 +32,4 @@ const CommuItemDetail = () => {
   )
 }
 
-export default CommuItem
+export default CommuItemDetail
