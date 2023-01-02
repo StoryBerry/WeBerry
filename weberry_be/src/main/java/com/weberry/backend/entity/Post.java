@@ -2,6 +2,7 @@ package com.weberry.backend.entity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -80,22 +81,32 @@ public class Post {
 		private String content;
 //		private ?? images;
 		private User.SignIn user;
+		private List<Comment.ToShow> comments;
 		private LocalDateTime createdAt;
-		private LocalDateTime modifiedAt;
+		private LocalDateTime modifiedAt; 
 		
 		public static ToShow toShow(Post post) {
+			List<Comment.ToShow> toShowList = new ArrayList<Comment.ToShow>();
+			
+			List<Comment> commentList = post.getComments();
+			if (commentList != null) commentList.stream().forEach(comment -> toShowList.add(Comment.ToShow.toShow(comment)));
 			
 			return ToShow.builder().id(post.getId())
 								   .content(post.getContent())
 								   .createdAt(post.getCreatedAt())
 								   .modifiedAt(post.getModifiedAt())
 								   .user(User.SignIn.toSignIn(post.getUser()))
+								   .comments(toShowList)
 								   .build();
 		}
 		
 		public static Post toPost(Post.ToShow post) {
 			
 			return Post.builder().id(post.getId())
+								 .content(post.getContent())
+								 .user(User.SignIn.toUser(post.getUser()))
+								 .createdAt(post.getCreatedAt())
+								 .modifiedAt(post.getModifiedAt())
 								 .build();
 		}
 	}
@@ -119,6 +130,26 @@ public class Post {
 								 .createdAt(toEdit.getCreatedAt())
 								 .modifiedAt(LocalDateTime.now())
 								 .build();
+		}
+	}
+	
+	@Builder @NoArgsConstructor @AllArgsConstructor
+	@Getter @Setter @ToString
+	public static class CommentIn {
+		
+		private long id;
+		private String content;
+//		private ?? images;
+		private LocalDateTime createdAt;
+		private LocalDateTime modifiedAt;
+		
+		public static CommentIn toCommentIn(Post post) {
+			
+			return CommentIn.builder().id(post.getId())
+									  .content(post.getContent())
+									  .createdAt(post.getCreatedAt())
+									  .modifiedAt(post.getModifiedAt())
+									  .build();
 		}
 	}
 	
