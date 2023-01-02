@@ -3,14 +3,14 @@ import CommuItem from '../../components/Commu/CommuItem'
 import styles from '../../styles/Home.module.css'
 
 
-const citem = () => {
+const citemdetail = () => {
   return (
     <>
     <div className={styles.main}>
-    <CommuItem />
+      <CommuItemDetail />
     </div>
     </>
     )
 }
 
-export default citem
+export default citemdetail
