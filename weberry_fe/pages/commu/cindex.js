@@ -8,20 +8,22 @@ const cindex = () => {
     const dataList = [];
     const posts = fetch('http://localhost:8090/post')
                     .then(response => response.json())
-                    .then(datas => {
-                      console.log(datas);
-                      setPosts(datas)
-                    })
+                    .then(datas => setPosts(datas))
                     .catch(err => console.error(err))
+
+    console.log('posts: ' + posts);
+    console.log('post[0]: ' + posts[0]);
+    console.log('post[0]["id"]: ' + posts[0].id);
   }, [])
 
-  return posts? (
-    <div className={styles.container}>
-      {posts.map(post => {
-        return (< CommuItem post={post}/>)
-      })}
+  return (
+  <div className={styles.container}>
+       <div>
+        < Cmain />
+       </div>
+      
     </div>
-  ) : null;
+  )  
 }
 
 export default cindex
