@@ -57,7 +57,7 @@ public class AuthController {
 		
 		return userService.signIn(user);
 	}
-	
+		
 	@GetMapping(path="/check/token")
 	public Map<String, Object> checkToken(@RequestHeader(name="Authorization") String token) {
 		

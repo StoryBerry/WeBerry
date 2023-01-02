@@ -26,7 +26,7 @@ public class ChatSpace {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long index;
+	private long id;
 	
 	private String spaceName;
 	

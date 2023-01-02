@@ -23,17 +23,44 @@ export default function BellWarrn() {
                     </button>
                 )
             }
-            < div className={`right-0 fixed bg-grey bg-opacity-80 w-full mt-9 h-full p-10 
+            < div className={`right-0 fixed bg-grey  w-full mt-9 h-full p-10 
               ${isOpen ? 'translate-x-0' : 'translate-x-full'} ease-in-out duration-300`}>
-                <div className='text-white'>
-                    <div className=' bg-black_600 justify-center ml-80 mr-80 '>
-                        <a>이것이이것은 유사 재난 문자라는 것이다 엣헴! 렛잇고!~~~~ 이것은 유사 재난 문자라는 것이다 엣헴! 렛잇고!~~~~ 이것은 유사 재난 문자라는 것이다 엣헴! 렛잇고!~~~~ 것은 유사 재난 문자라는 것이다 엣헴! 렛잇고!~~~~ 이것은 유사 재난 문자라는 것이다 엣헴! 렛잇고!~~~~ 이것은 유사 재난 문자라는 것이다 엣헴! 렛잇고!~~~~ 은 유사 재난 문자라는 것이다 엣헴! 렛잇고!~~~~ 파이널판톼지폴팅~
-                        </a>
+                <h1 className='text-xl font-black'> 알림</h1>
+
+                <div className='flex justify-center w-full mt-3 mb-5'>
+                    <div className='  bg-black_600 bg-opacity-70 rounded-lg shadow-lg flex flex-wrap w-80' >
+                        <h6 className='text-left pl-4 pt-2 text-xs text-white display flex-auto'>위베리농장</h6>
+                        <h6 className='text-right pr-4 pt-2 text-xs text-white flex-auto'>1시간전</h6>
+                        <div className='text-left  p-4 text-sm text-white flex justify-end'> #1번 알림 | 실내 온도가 18도로 떨어졌어요. 빨리 온도를 확인해주세요</div>
+                        <h6 className='text-center pl-4 pr-4 pb-2 text-xs text-berry flex-auto'>※ 낮은 온도는 딸기에게 치명적입니다.</h6>
                     </div>
                 </div>
-                <h3 className='text-xl top-56'> 지금 알림 바가 구리다고 저를 까는겁니까?</h3>
-                <h3 className=' text-xl top-56'>두유 노우 아씨엔?</h3>
+
+                
+                <div className='flex justify-center w-full mt-3 mb-5'>
+                    <div className='  bg-black_600 bg-opacity-70 rounded-lg shadow-lg flex flex-wrap w-80' >
+                        <h6 className='text-left pl-4 pt-2 text-xs text-white display flex-auto'>위베리농장</h6>
+                        <h6 className='text-right pr-4 pt-2 text-xs text-white flex-auto'>1시간전</h6>
+                        <div className='text-left  p-4 text-sm text-white flex justify-end'> #2번 알림 | 실내 온도가 18도로 떨어졌어요. 빨리 온도를 확인해주세요</div>
+                        <h6 className='text-center pl-4 pr-4 pb-2 text-xs text-berry flex-auto'>※ 낮은 온도는 딸기에게 치명적입니다.</h6>
+                    </div>
+                </div>
+
+                  
+                <div className='flex justify-center w-full mt-3 mb-5'>
+                    <div className='  bg-black_600 bg-opacity-70 rounded-lg shadow-lg flex flex-wrap w-80' >
+                        <h6 className='text-left pl-4 pt-2 text-xs text-white display flex-auto'>위베리농장</h6>
+                        <h6 className='text-right pr-4 pt-2 text-xs text-white flex-auto'>1시간전</h6>
+                        <div className='text-left  p-4 text-sm text-white flex justify-end'> #2번 알림 | 실내 온도가 18도로 떨어졌어요. 빨리 온도를 확인해주세요</div>
+                        <h6 className='text-center pl-4 pr-4 pb-2 text-xs text-berry flex-auto'>※ 낮은 온도는 딸기에게 치명적입니다.</h6>
+                    </div>
+                </div>
+
+                
+
+                
             </div>
+
 
 
         </>

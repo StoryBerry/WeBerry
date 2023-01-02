@@ -47,7 +47,6 @@ public class User {
 	@JoinTable(name="FARM_USER",
 			   joinColumns=@JoinColumn(name="USERID"),
 			   inverseJoinColumns=@JoinColumn(name="FARMID"))
-	@JsonIgnore
 	private Farm farm;
 	
 	@OneToMany(mappedBy="user")
@@ -116,6 +115,40 @@ public class User {
 					.nickName(user.getNickName())
 					.farm(Farm.SignIn.toSignIn(user.getFarm()))
 					.build();
+		}
+		
+		public static User toUser(User.SignIn user) {
+			
+			return User.builder()
+					   .userid(user.getUserid())
+					   .build();
+		}
+	}
+	
+	@Builder @NoArgsConstructor @AllArgsConstructor
+	@Getter @Setter @ToString
+	public static class CommentIn {
+		
+		private String userid;
+		private String name;
+		private String nickName;
+		
+		public static User.CommentIn toCommentIn(User user) {
+			
+			return User.CommentIn.builder()
+							     .userid(user.getUserid())
+							     .name(user.getName())
+							     .nickName(user.getNickName())
+							     .build();
+		}
+		
+		public static User toUser(User.SignIn user) {
+			
+			return User.builder()
+					   .userid(user.getUserid())
+					   .name(user.getName())
+					   .nickName(user.getNickName())
+					   .build();
 		}
 	}
 	
