@@ -21,7 +21,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weberry.backend.entity.Data;
 import com.weberry.backend.entity.DataRequestList;
-import com.weberry.backend.entity.Report;
 import com.weberry.backend.entity.ReportRequestList;
 import com.weberry.backend.service.data.DataService;
 import com.weberry.backend.service.report.ReportService;

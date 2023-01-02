@@ -31,9 +31,15 @@ public class AuthController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping(path="/sign-up/check")
+	@GetMapping(path="/sign-up/check/user")
+	public boolean checkUser(@RequestParam("userId") String userId) {
+		
+		return userService.checkUser(userId);
+	}
+	
+	@GetMapping(path="/sign-up/check/farm")
 	public List<FarmProjection> checkFarm(@RequestParam("farmName") String farmName) {
-		System.out.println("checkFarm");
+
 		return farmService.checkFarm(farmName);
 	}
 	

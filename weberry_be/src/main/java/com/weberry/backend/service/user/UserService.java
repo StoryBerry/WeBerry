@@ -9,6 +9,8 @@ import com.weberry.backend.entity.User;
 
 @Service
 public interface UserService {
+	
+	boolean checkUser(String userId);
 
 	User.SignIn createUser(User.Request request, Farm farm);
 	

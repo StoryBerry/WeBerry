@@ -3,7 +3,6 @@ package com.weberry.backend.service.comment;
 import org.springframework.stereotype.Service;
 
 import com.weberry.backend.entity.Comment;
-import com.weberry.backend.entity.Post;
 
 @Service
 public interface CommentService {
