@@ -10,35 +10,23 @@ const Footer = () => {
     <div className='bg-white fixed w-full bottom-0 '>
       <div className=" mx-auto max-w-5xl px-4 sm:px-6 py-3 border-t-2 border-y-grey border-opacity-50">
         <div className="place-content-evenly flex " >
-<<<<<<< Updated upstream
-=======
 
         <Link href="/">
->>>>>>> Stashed changes
           <button className=' hover:text-light_pink focus:text-light_pink'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
               <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
               <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
             </svg>
-<<<<<<< Updated upstream
-          </button> 
-
-          <button className=' hover:text-light_pink focus:text-light_pink' xmlns="http://www.w3.org/2000/svg">
-=======
           </button> </Link>
 
         <Link href="/commu/cindex">
           <button className=' hover:text-light_pink focus:text-light_pink' xmlns="http://www.w3.org/2000/svg" href='pages/commu/cindex.js'>
->>>>>>> Stashed changes
             <svg  viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
               <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
               <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" clip-rule="evenodd" />
             </svg>
-<<<<<<< Updated upstream
           </button>
-=======
-          </button></Link>
->>>>>>> Stashed changes
+        </Link>
 
           <button className=' hover:text-light_pink focus:text-light_pink'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
