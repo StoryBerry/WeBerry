@@ -21,6 +21,8 @@ module.exports = {
       'black_600' :"#4B5563",
       'yello_100' : "#FDF6B2",
       'berry' : "#ff0033",
+      "sun": "#FFA778",
+      "water":"#50c2ff",
     },
     extend: {
 

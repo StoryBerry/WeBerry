@@ -25,9 +25,9 @@ export default function Sidebar() {
                     </button>
                 )
             }
-            < div className={`right-0 fixed bg-light_pink w-5/12 mt-9 h-full p-10 
+            < div className={`right-0 fixed bg-white w-9/12 mt-9 h-full p-10 
               ${isOpen ? 'translate-x-0' : 'translate-x-full'} ease-in-out duration-300`}>
-                <h2 className='text-sm'>사이드 바</h2>
+                <h2 className='text-lg font-black'>사이드 바</h2>
             </div>
 
 
