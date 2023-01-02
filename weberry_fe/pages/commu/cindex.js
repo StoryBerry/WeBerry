@@ -1,19 +1,27 @@
-import React from 'react'
-import Body from '../../components/Main/Body/Body'
+import React, { useEffect, useState } from 'react'
 import styles from '../../styles/Home.module.css'
-import Cmain from '../../components/Commu/Cmain'
+import CommuItem from '../../components/Commu/CommuItem'
 
 const cindex = () => {
-  return (
-    <>
-  <div className={styles.container}>
-       <div>
-        < Cmain />
-       </div>
-      
+  const [posts, setPosts] = useState([])
+  useEffect(() => {
+    const dataList = [];
+    const posts = fetch('http://localhost:8090/post')
+                    .then(response => response.json())
+                    .then(datas => {
+                      console.log(datas);
+                      setPosts(datas)
+                    })
+                    .catch(err => console.error(err))
+  }, [])
+
+  return posts? (
+    <div className={styles.container}>
+      {posts.map(post => {
+        return (< CommuItem post={post}/>)
+      })}
     </div>
-    </>
-  )
+  ) : null;
 }
 
 export default cindex
