@@ -92,12 +92,12 @@
   border-color: #0070f3;
 }
 
-.card h2 {
+.card_h2 {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
 }
 
-.card p {
+.card_p {
   margin: 0;
   font-size: 1.25rem;
   line-height: 1.5;
@@ -106,3 +106,27 @@
 .logo {
   margin-left: 0.5rem;
 }
+
+.card_board {
+  text-align: left;
+  color: inherit;
+  border: 1.5px solid #ffffff;
+  border-top-color: rgb(245 245 244);
+  border-bottom-color: rgb(245 245 244);
+  /* transition: color 0.15s ease, border-color 0.15s ease; */
+  }
+
+  .card_font {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.5rem; 
+    margin-bottom: 0.2rem
+  }
+
+  .card_button{
+    margin: 0 0 0.01rem 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 10px;
+    border: 0.01px solid darkgray;
+    border-radius: 10px;
+
+  }
