@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.weberry.backend.entity.Farm;
-import com.weberry.backend.entity.User;
 import com.weberry.backend.projection.FarmProjection;
 import com.weberry.backend.repository.FarmRepository;
 

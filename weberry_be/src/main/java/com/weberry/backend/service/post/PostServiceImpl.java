@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.weberry.backend.entity.Post;
-import com.weberry.backend.entity.Post.Request;
 import com.weberry.backend.repository.PostRepository;
 
 @Service
