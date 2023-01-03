@@ -5,6 +5,7 @@ import home from './home.svg';
 import comu from './conum.svg';
 import tailk from './tail.svg'
 import person from './person.svg'
+import BellWarrn from './BellWarrn';
 const Footer = () => {
   return (
     <div className='bg-white fixed w-full bottom-0 '>
@@ -33,29 +34,13 @@ const Footer = () => {
 
           </button>
 
-          <button className=' hover:text-light_pink focus:text-light_pink'>
+          
+          {/* <button className=' hover:text-light_pink focus:text-light_pink'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
               <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
             </svg>
-          </button>
-
-          {/* 
-          버튼호버 에러 
-          테일윈드 컨
-
-          <button className=' hover:text-light_pink focus:text-light_pink'>
-          <Image className='hover:fill-light_pink' src={home} width={25} height={25} /></button>
-          <Image src={comu} width={25} height={25} />
-          <Image src={tailk} width={25} height={25} />
-          <Image src={person} width={25} height={25} /> */}
+          </button> */}
         </div></div>
-      {/*       
-      <div className='container max-w-lg px-4 py-32 mx-auto mt-30 text-left md:max-w-none md:text-center tails-selected-element m-10 mb-32'>
-        <h1>기재되어있는 회사명 · 제품명 · 시스템 이름은 해당 소유자의 상표 또는 등록 상표입니다.</h1>
-        <h1>© 2023 - 2025 WeBerry CO. LTD. All Rights Reserved. Published in Korea by WeBerry SOFT CO. LTD.</h1>
-        <br></br>
-        <h1>개인정보 처리방침(링크)</h1>
-      </div> */}
     </div>
 
   )
