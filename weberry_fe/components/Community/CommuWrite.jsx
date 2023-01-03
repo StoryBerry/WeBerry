@@ -23,7 +23,6 @@ const CommuWrite = (props) => {
     console.log(input);
     const body = {'content': content,
                   'user': input}
-    console.log(body)
     fetch('http://localhost:8090/post/write',
           {method: 'POST',
            headers: {'Content-Type': 'application/json; charset=UTF-8'},
