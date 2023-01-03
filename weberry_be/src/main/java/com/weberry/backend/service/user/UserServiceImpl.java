@@ -52,13 +52,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String signIn(User user) {
+	public Map<String, String> signIn(User user) {
 		User toCheck = userRepository.findByUserid(user.getUserid());
 		
 		if (toCheck.getPassword().equals(user.getPassword())) {
 			User.SignIn signIn = User.SignIn.toSignIn(toCheck);
-			
-			return createToken(signIn);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("token", createToken(signIn));
+			return map;
 		}
 		
 		return null;

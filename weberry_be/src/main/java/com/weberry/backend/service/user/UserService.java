@@ -16,7 +16,7 @@ public interface UserService {
 	
 	void connectUserAndFarm(Farm farmInfo, User user);
 	
-	String signIn(User user);
+	Map<String, String> signIn(User user);
 	
 	Map<String, Object> checkToken(String token);
 }

@@ -59,7 +59,7 @@ public class AuthController {
 	}
 	
 	@PostMapping(path="/sign-in")
-	public String signIn(@RequestBody User user) {
+	public Map<String, String> signIn(@RequestBody User user) {
 		
 		return userService.signIn(user);
 	}
