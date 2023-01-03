@@ -46,7 +46,7 @@ public class PostController {
 	
 	@PostMapping(path="/write")
 	public Post.ToShow writePost(@RequestBody Post.Request request) {
-		
+		System.out.println(request);
 		return postService.writePost(request);
 	}
 	
