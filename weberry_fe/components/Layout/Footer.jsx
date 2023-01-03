@@ -18,7 +18,7 @@ const Footer = () => {
             </svg>
           </button> </Link>
 
-        <Link href="/commu/cindex">
+        <Link href="/community">
           <button className=' hover:text-light_pink focus:text-light_pink' xmlns="http://www.w3.org/2000/svg" href='pages/commu/cindex.js'>
             <svg  viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
               <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />

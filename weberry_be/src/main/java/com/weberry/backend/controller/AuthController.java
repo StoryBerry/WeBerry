@@ -57,6 +57,12 @@ public class AuthController {
 		
 		return userService.createUser(userInfo, farmInfo);
 	}
+	
+	@PostMapping(path="/sign-in")
+	public Map<String, String> signIn(@RequestBody User user) {
+		
+		return userService.signIn(user);
+	}
 		
 	@GetMapping(path="/check/token")
 	public Map<String, Object> checkToken(@RequestHeader(name="Authorization") String token) {
