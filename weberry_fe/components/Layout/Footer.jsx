@@ -5,12 +5,12 @@ import home from './home.svg';
 import comu from './conum.svg';
 import tailk from './tail.svg'
 import person from './person.svg'
+import BellWarrn from './BellWarrn';
 const Footer = () => {
   return (
     <div className='bg-white fixed w-full bottom-0 '>
       <div className=" mx-auto max-w-5xl px-4 sm:px-6 py-3 border-t-2 border-y-grey border-opacity-50">
         <div className="place-content-evenly flex " >
-
         <Link href="/">
           <button className=' hover:text-light_pink focus:text-light_pink'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
@@ -27,7 +27,6 @@ const Footer = () => {
             </svg>
           </button>
         </Link>
-
           <button className=' hover:text-light_pink focus:text-light_pink'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
               <path fill-rule="evenodd" d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97z" clip-rule="evenodd" />
@@ -35,29 +34,13 @@ const Footer = () => {
 
           </button>
 
-          <button className=' hover:text-light_pink focus:text-light_pink'>
+          
+          {/* <button className=' hover:text-light_pink focus:text-light_pink'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
               <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
             </svg>
-          </button>
-
-          {/* 
-          버튼호버 에러 
-          테일윈드 컨
-
-          <button className=' hover:text-light_pink focus:text-light_pink'>
-          <Image className='hover:fill-light_pink' src={home} width={25} height={25} /></button>
-          <Image src={comu} width={25} height={25} />
-          <Image src={tailk} width={25} height={25} />
-          <Image src={person} width={25} height={25} /> */}
+          </button> */}
         </div></div>
-      {/*       
-      <div className='container max-w-lg px-4 py-32 mx-auto mt-30 text-left md:max-w-none md:text-center tails-selected-element m-10 mb-32'>
-        <h1>기재되어있는 회사명 · 제품명 · 시스템 이름은 해당 소유자의 상표 또는 등록 상표입니다.</h1>
-        <h1>© 2023 - 2025 WeBerry CO. LTD. All Rights Reserved. Published in Korea by WeBerry SOFT CO. LTD.</h1>
-        <br></br>
-        <h1>개인정보 처리방침(링크)</h1>
-      </div> */}
     </div>
 
   )
