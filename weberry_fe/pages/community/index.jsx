@@ -15,10 +15,7 @@ const index = () => {
   useEffect(() => {
     fetch('http://localhost:8090/post')
         .then(response => response.json())
-        .then(datas => {
-          console.log(datas);
-          setPosts(datas)
-        })
+        .then(datas => setPosts(datas))
         .catch(err => console.error(err))
   }, [toWritePost])
 
