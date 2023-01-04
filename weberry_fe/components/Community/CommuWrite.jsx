@@ -32,7 +32,7 @@ const CommuWrite = (props) => {
 
   useEffect(() => {
     fetch('http://localhost:8090/post/check/token',
-          {headers: {Authorization: token}})
+          {headers: {Authorization: token.token}})
         .then(response => response.json())
         .then(data => setSignIn({...JSON.parse(data['signIn'])}))
         .catch(err => console.error(err))
