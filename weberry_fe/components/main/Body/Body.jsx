@@ -21,7 +21,7 @@ const Body = (props) => {
       imageList.push(reports[point].baseImageUrl.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', ''))
       imageList.push(reports[point].analyzedImageUrl.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', ''))
     }
-    setPoint(0);
+    setImageno(0);
   }
 
   const checkToken = async () => {
