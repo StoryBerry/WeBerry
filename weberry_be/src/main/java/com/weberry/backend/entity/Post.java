@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,7 +36,8 @@ public class Post {
 	
 	private String content;
 	
-//	private ?? images;
+	@Column(columnDefinition="TEXT")
+	private StringBuilder images;
 	
 	private LocalDateTime createdAt;
 	
@@ -58,13 +60,13 @@ public class Post {
 	public static class Request {
 		
 		private String content;
-//		private ?? images;
 		private User user;
 		
-		public static Post toWrite(Request request) {
+		public static Post toWrite(Request request, StringBuilder images) {
 			
 			return Post.builder().content(request.getContent())
 								 .user(request.getUser())
+								 .images(images)
 								 .createdAt(LocalDateTime.now())
 								 .build();
 		}
@@ -76,7 +78,7 @@ public class Post {
 		
 		private long id;
 		private String content;
-//		private ?? images;
+		private StringBuilder images;
 		private User.SignIn user;
 		private List<Comment.ToShow> comments;
 		private LocalDateTime createdAt;
@@ -92,6 +94,7 @@ public class Post {
 								   .content(post.getContent())
 								   .createdAt(post.getCreatedAt())
 								   .modifiedAt(post.getModifiedAt())
+								   .images(post.getImages())
 								   .user(User.SignIn.toSignIn(post.getUser()))
 								   .comments(toShowList)
 								   .build();
@@ -114,7 +117,7 @@ public class Post {
 
 		private long id;
 		private String content;
-//		private ?? images;
+		private StringBuilder images;
 		private User user;
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;
@@ -123,6 +126,7 @@ public class Post {
 			
 			return Post.builder().id(toEdit.getId())
 								 .content(toEdit.getContent())
+								 .images(toEdit.getImages())
 								 .user(toEdit.getUser())
 								 .createdAt(toEdit.getCreatedAt())
 								 .modifiedAt(LocalDateTime.now())
@@ -136,7 +140,7 @@ public class Post {
 		
 		private long id;
 		private String content;
-//		private ?? images;
+		private StringBuilder images;
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;
 		
@@ -144,6 +148,7 @@ public class Post {
 			
 			return CommentIn.builder().id(post.getId())
 									  .content(post.getContent())
+									  .images(post.getImages())
 									  .createdAt(post.getCreatedAt())
 									  .modifiedAt(post.getModifiedAt())
 									  .build();

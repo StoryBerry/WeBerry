@@ -19,10 +19,9 @@ const CommuWrite = (props) => {
                                       : setToWritePost(!toWritePost);
   }
   const writePost = (input) => {
-    console.log(typeof input);
-    console.log(input);
     const body = {'content': content,
-                  'user': input}
+                  'user': input,
+                  'imageFiles': images}
     fetch('http://localhost:8090/post/write',
           {method: 'POST',
            headers: {'Content-Type': 'application/json; charset=UTF-8'},
