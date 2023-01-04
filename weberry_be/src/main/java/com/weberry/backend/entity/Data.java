@@ -32,8 +32,6 @@ public class Data {
 	@Id
 	private String id; 
 	
-	private String imageUrl;
-	
 	private float temperature;
 	
 	private float humidity;
@@ -41,6 +39,9 @@ public class Data {
 	private LocalDate mDate;
 	
 	private int point;
+	
+	@OneToOne(mappedBy="data")
+	private Image imageUrl;
 	
 	@ManyToOne
 	@JoinTable(name="FARM_DATA",

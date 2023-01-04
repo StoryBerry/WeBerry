@@ -36,8 +36,8 @@ public class Post {
 	
 	private String content;
 	
-	@Column(columnDefinition="TEXT")
-	private StringBuilder images;
+	@OneToMany(mappedBy="post")
+	private List<Image> images;
 	
 	private LocalDateTime createdAt;
 	
@@ -62,11 +62,11 @@ public class Post {
 		private String content;
 		private User user;
 		
-		public static Post toWrite(Request request, StringBuilder images) {
+		public static Post toWrite(Request request) {
 			
 			return Post.builder().content(request.getContent())
 								 .user(request.getUser())
-								 .images(images)
+								 .images(new ArrayList<Image>())
 								 .createdAt(LocalDateTime.now())
 								 .build();
 		}
@@ -78,25 +78,28 @@ public class Post {
 		
 		private long id;
 		private String content;
-		private StringBuilder images;
+		private List<Image.ToShow> images;
 		private User.SignIn user;
 		private List<Comment.ToShow> comments;
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt; 
 		
 		public static ToShow toShow(Post post) {
-			List<Comment.ToShow> toShowList = new ArrayList<Comment.ToShow>();
-			
-			List<Comment> commentList = post.getComments();
-			if (commentList != null) commentList.stream().forEach(comment -> toShowList.add(Comment.ToShow.toShow(comment)));
+			List<Comment.ToShow> commentList = new ArrayList<Comment.ToShow>();
+			List<Comment> comments = post.getComments();
+			if (comments != null) comments.stream().forEach(comment -> commentList.add(Comment.ToShow.toShow(comment)));
+
+			List<Image.ToShow> imageList = new ArrayList<Image.ToShow>();
+			List<Image> images = post.getImages();
+			if (images != null) images.stream().forEach(image -> imageList.add(Image.ToShow.toShow(image)));
 			
 			return ToShow.builder().id(post.getId())
 								   .content(post.getContent())
 								   .createdAt(post.getCreatedAt())
 								   .modifiedAt(post.getModifiedAt())
-								   .images(post.getImages())
+								   .images(imageList)
 								   .user(User.SignIn.toSignIn(post.getUser()))
-								   .comments(toShowList)
+								   .comments(commentList)
 								   .build();
 		}
 		
@@ -117,7 +120,7 @@ public class Post {
 
 		private long id;
 		private String content;
-		private StringBuilder images;
+		private List<Image> images;
 		private User user;
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;

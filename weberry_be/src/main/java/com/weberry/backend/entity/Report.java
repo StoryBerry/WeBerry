@@ -25,9 +25,11 @@ public class Report {
 	
 	private String status;
 	
-	private String baseImageUrl;
+	@OneToOne(mappedBy="report")
+	private Image baseImageUrl;
 	
-	private String analyzedImageUrl;
+	@OneToOne(mappedBy="report")
+	private Image analyzedImageUrl;
 	
 	@OneToOne
 	@JoinTable(name="DATA_REPORT",
