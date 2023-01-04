@@ -18,6 +18,7 @@ const index = () => {
         .then(datas => setPosts(datas))
         .catch(err => console.error(err))
   }, [toWritePost])
+  console.log(token);
 
   return (
     <>
