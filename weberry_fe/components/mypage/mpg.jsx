@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Chat = () => {
+const mpg = () => {
   return (
     <div >Chat 화면입니다.
 
@@ -8,4 +8,4 @@ const Chat = () => {
   )
 }
 
-export default Chat
+export default mpg
