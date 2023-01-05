@@ -55,21 +55,3 @@ REST API(Tool): Postman
 <br>
   
   
-  
-  
-</br>
-<h1>저희는 아직 끝나지 않았습니다. To be Continue~ </h1>
-
-
-#### Update
--11/02 : 팀원 추가(이주용(BE), 도은빈(FE))
-<div>
-
-
- 
-  <br>
- 
-  <br>
- 
-  <br>
-</div>
