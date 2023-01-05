@@ -23,4 +23,4 @@ const CommuItem = (props) => {
   )
 }
 
-export default CommuItem4
+export default CommuItem
