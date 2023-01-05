@@ -135,7 +135,7 @@ def analyze_image(farmId):
 		os.makedirs(output_path)
 	images = [path + fileName for fileName in os.listdir(path)]
 	
-	reports = {'requestList': []}
+	reports = {'requestList': [], 'baseImageUrls':[], 'analyzedImageUrls': []}
 
 	for idx, image in enumerate(images):
 		decodedImage = np.fromfile(image, np.uint8)
@@ -151,12 +151,17 @@ def analyze_image(farmId):
 			if result:
 					with open(analayzedImageUrl, mode='wb') as f:
 							encoded_img.tofile(f)
+							analayzedImageUrl.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', '')
 
 		report = {'status': locals().get('status', 'Normal'),
-							'baseImageUrl': image,
-							'analyzedImageUrl': locals().get('analayzedImageUrl', None),
-							'data': {'id': f'{farmId}_{date}_{idx + 1}'}}
+							'data': {'id': f'{farmId}_{date}_{idx + 1}'}
+						 }
+		base = {'imageUrl': image.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', '')}
+		analyed = {'imageUrl': locals().get('analayzedImageUrl', None),}
+		
 		reports['requestList'].append(report)
+		reports['baseImageUrls'].append(base)
+		reports['analayzedImageUrls'].append(analyed)
 	
 	return jsonify(reports)
 

@@ -18,7 +18,6 @@ const index = () => {
         .then(datas => setPosts(datas))
         .catch(err => console.error(err))
   }, [toWritePost])
-  console.log(token);
 
   return (
     <>
@@ -26,7 +25,7 @@ const index = () => {
     <div className={styles.container}>
       <div className='sticky left-3/4 top-20 py-1 px-1 bg-grey text-berry font-semibold rounded-lg shadow-md w-20'
            onClick={clickHandler}>글쓰기</div>
-      {posts && <CommuMain posts={posts}/>}
+      {posts.length > 0 && <CommuMain posts={posts}/>}
     </div>
     </>
   )

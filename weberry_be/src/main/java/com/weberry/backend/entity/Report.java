@@ -37,22 +37,24 @@ public class Report {
 			   inverseJoinColumns=@JoinColumn(name="DATA_ID"))
 	private Data data;
 	
+	public Data setData(Data data) {
+		data.setReport(this);
+		
+		return data;
+	}
+	
 	@Builder @NoArgsConstructor @AllArgsConstructor
 	@Getter @Setter @ToString
 	public static class Request {
 		
 		private String id;
 		private String status;
-		private String baseImageUrl;
-		private String analyzedImageUrl;
 		private Data data;
 		
 		public static Report toReport(Request request) {
 			
 			return Report.builder().id(request.getData().getId())
 								   .status(request.getStatus())
-								   .baseImageUrl(request.getBaseImageUrl())
-								   .analyzedImageUrl(request.getAnalyzedImageUrl())
 								   .data(request.getData())
 								   .build();
 		}
@@ -64,8 +66,8 @@ public class Report {
 		
 		private String id;
 		private String status;
-		private String baseImageUrl;
-		private String analyzedImageUrl;
+		private Image.ToShow baseImageUrl;
+		private Image.ToShow analyzedImageUrl;
 		private Data.ToShow data;
 		
 		public static ToShow toShow(Report report) {
@@ -73,8 +75,8 @@ public class Report {
 			return Report.ToShow.builder()
 								.id(report.getData().getId())
 								.status(report.getStatus())
-								.baseImageUrl(report.getBaseImageUrl())
-								.analyzedImageUrl(report.getAnalyzedImageUrl())
+								.baseImageUrl(Image.ToShow.toShow(report.getBaseImageUrl()))
+								.analyzedImageUrl(Image.ToShow.toShow(report.getAnalyzedImageUrl()))
 								.data(Data.ToShow.toShow(report.getData()))
 								.build();
 		}

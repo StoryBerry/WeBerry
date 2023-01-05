@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,8 +23,11 @@ import com.weberry.backend.service.comment.CommentService;
 import com.weberry.backend.service.post.PostService;
 import com.weberry.backend.service.user.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping(path="/post")
+@Slf4j
 public class PostController {
 	
 	@Autowired
@@ -48,8 +52,13 @@ public class PostController {
 	}
 	
 	@PostMapping(path="/write")
-	public Post.ToShow writePost(@RequestPart("imageFiles") List<MultipartFile> imageFiles, @ModelAttribute Post.Request request) {
-
+	
+	public Post.ToShow writePost(@RequestPart(name="imageFiles") List<MultipartFile> imageFiles, @ModelAttribute Post.Request request) {
+		System.out.println(String.format("imageFiles: %s", imageFiles));
+		System.out.println(String.format("request: %s", request));
+		
+		
+	
 		return postService.writePost(imageFiles, request);
 	}
 	

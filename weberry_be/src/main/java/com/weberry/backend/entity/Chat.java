@@ -49,4 +49,16 @@ public class Chat {
 			   inverseJoinColumns=@JoinColumn(name="CHATSPACE_INDEX"))
 	private ChatSpace chatSpace;
 	
+	public User setUser(User user) {
+		user.getChats().add(this);
+		
+		return user;
+	}
+	
+	public ChatSpace setChatSpace(ChatSpace chatSpace) {
+		chatSpace.getChats().add(this);
+		
+		return chatSpace;
+	}
+	
 }

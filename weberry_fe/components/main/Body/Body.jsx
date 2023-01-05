@@ -7,11 +7,11 @@ const Body = (props) => {
   const imageList = [];
   
   const [token, setToken] = useAtom(Token);
-  const [reports, setReports] = useState(null);
+  const [reports, setReports] = useState({});
   const [imageno, setImageno] = useState(0);
   const [point, setPoint] = useState(0);
   
-  if (reports) {
+  if (reports.length > 0) {
     if (point === reports.length) {
       for (let report of reports) {
         imageList.push(report.baseImageUrl.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', ''))
@@ -23,8 +23,9 @@ const Body = (props) => {
     }
     setImageno(0);
   }
-
+  
   const checkToken = async () => {
+    console.log(token)
     let user = null;
     await fetch('http://localhost:8090/auth/check/token',
                 {method: 'GET',

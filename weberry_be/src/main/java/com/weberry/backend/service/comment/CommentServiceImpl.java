@@ -8,8 +8,10 @@ import com.weberry.backend.entity.Comment.RecommentRequest;
 import com.weberry.backend.entity.Comment.Request;
 import com.weberry.backend.entity.Comment.ToShow;
 import com.weberry.backend.entity.Post;
+import com.weberry.backend.entity.User;
 import com.weberry.backend.repository.CommentRepository;
 import com.weberry.backend.repository.PostRepository;
+import com.weberry.backend.repository.UserRepository;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -20,23 +22,32 @@ public class CommentServiceImpl implements CommentService {
 	@Autowired
 	PostRepository postRepository;
 	
+	@Autowired
+	UserRepository userRepository;
+	
 	@Override
 	public ToShow commentOnPost(Request request) {
-		commentRepository.save(Comment.Request.toCreate(request));
-		Comment comment = commentRepository.findFirstByUserUseridOrderByIdDesc(request.getPost().getUser().getUserid());
-		System.out.println(comment);
-		System.out.println(comment.getUser());
-		System.out.println(Post.ToShow.toShow(postRepository.findById(comment.getPost().getId())));
+		User user = userRepository.findById(request.getUserid()).get();
+		Post post = postRepository.findById(request.getPostid());
+		commentRepository.save(Comment.Request.toCreate(request, user, post));
+		Comment savedComment = commentRepository.findFirstByUserUseridOrderByIdDesc(request.getUserid());
+		userRepository.save(savedComment.setUser(user));
+		postRepository.save(savedComment.setPost(post));
 		
-		return Comment.ToShow.toShow(comment);
+		return Comment.ToShow.toShow(savedComment);
 	}
 
 	@Override
 	public ToShow recommentOnComment(RecommentRequest request) {
-		commentRepository.save(Comment.RecommentRequest.toCreate(request));
-		Comment comment = commentRepository.findFirstByUserUseridOrderByIdDesc(request.getUser().getUserid());
+		System.out.println(String.format("%s, %d, %d", request.getUserid(), request.getPostid(), request.getCommentid()));
+		User user = userRepository.findById(request.getUserid()).get();
+		Post post = postRepository.findById(request.getPostid());
+		Comment comment = commentRepository.findById(request.getCommentid()).get();
+		commentRepository.save(Comment.RecommentRequest.toCreate(request, user, post, comment));
+		Comment savedRecomment = commentRepository.findFirstByUserUseridOrderByIdDesc(request.getUserid());
+		commentRepository.save(savedRecomment.setComment(comment));
 		
-		return Comment.ToShow.toShow(comment);
+		return Comment.ToShow.toShow(savedRecomment);
 	}
 
 }

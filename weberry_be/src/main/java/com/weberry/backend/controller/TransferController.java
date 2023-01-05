@@ -52,6 +52,7 @@ public class TransferController {
 		ResponseEntity<?> resultMap = restTemplate.exchange(uri, HttpMethod.GET, entity, Object.class);
 		ObjectMapper mapper = new ObjectMapper();
 		Object result = resultMap.getBody();
+		System.out.println(result);
 		ReportRequestList requestList = mapper.convertValue(result, ReportRequestList.class);
 		reportService.writeReport(requestList);
 		

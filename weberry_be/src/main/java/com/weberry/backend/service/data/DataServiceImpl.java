@@ -14,13 +14,18 @@ import org.springframework.web.multipart.MultipartFile;
 import com.weberry.backend.entity.Data;
 import com.weberry.backend.entity.Data.Request;
 import com.weberry.backend.entity.DataRequestList;
+import com.weberry.backend.entity.Image;
 import com.weberry.backend.repository.DataRepository;
+import com.weberry.backend.repository.ImageRepository;
 
 @Service
 public class DataServiceImpl implements DataService {
 
 	@Autowired
 	private DataRepository dataRepository;
+	
+	@Autowired
+	private ImageRepository imageRepository;
 	
 	@Override
 	public List<Data.ToShow> transferData(List<MultipartFile> imageFiles, DataRequestList request) {
@@ -49,10 +54,15 @@ public class DataServiceImpl implements DataService {
 			e.printStackTrace();
 		}
 		
-		Data toSave = Data.Request.toCreate(request);
-		toSave.setImageUrl(imageUrl);
-		dataRepository.save(toSave);
-		Data.ToShow saved = Data.ToShow.toShow(dataRepository.findById(toSave.getId()).get());
+		Data toSaveData = Data.Request.toCreate(request);
+		dataRepository.save(toSaveData);
+		Data savedData = dataRepository.findFirstBymDateAndFarmFarmIdOrderByIdDesc(toSaveData.getMDate(), farm);
+
+		imageRepository.save(Image.Request.toImage(String.format("/images/farm/%s", imageFile.getOriginalFilename()), toSaveData));
+		Image savedImage = imageRepository.findByDataId(savedData.getId());
+		dataRepository.save(savedImage.setData(savedData));
+		
+		Data.ToShow saved = Data.ToShow.toShow(dataRepository.findById(toSaveData.getId()).get());
 		System.out.println(String.format("Data: %s 와 같이 저장되었습니다. \n", saved));
 		
 		return saved;

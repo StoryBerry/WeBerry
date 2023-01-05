@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.weberry.backend.entity.Data;
+import com.weberry.backend.entity.Image;
 import com.weberry.backend.entity.Report;
 import com.weberry.backend.entity.ReportRequestList;
 import com.weberry.backend.entity.User.SignIn;
 import com.weberry.backend.repository.DataRepository;
+import com.weberry.backend.repository.ImageRepository;
 import com.weberry.backend.repository.ReportRepository;
 
 @Service
@@ -24,23 +26,38 @@ public class ReportServiceImpl implements ReportService{
 	@Autowired
 	private DataRepository dataRepository;
 	
+	@Autowired
+	private ImageRepository imageRepository;
+	
 	@Override
 	public void writeReport(ReportRequestList requestList) {
 		
-		for (Report.Request request : requestList.getRequestList()) {
-			Report.ToShow report = writeReport(request);
+		for (int i = 0; i < requestList.getRequestList().size(); i++) {
+			Report.Request request = requestList.getRequestList().get(i);
+			Image baseImageUrl = requestList.getBaseImageUrls().get(i);
+			Image analyzedImageUrl = requestList.getAnalyzedImageUrls().get(i);
+			Report.ToShow report = writeReport(request, baseImageUrl, analyzedImageUrl);
+			
 			System.out.println(String.format("Report: %s와 같이 저장되었습니다.\n", report));
 		}
 		
 	}
 	
-	private Report.ToShow writeReport(Report.Request request) {
-		Report toSave = Report.Request.toReport(request);
-		Data data = dataRepository.findById(toSave.getData().getId()).get();
-		toSave.setData(data);
-		reportRepository.save(toSave);
+	private Report.ToShow writeReport(Report.Request request, Image baseImageUrl, Image analyzedImageUrl) {
+		reportRepository.save(Report.Request.toReport(request));
 		
-		return Report.ToShow.toShow(reportRepository.findById(toSave.getId()).get()); 
+		Report savedReport = reportRepository.findById(request.getId()).get();
+		imageRepository.save(Image.Request.toImage(baseImageUrl.getImageUrl(), savedReport));
+		Image savedBaseImageUrl = imageRepository.findById(baseImageUrl.getImageUrl()).get();
+		reportRepository.save(savedBaseImageUrl.setReportBaseUrl(savedReport));
+		
+		
+		savedReport = reportRepository.findById(request.getId()).get();
+		imageRepository.save(Image.Request.toImage(analyzedImageUrl.getImageUrl(), savedReport));
+		Image savedAnalyzedImageUrl = imageRepository.findById(analyzedImageUrl.getImageUrl()).get();
+		reportRepository.save(savedAnalyzedImageUrl.setReportAnalyzedUrl(savedReport));
+		
+		return Report.ToShow.toShow(reportRepository.findById(request.getId()).get()); 
 	}
 
 	@Override

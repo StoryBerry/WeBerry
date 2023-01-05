@@ -13,5 +13,8 @@ import lombok.ToString;
 public class ReportRequestList {
 
 	List<Report.Request> requestList;
+
+	List<Image> baseImageUrls;
 	
+	List<Image> analyzedImageUrls;
 }

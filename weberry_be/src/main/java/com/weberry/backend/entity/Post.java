@@ -17,6 +17,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.weberry.backend.repository.ImageRepository;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +31,7 @@ import lombok.ToString;
 @Table(name="POST")
 @Builder @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter @ToString
+// team
 public class Post {
 	
 	@Id
@@ -36,8 +40,6 @@ public class Post {
 	
 	private String content;
 	
-	@OneToMany(mappedBy="post")
-	private List<Image> images;
 	
 	private LocalDateTime createdAt;
 	
@@ -45,6 +47,9 @@ public class Post {
 	
 	@ColumnDefault("0")
 	private long likes;
+	
+	@OneToMany(mappedBy="post")
+	private List<Image> images;
 	
 	@ManyToOne
 	@JoinTable(name="USER_POST",
@@ -55,17 +60,23 @@ public class Post {
 	@OneToMany(mappedBy="post")
 	private List<Comment> comments;
 	
+	public User setUser(User user) {
+		user.getPosts().add(this);
+		
+		return user; 
+	}
+	
 	@Builder @NoArgsConstructor @AllArgsConstructor
 	@Getter @Setter @ToString
 	public static class Request {
 		
 		private String content;
-		private User user;
+		private User.SignIn user;
 		
-		public static Post toWrite(Request request) {
-			
+		public static Post toWrite(Request request, User user) {
+
 			return Post.builder().content(request.getContent())
-								 .user(request.getUser())
+								 .user(user)
 								 .images(new ArrayList<Image>())
 								 .createdAt(LocalDateTime.now())
 								 .build();
@@ -88,7 +99,7 @@ public class Post {
 			List<Comment.ToShow> commentList = new ArrayList<Comment.ToShow>();
 			List<Comment> comments = post.getComments();
 			if (comments != null) comments.stream().forEach(comment -> commentList.add(Comment.ToShow.toShow(comment)));
-
+			
 			List<Image.ToShow> imageList = new ArrayList<Image.ToShow>();
 			List<Image> images = post.getImages();
 			if (images != null) images.stream().forEach(image -> imageList.add(Image.ToShow.toShow(image)));
@@ -143,15 +154,18 @@ public class Post {
 		
 		private long id;
 		private String content;
-		private StringBuilder images;
+		private List<Image.ToShow> images;
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;
 		
 		public static CommentIn toCommentIn(Post post) {
+			List<Image.ToShow> imageList = new ArrayList<Image.ToShow>();
+			List<Image> images = post.getImages();
+			if (images != null) images.stream().forEach(image -> imageList.add(Image.ToShow.toShow(image)));
 			
 			return CommentIn.builder().id(post.getId())
 									  .content(post.getContent())
-									  .images(post.getImages())
+									  .images(imageList)
 									  .createdAt(post.getCreatedAt())
 									  .modifiedAt(post.getModifiedAt())
 									  .build();

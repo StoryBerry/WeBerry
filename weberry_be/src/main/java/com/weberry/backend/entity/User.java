@@ -47,23 +47,25 @@ public class User {
 	private Farm farm;
 	
 	@OneToMany(mappedBy="user")
-	@JsonIgnore
 	private List<Post> posts;
 	
 	@OneToMany(mappedBy="user")
-	@JsonIgnore
 	private List<Comment> comments;
 	
 	@ManyToMany
 	@JoinTable(name="CHATSPACE_USER",
 			   joinColumns=@JoinColumn(name="USERID"),
 			   inverseJoinColumns=@JoinColumn(name="CHATSPACE_INDEX"))
-	@JsonIgnore
 	private List<ChatSpace> chatSpaces;
 	
 	@OneToMany(mappedBy="user")
-	@JsonIgnore
 	private List<Chat> chats;
+	
+	public Farm setFarm(Farm farm) {
+		farm.getUsers().add(this);
+		
+		return farm;
+	}
 	
 	@Builder @NoArgsConstructor @AllArgsConstructor
 	@Getter @Setter @ToString
@@ -118,6 +120,7 @@ public class User {
 			
 			return User.builder()
 					   .userid(user.getUserid())
+					   .farm(Farm.SignIn.toFarm(user.getFarm()))
 					   .build();
 		}
 	}

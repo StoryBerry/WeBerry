@@ -47,12 +47,17 @@ public class Data {
 	@JoinTable(name="FARM_DATA",
 				joinColumns=@JoinColumn(name="DATA_ID"),
 				inverseJoinColumns=@JoinColumn(name="FARM_ID"))
-	@JsonIgnore
 	private Farm farm;
 	
 	@OneToOne(mappedBy="data")
 	@JsonIgnore
 	private Report report;
+	
+	public Farm setFarm(Farm farm) {
+		farm.getDatas().add(this);
+		
+		return farm;
+	}
 	
 	@Builder @NoArgsConstructor @AllArgsConstructor
 	@Getter @Setter @ToString
@@ -84,7 +89,7 @@ public class Data {
 	public static class ToShow {
 		
 		private String id; 
-		private String imageUrl;
+		private Image.ToShow imageUrl;
 		private float temperature;
 		private float humidity;
 		private LocalDate mDate;
@@ -95,7 +100,7 @@ public class Data {
 			
 			return ToShow.builder()
 						 .id(data.getId())
-						 .imageUrl(data.getImageUrl())
+						 .imageUrl(Image.ToShow.toShow(data.getImageUrl()))
 						 .temperature(data.getTemperature())
 						 .humidity(data.getHumidity())
 						 .mDate(data.getMDate())

@@ -13,19 +13,25 @@ const CommuWrite = (props) => {
 
   const clickHandler = () => setToWritePost(!toWritePost);
   const contentHandler = (event) => setContent(event.target.value);
-  const imageHandler = (event) => setImage(event.target.files);
+  const imageHandler = (event) => setImage([...event.target.files]);
   const buttonHandler = (event) => {
     event.target.innerText === '작성' ? writePost(signIn) 
                                       : setToWritePost(!toWritePost);
   }
   const writePost = (input) => {
+    const formData = new FormData();
     const body = {'content': content,
-                  'user': input,
-                  'imageFiles': images}
+                  'user': input}
+    formData.set('request', body);
+    for (let i = 0; i < images.length; i++) {
+      formData.set(`imageFiles[${i}]`, images[i])
+    }
+    // formData.set('imageFiles', images);
+    console.log(formData.get('imageFiles'))
     fetch('http://localhost:8090/post/write',
           {method: 'POST',
-           headers: {'Content-Type': 'application/json; charset=UTF-8'},
-           body: JSON.stringify(body)});
+           body: formData
+          });
     clickHandler();
   }
 
@@ -37,7 +43,6 @@ const CommuWrite = (props) => {
         .catch(err => console.error(err))
 
   }, [])
-  console.log(signIn.userid)
 
   return (
     <>
