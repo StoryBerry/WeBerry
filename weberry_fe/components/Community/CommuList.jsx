@@ -1,7 +1,9 @@
 import React from 'react'
 import CommuItem from './CommuItem'
 import Link from 'next/link'
+
 const CommuList = (props) => {
+  
   const posts = props.posts;
   console.log(posts);
 

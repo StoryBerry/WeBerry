@@ -7,7 +7,7 @@ import BellWarrn from './BellWarrn';
 export default function Header({ }) {
   return (
     <div >
-      <div className='bg-white fixed w-full top-0 border-b-2 border-berry border-opacity-30'>
+      <div className='bg-white fixed w-full top-0 z-30'>
         <div className=" mx-auto max-w-5xl px-2 sm:px-6 flex items-center justify-between py-3 border-b-2 border-y-grey border-opacity-50">
           <div className=" lg:flex-1 mt-2 ml-4 ">
             <Image src={logo_gub} width={60} height={20} alt="로고" />
