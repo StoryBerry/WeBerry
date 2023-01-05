@@ -42,7 +42,6 @@ REST API(Tool): Postman
   <img src="https://img.shields.io/badge/h2%20DataBase-00000.svg?style=for-the-badge&logo=h2DataBase&logoColor=white">
   <img src="https://img.shields.io/badge/postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white">
   <img src="https://img.shields.io/badge/nextjs-000000?style=for-the-badge&logo=Next.js&logoColor=white">
-  <img src="https://img.shields.io/badge/Leaflet-199900?style=for-the-badge&logo=Leaflet&logoColor=white">
   <img src="https://img.shields.io/badge/tailwindcss-000000?style=for-the-badge&logo=TailWindCss&logoColor=white">
   <img src="https://img.shields.io/badge/jswtoken-000000?style=for-the-badge&logo=JSONWebTokens&logoColor=white">
   
