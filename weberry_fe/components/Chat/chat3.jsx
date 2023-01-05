@@ -10,7 +10,11 @@ const Chat3 = (mento) => {
     <div className="ml-4 ">
       <div className='border-b-2 border-grey_light '>
         <div className='flex justify-start items-center'>
-          <Image className="" src='/images/Commu-Img/2.png' width='300' height='300' />
+        <img
+            className="mt-12 m-6 mb-6 ml-9 inline-block h-32 w-32 rounded-full ring-2 ring-white border-4  border-grey"
+            src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt=""
+          />
           <div className='flex flex-col text-left ml-2 mt-3'>
             <div className='flex justify-start items-center'>
               <h5 className="text-sm font-semibold " >유관순 </h5>
