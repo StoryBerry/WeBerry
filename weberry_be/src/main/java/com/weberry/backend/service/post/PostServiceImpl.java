@@ -32,7 +32,10 @@ public class PostServiceImpl implements PostService {
 		List<Post.ToShow> toShowList = new ArrayList<Post.ToShow>();
 
 		List<Post> postList = postRepository.findAllByOrderByIdDesc();
-		postList.stream().forEach(post -> toShowList.add(Post.ToShow.toShow(post)));
+		for (Post post : postList) {
+			User user = userRepository.findById(post.getUser().getUserid()).get();
+			toShowList.add(Post.ToShow.toShow(post, user));
+		}
 		
 		return toShowList; 
 	}
@@ -44,13 +47,14 @@ public class PostServiceImpl implements PostService {
 		Post saved = postRepository.findFirstByUserUseridOrderByIdDesc(request.getUser().getUserid());
 		imageFiles.stream().forEach(imageFile -> savePostImage(imageFile, saved));
 		
-		return Post.ToShow.toShow(postRepository.findById(saved.getId()));
+		return Post.ToShow.toShow(postRepository.findById(saved.getId()), user);
 	}
 
 	@Override
 	public Post.ToShow getDetailOfPost(long id) {
+		Post post = postRepository.findById(id);
 		
-		return Post.ToShow.toShow(postRepository.findById(id)); 
+		return Post.ToShow.toShow(post, post.getUser()); 
 	}
 
 	@Override
@@ -58,7 +62,7 @@ public class PostServiceImpl implements PostService {
 		postRepository.save(Post.ToEdit.toEdit(toEdit));
 		Post post = postRepository.findById(toEdit.getId());
 		
-		return Post.ToShow.toShow(post);
+		return Post.ToShow.toShow(post, post.getUser());
 	}
 
 	@Override
@@ -70,7 +74,7 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	private void savePostImage(MultipartFile imageFile, Post post) {
-		String basePath = "C://users/playdata/desktop/WeBerry/weberry_fe/public/images/posts";
+		String basePath = "C://users/Will.Lee/desktop/WeBerry/weberry_fe/public/images/posts";
 		String userid = post.getUser().getUserid();
 		String imageUrl = String.format("%s/%s/%s", basePath, userid, imageFile.getOriginalFilename());
 		String url = String.format("/images/posts/%s/%s, ", userid, imageFile.getOriginalFilename());
@@ -84,9 +88,7 @@ public class PostServiceImpl implements PostService {
 			e.printStackTrace();
 		}
 		
-		System.out.println(1);
 		Post savedPost = postRepository.findById(post.getId());
-		System.out.println(2);
 		imageRepository.save(Image.Request.toImage(url, savedPost));
 		Image savedImage = imageRepository.findById(url).get();
 		postRepository.save(savedImage.setPost(savedPost));

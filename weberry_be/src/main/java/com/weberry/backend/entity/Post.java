@@ -95,7 +95,7 @@ public class Post {
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt; 
 		
-		public static ToShow toShow(Post post) {
+		public static ToShow toShow(Post post, User user) {
 			List<Comment.ToShow> commentList = new ArrayList<Comment.ToShow>();
 			List<Comment> comments = post.getComments();
 			if (comments != null) comments.stream().forEach(comment -> commentList.add(Comment.ToShow.toShow(comment)));
@@ -109,7 +109,7 @@ public class Post {
 								   .createdAt(post.getCreatedAt())
 								   .modifiedAt(post.getModifiedAt())
 								   .images(imageList)
-								   .user(User.SignIn.toSignIn(post.getUser()))
+								   .user(User.SignIn.toSignIn(user))
 								   .comments(commentList)
 								   .build();
 		}
