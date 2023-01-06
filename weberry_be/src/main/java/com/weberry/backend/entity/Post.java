@@ -71,7 +71,7 @@ public class Post {
 	public static class Request {
 		
 		private String content;
-		private User.SignIn user;
+		private String userid;
 		
 		public static Post toWrite(Request request, User user) {
 

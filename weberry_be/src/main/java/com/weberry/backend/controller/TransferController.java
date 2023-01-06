@@ -36,7 +36,7 @@ public class TransferController {
 	private ReportService reportService;
 	
 	@PostMapping
-	public void transferData(@RequestPart("imageFile") List<MultipartFile> imageFiles, @ModelAttribute  DataRequestList request) {
+	public void transferData(@RequestPart("imageFiles") List<MultipartFile> imageFiles, @ModelAttribute  DataRequestList request) {
 		List<Data.ToShow> savedList = dataService.transferData(imageFiles, request);
 		String farmId = savedList.get(0).getFarm().getFarmId();
 		

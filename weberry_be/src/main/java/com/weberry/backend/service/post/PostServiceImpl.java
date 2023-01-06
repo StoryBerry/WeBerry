@@ -42,9 +42,9 @@ public class PostServiceImpl implements PostService {
 	
 	@Override
 	public Post.ToShow writePost(List<MultipartFile> imageFiles, Post.Request request) {
-		User user = userRepository.findById(request.getUser().getUserid()).get();
+		User user = userRepository.findById(request.getUserid()).get();
 		postRepository.save(Post.Request.toWrite(request, user));
-		Post saved = postRepository.findFirstByUserUseridOrderByIdDesc(request.getUser().getUserid());
+		Post saved = postRepository.findFirstByUserUseridOrderByIdDesc(request.getUserid());
 		imageFiles.stream().forEach(imageFile -> savePostImage(imageFile, saved));
 		
 		return Post.ToShow.toShow(postRepository.findById(saved.getId()), user);
@@ -74,7 +74,7 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	private void savePostImage(MultipartFile imageFile, Post post) {
-		String basePath = "C://users/Will.Lee/desktop/WeBerry/weberry_fe/public/images/posts";
+		String basePath = "C://users/playdata/desktop/WeBerry/weberry_fe/public/images/posts";
 		String userid = post.getUser().getUserid();
 		String imageUrl = String.format("%s/%s/%s", basePath, userid, imageFile.getOriginalFilename());
 		String url = String.format("/images/posts/%s/%s, ", userid, imageFile.getOriginalFilename());
