@@ -53,7 +53,7 @@ const SignIn = () => {
           <div className='border m-1 border-none rounded-md bg-berry2 p-2 w-20' onClick={signinHanlder}>로그인</div>
           <div className='border m-1 border-none rounded-md  bg-berry2 p-2 w-20 ' >회원가입</div>
         </div>
-      </div> <Image className='mt-20' src={'/images/bg2.png'} width={500} height={500} alt="로고" />
+      </div> <Image className='mt-20' src={'/images/bg.png'} width={500} height={500} alt="로고" />
     </div>
   )
 }
