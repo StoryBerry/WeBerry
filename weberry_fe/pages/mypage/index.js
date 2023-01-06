@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
-import Chat from '../../components/MMchat/chat'
+import Mypage from '../../components/Mypage/mypage'
 
 const index = () => {
   return (
     <div className='mt-20'>
-      <Chat />
+      <Mypage />
     </div>
   )
 }

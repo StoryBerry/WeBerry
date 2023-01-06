@@ -30,7 +30,7 @@ module.exports = {
       "salmon":"#fa8072",
     },
     extend: {
-
+     
     },
   },
   variants: {

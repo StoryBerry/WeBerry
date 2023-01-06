@@ -126,8 +126,8 @@ net = cv2.dnn.readNet(modelWeights)
 def analyze_image(farmId):
 	mDate = datetime.now().strftime('%y.%m.%d')
 	date = datetime.now().strftime('%y%m%d')
-	path = f'C://users/playdata/desktop/WeBerry/weberry_fe/public/images/farm/{mDate}/{farmId}/'
-	output_path = f'C://users/playdata/desktop/WeBerry/weberry_fe/public/images/disease/{mDate}/{farmId}'
+	path = f'C://Users/Playdata/Desktop/WeBerry/weberry_fe/public/images/farm/{mDate}/{farmId}/'
+	output_path = f'C://Users/Playdata/Desktop/WeBerry/weberry_fe/public/images/disease/{mDate}/{farmId}'
 	# path = f'/home/weberry/Desktop/images/farm/{mDate}/{farmId}/'
 	# output_path = f'/home/weberry/Desktop/images/disease/{mDate}/{farmId}'
 	

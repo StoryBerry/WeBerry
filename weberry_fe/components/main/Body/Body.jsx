@@ -14,12 +14,12 @@ const Body = (props) => {
   if (reports.length > 0) {
     if (point === reports.length) {
       for (let report of reports) {
-        imageList.push(report.baseImageUrl.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', ''))
-        imageList.push(report.analyzedImageUrl.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', ''))
+        imageList.push(report.baseImageUrl.replace('C://Users/Playdata/Desktop/WeBerry/weberry_fe/public', ''))
+        imageList.push(report.analyzedImageUrl.replace('C://Users/Playdata/Desktop/WeBerry/weberry_fe/public', ''))
       }
     } else {
-      imageList.push(reports[point].baseImageUrl.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', ''))
-      imageList.push(reports[point].analyzedImageUrl.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', ''))
+      imageList.push(reports[point].baseImageUrl.replace('C://Users/Playdata/Desktop/WeBerry/weberry_fe/public', ''))
+      imageList.push(reports[point].analyzedImageUrl.replace('C://Users/Playdata/Desktop/WeBerry/weberry_fe/public', ''))
     }
     setImageno(0);
   }
@@ -69,7 +69,7 @@ const Body = (props) => {
 
   return (
     <div>
-      <Image className='pt-12' src={'/bg3.png'} width={800} height={30} alt="배경" />
+      <Image className='pt-12' src={'/images/bg3.png'} width={800} height={30} alt="배경" />
 
       <div className='m-0 p-7 pt-0 text-sm'>
         <div className='-ml-7 -mr-7  mb-3  rounded-t-xl border-t-2 border-grey' >

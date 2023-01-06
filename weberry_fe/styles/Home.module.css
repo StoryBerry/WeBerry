@@ -118,8 +118,10 @@
 
 .card_font {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.5rem; 
-  margin-bottom: 0.2rem
+  font-weight: 600;
+  font-size: 0.8rem; 
+  margin-bottom: 0.5rem
+   
 }
 
 .card_button{
@@ -130,3 +132,4 @@
   border-radius: 10px;
 
 }
+
