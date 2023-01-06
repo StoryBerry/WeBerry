@@ -14,4 +14,6 @@ public interface ImageRepository extends JpaRepository<Image, String>{
 	
 	Image findByDataId(String data);
 	
+	Image findByImageUrl(String imageUrl);
+	
 }

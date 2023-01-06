@@ -36,7 +36,7 @@ public class Data {
 	
 	private float humidity;
 	
-	private LocalDate mDate;
+	private LocalDate mdate;
 	
 	private int point;
 	
@@ -78,7 +78,7 @@ public class Data {
 			return Data.builder().id(id)
 								 .temperature(request.getTemperature())
 								 .humidity(request.getHumidity())
-								 .mDate(request.getMDate())
+								 .mdate(request.getMDate())
 								 .point(request.getPoint())
 								 .farm(request.getFarm()).build();
 		}
@@ -103,7 +103,19 @@ public class Data {
 						 .imageUrl(Image.ToShow.toShow(data.getImageUrl()))
 						 .temperature(data.getTemperature())
 						 .humidity(data.getHumidity())
-						 .mDate(data.getMDate())
+						 .mDate(data.getMdate())
+						 .point(data.getPoint())
+						 .farm(Farm.SignIn.toSignIn(data.getFarm()))
+						 .build();
+		}
+		
+		public static ToShow withoutImage(Data data) {
+			
+			return ToShow.builder()
+						 .id(data.getId())
+						 .temperature(data.getTemperature())
+						 .humidity(data.getHumidity())
+						 .mDate(data.getMdate())
 						 .point(data.getPoint())
 						 .farm(Farm.SignIn.toSignIn(data.getFarm()))
 						 .build();

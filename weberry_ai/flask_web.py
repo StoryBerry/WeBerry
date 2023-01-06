@@ -126,10 +126,8 @@ net = cv2.dnn.readNet(modelWeights)
 def analyze_image(farmId):
 	mDate = datetime.now().strftime('%y.%m.%d')
 	date = datetime.now().strftime('%y%m%d')
-	path = f'C://Users/Playdata/Desktop/WeBerry/weberry_fe/public/images/farm/{mDate}/{farmId}/'
-	output_path = f'C://Users/Playdata/Desktop/WeBerry/weberry_fe/public/images/disease/{mDate}/{farmId}'
-	# path = f'/home/weberry/Desktop/images/farm/{mDate}/{farmId}/'
-	# output_path = f'/home/weberry/Desktop/images/disease/{mDate}/{farmId}'
+	path = f'C://users/playdata/desktop/WeBerry/weberry_fe/public/images/farm/{mDate}/{farmId}/'
+	output_path = f'C://users/playdata/desktop/WeBerry/weberry_fe/public/images/disease/{mDate}/{farmId}'
 	
 	if not Path(output_path).exists():
 		os.makedirs(output_path)
@@ -151,17 +149,17 @@ def analyze_image(farmId):
 			if result:
 					with open(analayzedImageUrl, mode='wb') as f:
 							encoded_img.tofile(f)
-							analayzedImageUrl.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', '')
+							analayzedImageUrl = analayzedImageUrl.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', '')
 
-		report = {'status': locals().get('status', 'Normal'),
-							'data': {'id': f'{farmId}_{date}_{idx + 1}'}
+		report = {'id': f'{farmId}_{date}_{idx + 1}',
+							'status': locals().get('status', 'Normal')
 						 }
 		base = {'imageUrl': image.replace('C://users/playdata/desktop/WeBerry/weberry_fe/public', '')}
-		analyed = {'imageUrl': locals().get('analayzedImageUrl', None),}
+		analyed = {'imageUrl': locals().get('analayzedImageUrl', None)}
 		
 		reports['requestList'].append(report)
 		reports['baseImageUrls'].append(base)
-		reports['analayzedImageUrls'].append(analyed)
+		reports['analyzedImageUrls'].append(analyed)
 	
 	return jsonify(reports)
 

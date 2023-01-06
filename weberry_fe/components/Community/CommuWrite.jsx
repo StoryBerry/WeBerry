@@ -50,9 +50,9 @@ const CommuWrite = (props) => {
   }, [images]);
   return (
     <>
-      <div className="fixed bg-grey/80 z-10 w-full h-full mt-16 " onClick={clickHandler} />
+      <div className="fixed bg-grey/80 z-25 w-full h-full top-10 " onClick={clickHandler} />
       {signIn["userid"] ? (
-        <div className="fixed bg-white z-20 mt-24 w-4/5 left-9 content-center">
+        <div className="absolute bg-white z-30 top-15 w-4/5 left-9 content-center">
           <textarea ref={ref} onChange={contentHandler} className="my-8 p-2 w-4/5" cols="30" rows="10" placeholder="무엇을 작성하시겠습니까?" />
           <input ref={ref} onChange={imageHandler} className="files my-2 w-4/5" type="file" name="files" multiple="multiple" accept="image/png, image/jpg" />
           {imagePreview && <img src={imagePreview} />}

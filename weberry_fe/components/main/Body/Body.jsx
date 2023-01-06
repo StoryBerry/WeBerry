@@ -14,25 +14,23 @@ const Body = (props) => {
   if (reports.length > 0) {
     if (point === reports.length) {
       for (let report of reports) {
-        imageList.push(report.baseImageUrl.replace('C://Users/Playdata/Desktop/WeBerry/weberry_fe/public', ''))
-        imageList.push(report.analyzedImageUrl.replace('C://Users/Playdata/Desktop/WeBerry/weberry_fe/public', ''))
+        imageList.push(report.baseImageUrl.imageUrl)
+        report.analyzedImageUrl.imageUrl && imageList.push(report.analyzedImageUrl.imageUrl)
       }
     } else {
-      imageList.push(reports[point].baseImageUrl.replace('C://Users/Playdata/Desktop/WeBerry/weberry_fe/public', ''))
-      imageList.push(reports[point].analyzedImageUrl.replace('C://Users/Playdata/Desktop/WeBerry/weberry_fe/public', ''))
+      imageList.push(reports[point].baseImageUrl.imageUrl)
+      reports[point].analyzedImageUrl.imageUrl && imageList.push(reports[point].analyzedImageUrl.imageUrl)
     }
-    setImageno(0);
   }
   
   const checkToken = async () => {
-    console.log(token)
     let user = null;
     await fetch('http://localhost:8090/auth/check/token',
-                {method: 'GET',
-                headers: {Authorization: token.token}})
-                .then(response => response.json())
-                .then(data => user = JSON.parse(data['signIn']))
-                .then(err => console.log(err));
+    {method: 'GET',
+    headers: {Authorization: token.token}})
+    .then(response => response.json())
+    .then(data => user = JSON.parse(data['signIn']))
+    .then(err => console.error(err));
     
     return user;
   }
@@ -40,15 +38,14 @@ const Body = (props) => {
     const user = await checkToken();
     
     await fetch('http://localhost:8090/report',
-                {method: 'POST',
-                headers: {'Content-Type': 'application/json; charset=UTF-8'},
-                body: JSON.stringify(user)})
-              .then(response => response.json())
-              .then(data => {
-                console.log(data);
-                setReports(data);
-              })
-              .catch(err => console.error(err));
+    {method: 'POST',
+    headers: {'Content-Type': 'application/json; charset=UTF-8'},
+    body: JSON.stringify(user)})
+    .then(response => response.json())
+    .then(data => {
+      setReports(data.reverse());
+    })
+    .catch(err => console.error(err));
   }
   const prevImageno = () => {
     imageno - 1 >= 0 ? setImageno(imageno - 1) : setImageno(imageList.length - 1)
@@ -59,8 +56,9 @@ const Body = (props) => {
   const chooseReport = (event) => {
     document.getElementById('toggle').removeAttribute('open')
     setPoint(Number(event.target.id));
+    setImageno(0);
   }
-
+  
   useEffect(() => {
     
     getReports();

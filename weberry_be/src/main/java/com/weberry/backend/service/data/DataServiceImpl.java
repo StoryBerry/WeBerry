@@ -39,11 +39,12 @@ public class DataServiceImpl implements DataService {
 	}
 	
 	private Data.ToShow transferData(MultipartFile imageFile, Request request) {
-//		String basePath = "/home/weberry/Desktop/images/farm";
-		String basePath = "C://Users/Playdata/Desktop/WeBerry/weberry_fe/public/images/farm";
+//		String basePath = "/home/weberry/Desktop/weberry_fe/public/images/farm";
+		String basePath = "C://users/playdata/desktop/WeBerry/weberry_fe/public/images/farm";
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
 		String imageUrl = String.format("%s/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());
+		String url = String.format("/images/farm/%s/%s/%s", request.getMDate().format(format), farm, imageFile.getOriginalFilename());
 		
 		File file = new File(imageUrl);
 		file.mkdirs();
@@ -56,9 +57,9 @@ public class DataServiceImpl implements DataService {
 		
 		Data toSaveData = Data.Request.toCreate(request);
 		dataRepository.save(toSaveData);
-		Data savedData = dataRepository.findFirstBymDateAndFarmFarmIdOrderByIdDesc(toSaveData.getMDate(), farm);
+		Data savedData = dataRepository.findFirstByMdateAndFarmFarmIdOrderByIdDesc(toSaveData.getMdate(), farm);
 
-		imageRepository.save(Image.Request.toImage(String.format("/images/farm/%s", imageFile.getOriginalFilename()), toSaveData));
+		imageRepository.save(Image.Request.toImage(url, toSaveData));
 		Image savedImage = imageRepository.findByDataId(savedData.getId());
 		dataRepository.save(savedImage.setData(savedData));
 		

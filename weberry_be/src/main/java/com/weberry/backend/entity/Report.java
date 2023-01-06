@@ -1,9 +1,14 @@
 package com.weberry.backend.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -25,11 +30,8 @@ public class Report {
 	
 	private String status;
 	
-	@OneToOne(mappedBy="report")
-	private Image baseImageUrl;
-	
-	@OneToOne(mappedBy="report")
-	private Image analyzedImageUrl;
+	@OneToMany(mappedBy="report")
+	private List<Image> imageUrls;
 	
 	@OneToOne
 	@JoinTable(name="DATA_REPORT",
@@ -49,13 +51,13 @@ public class Report {
 		
 		private String id;
 		private String status;
-		private Data data;
 		
-		public static Report toReport(Request request) {
+		public static Report toReport(Request request, Data data) {
 			
-			return Report.builder().id(request.getData().getId())
+			return Report.builder().id(request.getId())
 								   .status(request.getStatus())
-								   .data(request.getData())
+								   .imageUrls(new ArrayList<Image>())
+								   .data(data)
 								   .build();
 		}
 	}
@@ -71,14 +73,26 @@ public class Report {
 		private Data.ToShow data;
 		
 		public static ToShow toShow(Report report) {
+			if (report.getImageUrls().size() == 2) {
+				
+				return Report.ToShow.builder()
+									.id(report.getData().getId())
+									.status(report.getStatus())
+									.baseImageUrl(Image.ToShow.toShow(report.getImageUrls().get(1)))
+									.analyzedImageUrl(Image.ToShow.toShow(report.getImageUrls().get(0)))
+									.data(Data.ToShow.withoutImage(report.getData()))
+									.build();
+			} else {
+				
+				return Report.ToShow.builder()
+									.id(report.getData().getId())
+									.status(report.getStatus())
+									.baseImageUrl(Image.ToShow.toShow(report.getImageUrls().get(0)))
+									.data(Data.ToShow.withoutImage(report.getData()))
+									.build();
+				
+			}
 			
-			return Report.ToShow.builder()
-								.id(report.getData().getId())
-								.status(report.getStatus())
-								.baseImageUrl(Image.ToShow.toShow(report.getBaseImageUrl()))
-								.analyzedImageUrl(Image.ToShow.toShow(report.getAnalyzedImageUrl()))
-								.data(Data.ToShow.toShow(report.getData()))
-								.build();
 		}
 	}
 }

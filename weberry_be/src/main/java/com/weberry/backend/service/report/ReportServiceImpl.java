@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.weberry.backend.entity.Data;
 import com.weberry.backend.entity.Image;
 import com.weberry.backend.entity.Report;
+import com.weberry.backend.entity.Report.ToShow;
 import com.weberry.backend.entity.ReportRequestList;
 import com.weberry.backend.entity.User.SignIn;
 import com.weberry.backend.repository.DataRepository;
@@ -31,7 +32,7 @@ public class ReportServiceImpl implements ReportService{
 	
 	@Override
 	public void writeReport(ReportRequestList requestList) {
-		
+
 		for (int i = 0; i < requestList.getRequestList().size(); i++) {
 			Report.Request request = requestList.getRequestList().get(i);
 			Image baseImageUrl = requestList.getBaseImageUrls().get(i);
@@ -44,18 +45,20 @@ public class ReportServiceImpl implements ReportService{
 	}
 	
 	private Report.ToShow writeReport(Report.Request request, Image baseImageUrl, Image analyzedImageUrl) {
-		reportRepository.save(Report.Request.toReport(request));
+		System.out.println("Dataid: " + dataRepository.findById(request.getId()).get().getId());
+		Data data = dataRepository.findById(request.getId()).get();
+		reportRepository.save(Report.Request.toReport(request, data));
 		
 		Report savedReport = reportRepository.findById(request.getId()).get();
-		imageRepository.save(Image.Request.toImage(baseImageUrl.getImageUrl(), savedReport));
-		Image savedBaseImageUrl = imageRepository.findById(baseImageUrl.getImageUrl()).get();
-		reportRepository.save(savedBaseImageUrl.setReportBaseUrl(savedReport));
+		Image savedBaseImageUrl = imageRepository.findByImageUrl(baseImageUrl.getImageUrl());
+		imageRepository.save(Image.Request.toImage(savedBaseImageUrl.getImageUrl(), savedReport));
+		savedReport = savedBaseImageUrl.setReportImageUrl(savedReport);
 		
 		
-		savedReport = reportRepository.findById(request.getId()).get();
 		imageRepository.save(Image.Request.toImage(analyzedImageUrl.getImageUrl(), savedReport));
 		Image savedAnalyzedImageUrl = imageRepository.findById(analyzedImageUrl.getImageUrl()).get();
-		reportRepository.save(savedAnalyzedImageUrl.setReportAnalyzedUrl(savedReport));
+		savedReport = savedAnalyzedImageUrl.setReportImageUrl(savedReport);
+		reportRepository.save(savedReport);
 		
 		return Report.ToShow.toShow(reportRepository.findById(request.getId()).get()); 
 	}
@@ -64,18 +67,15 @@ public class ReportServiceImpl implements ReportService{
 	public List<Report.ToShow> getDailyReports(SignIn user) {
 		String farmId = user.getFarm().getFarmId();
 		LocalDate today = LocalDate.now();
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyMMdd");
-		String id = String.format("%s_%s", farmId, today.format(format));
 		
 		List<Report.ToShow> toShows = new ArrayList<Report.ToShow>();
-		List<Report> reports = reportRepository.findAllByIdStartsWith(id);
+		List<Data> datas = dataRepository.findAllByMdateAndFarmFarmIdOrderByIdDesc(today, farmId);
+		
 		
 		try {
-			reports.stream().forEach(report -> toShows.add(Report.ToShow.toShow(report)));
-			
+			datas.stream().forEach(data -> toShows.add(Report.ToShow.toShow(reportRepository.findByData(data))));
 		} catch (Exception e) {
 			System.out.printf("금일 %s에서 측정한 내역이 없습니다.", farmId);
-			
 		}
 		
 		return toShows;

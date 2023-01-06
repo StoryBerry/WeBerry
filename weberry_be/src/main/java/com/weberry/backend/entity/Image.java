@@ -38,7 +38,7 @@ public class Image {
 			   inverseJoinColumns=@JoinColumn(name="DATA_ID"))
 	private Data data;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinTable(name="REPORT_IMAGE",
 			   joinColumns=@JoinColumn(name="IMAGE_URL"),
 			   inverseJoinColumns=@JoinColumn(name="REPORT_ID"))
@@ -62,14 +62,8 @@ public class Image {
 		return data;
 	}
 	
-	public Report setReportBaseUrl(Report report) {
-		report.setBaseImageUrl(this);
-		
-		return report;
-	}
-	
-	public Report setReportAnalyzedUrl(Report report) {
-		report.setAnalyzedImageUrl(this);
+	public Report setReportImageUrl(Report report) {
+		report.getImageUrls().add(this);
 		
 		return report;
 	}
