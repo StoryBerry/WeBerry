@@ -14,8 +14,6 @@ public interface UserService {
 
 	User.SignIn createUser(User.Request request, Farm farm);
 	
-	void connectUserAndFarm(Farm farmInfo, User user);
-	
 	Map<String, String> signIn(User user);
 	
 	Map<String, Object> checkToken(String token);

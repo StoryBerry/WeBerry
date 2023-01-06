@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean checkUser(String userId) {
-		User user = userRepository.findByUserid(userId);
+		User user = userRepository.findById(userId).get();
 
 		if (user != null) return false;
 		
@@ -42,18 +42,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User.SignIn createUser(Request request, Farm farm) {
 		userRepository.save(User.Request.toCreate(request, farm));
+		User saved = userRepository.findById(request.getUserid()).get();
+		Farm savedFarm = farmRepository.findByFarmId(farm.getFarmId());
+		farmRepository.save(saved.setFarm(savedFarm));
 		
-		return User.SignIn.toSignIn(userRepository.findByUserid(request.getUserid()));
-	}
-	
-	public void connectUserAndFarm(Farm farmInfo, User user) {
-		Farm toSave = farmRepository.findByFarmId(farmInfo.getFarmId());
-		user.setFarm(toSave);
+		return User.SignIn.toSignIn(saved);
 	}
 
 	@Override
 	public Map<String, String> signIn(User user) {
-		User toCheck = userRepository.findByUserid(user.getUserid());
+		User toCheck = userRepository.findById(user.getUserid()).get();
 		
 		if (toCheck.getPassword().equals(user.getPassword())) {
 			User.SignIn signIn = User.SignIn.toSignIn(toCheck);

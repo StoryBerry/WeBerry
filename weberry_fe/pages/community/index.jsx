@@ -19,14 +19,13 @@ const index = () => {
         .then(datas => setPosts(datas))
         .catch(err => console.error(err))
   }, [toWritePost])
-  console.log(token);
 
   return (
     <>
     {toWritePost && <CommuWrite setToWritePost={setToWritePost} toWritePost={toWritePost} token={token}/>}
     
     <div className='items-center px-8'>{posts && <CommuMain posts={posts}/>}</div>
-    <Image className="sticky bottom-12 left-80 z-30 ali" src='/images/Commu-Img/add-button.png' width='80' height='80' onClick={clickHandler} />
+    <Image className="fixed bottom-16 right-5 z-30 ali" src='/images/Commu-Img/add-button.png' width='80' height='80' onClick={clickHandler} />
     </>
   )
 }

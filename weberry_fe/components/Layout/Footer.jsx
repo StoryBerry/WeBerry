@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 const Footer = () => {
   return (
-    <div className='bg-white fixed w-full bottom-0 z-30'>
+    <div className='bg-white fixed w-full bottom-0 z-20'>
       <div className=" mx-auto max-w-5xl px-4 sm:px-6 py-3 border-t-2 border-y-grey border-opacity-50">
         <div className="place-content-evenly flex " >
         <Link href="/">
