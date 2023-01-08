@@ -17,16 +17,16 @@ const CommuWrite = (props) => {
     setImage([...event.target.files]);
   };
   const buttonHandler = (event) => {
-    event.target.innerText === "작성" ? writePost() : setToWritePost(!toWritePost);
+    event.target.innerText === "작성"
+      ? writePost()
+      : setToWritePost(!toWritePost);
   };
-  const writePost = () => {
-    console.log(content, signIn);
+  const writePost = async () => {
     const formData = new FormData();
-    const body = { content: content, user: signIn };
     formData.set("content", content);
     formData.set("userid", signIn.userid);
-    formData.set("imageFiles", images[0]);
-    fetch("http://localhost:8090/post/write", {
+    images.map((image) => formData.append("imageFiles", image));
+    await fetch("http://localhost:8090/post/write", {
       method: "POST",
       body: formData,
     });
@@ -50,23 +50,39 @@ const CommuWrite = (props) => {
   }, [images]);
   return (
     <>
-      <div className="fixed bg-grey/80 z-25 w-full h-full top-10 " onClick={clickHandler} />
+      <div
+        className="fixed bg-grey/80 z-25 w-full h-full top-10 "
+        onClick={clickHandler}
+      />
       {signIn["userid"] ? (
         <div className="absolute bg-white z-30 top-15 w-4/5 left-9 content-center">
-          <textarea ref={ref} onChange={contentHandler} className="my-8 p-2 w-4/5" cols="30" rows="10" placeholder="무엇을 작성하시겠습니까?" />
-          <input ref={ref} onChange={imageHandler} className="files my-2 w-4/5" type="file" name="files" multiple="multiple" accept="image/png, image/jpg" />
+          <textarea
+            ref={ref}
+            onChange={contentHandler}
+            className="my-8 p-2 w-4/5"
+            cols="30"
+            rows="10"
+            placeholder="무엇을 작성하시겠습니까?"
+          />
+          <input
+            ref={ref}
+            onChange={imageHandler}
+            className="files my-2 w-4/5"
+            type="file"
+            name="files"
+            multiple="multiple"
+            accept="image/png, image/jpeg"
+          />
           {imagePreview && <img src={imagePreview} />}
           <div className="buttons flex w-4/5 justify-around mx-8 my-4">
             <div
               className="button w-16 p-2 bg-water text-black font-semibold rounded-lg shadow-md"
-              onClick={buttonHandler}
-            >
+              onClick={buttonHandler}>
               작성
             </div>
             <div
               className="button w-16 p-2 bg-grey text-black font-semibold rounded-lg shadow-md"
-              onClick={buttonHandler}
-            >
+              onClick={buttonHandler}>
               취소
             </div>
           </div>

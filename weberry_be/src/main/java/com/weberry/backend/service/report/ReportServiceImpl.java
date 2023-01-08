@@ -51,13 +51,13 @@ public class ReportServiceImpl implements ReportService{
 		
 		Report savedReport = reportRepository.findById(request.getId()).get();
 		Image savedBaseImageUrl = imageRepository.findByImageUrl(baseImageUrl.getImageUrl());
-		imageRepository.save(Image.Request.toImage(savedBaseImageUrl.getImageUrl(), savedReport));
-		savedReport = savedBaseImageUrl.setReportImageUrl(savedReport);
+		imageRepository.save(Image.Request.toBaseImage(savedBaseImageUrl.getImageUrl(), savedReport));
+		savedReport = savedBaseImageUrl.setReportBaseImageUrl(savedReport);
 		
 		
-		imageRepository.save(Image.Request.toImage(analyzedImageUrl.getImageUrl(), savedReport));
+		imageRepository.save(Image.Request.toAnalyzedImage(analyzedImageUrl.getImageUrl(), savedReport));
 		Image savedAnalyzedImageUrl = imageRepository.findById(analyzedImageUrl.getImageUrl()).get();
-		savedReport = savedAnalyzedImageUrl.setReportImageUrl(savedReport);
+		savedReport = savedAnalyzedImageUrl.setReportAnalyzedImageUrl(savedReport);
 		reportRepository.save(savedReport);
 		
 		return Report.ToShow.toShow(reportRepository.findById(request.getId()).get()); 
@@ -71,12 +71,12 @@ public class ReportServiceImpl implements ReportService{
 		List<Report.ToShow> toShows = new ArrayList<Report.ToShow>();
 		List<Data> datas = dataRepository.findAllByMdateAndFarmFarmIdOrderByIdDesc(today, farmId);
 		
-		
 		try {
 			datas.stream().forEach(data -> toShows.add(Report.ToShow.toShow(reportRepository.findByData(data))));
 		} catch (Exception e) {
 			System.out.printf("금일 %s에서 측정한 내역이 없습니다.", farmId);
 		}
+		toShows.stream().forEach(toShow -> System.out.println(toShow));
 		
 		return toShows;
 	}

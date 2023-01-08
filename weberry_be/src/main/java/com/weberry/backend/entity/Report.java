@@ -31,7 +31,10 @@ public class Report {
 	private String status;
 	
 	@OneToMany(mappedBy="report")
-	private List<Image> imageUrls;
+	private List<Image> baseImageUrl;
+	
+	@OneToMany(mappedBy="report")
+	private List<Image> analyezedImageUrl;
 	
 	@OneToOne
 	@JoinTable(name="DATA_REPORT",
@@ -56,7 +59,8 @@ public class Report {
 			
 			return Report.builder().id(request.getId())
 								   .status(request.getStatus())
-								   .imageUrls(new ArrayList<Image>())
+								   .baseImageUrl(new ArrayList<>())
+								   .analyezedImageUrl(new ArrayList<>())
 								   .data(data)
 								   .build();
 		}
@@ -73,26 +77,15 @@ public class Report {
 		private Data.ToShow data;
 		
 		public static ToShow toShow(Report report) {
-			if (report.getImageUrls().size() == 2) {
-				
-				return Report.ToShow.builder()
-									.id(report.getData().getId())
-									.status(report.getStatus())
-									.baseImageUrl(Image.ToShow.toShow(report.getImageUrls().get(1)))
-									.analyzedImageUrl(Image.ToShow.toShow(report.getImageUrls().get(0)))
-									.data(Data.ToShow.withoutImage(report.getData()))
-									.build();
-			} else {
-				
-				return Report.ToShow.builder()
-									.id(report.getData().getId())
-									.status(report.getStatus())
-									.baseImageUrl(Image.ToShow.toShow(report.getImageUrls().get(0)))
-									.data(Data.ToShow.withoutImage(report.getData()))
-									.build();
-				
-			}
+			Image analyzedImage = null;
+			if (report.getAnalyezedImageUrl().size() > 0) analyzedImage = report.getAnalyezedImageUrl().get(0);
 			
+			return ToShow.builder().id(report.getId())
+								   .status(report.getStatus())
+								   .baseImageUrl(Image.ToShow.toShow(report.getBaseImageUrl().get(0)))
+								   .analyzedImageUrl(Image.ToShow.toShow(analyzedImage))
+								   .data(Data.ToShow.toShow(report.getData()))
+								   .build();
 		}
 	}
 }

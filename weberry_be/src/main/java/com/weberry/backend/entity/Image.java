@@ -62,8 +62,14 @@ public class Image {
 		return data;
 	}
 	
-	public Report setReportImageUrl(Report report) {
-		report.getImageUrls().add(this);
+	public Report setReportBaseImageUrl(Report report) {
+		report.getBaseImageUrl().add(this);
+		
+		return report;
+	}
+	
+	public Report setReportAnalyzedImageUrl(Report report) {
+		report.getAnalyezedImageUrl().add(this);
 		
 		return report;
 	}
@@ -97,7 +103,14 @@ public class Image {
 								  .data(data).build();
 		}
 		
-		public static Image toImage(String url, Report report) {
+		public static Image toBaseImage(String url, Report report) {
+			
+			return Image.builder().imageUrl(url)
+								  .report(report)
+								  .data(report.getData()).build();
+		}
+		
+		public static Image toAnalyzedImage(String url, Report report) {
 			
 			return Image.builder().imageUrl(url)
 					.report(report).build();
@@ -123,6 +136,8 @@ public class Image {
 		private String imageUrl;
 		
 		public static ToShow toShow(Image image) {
+			
+			if (image == null) return null;
 			
 			return ToShow.builder().imageUrl(image.getImageUrl()).build();
 		}
