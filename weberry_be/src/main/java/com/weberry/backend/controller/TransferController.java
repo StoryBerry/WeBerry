@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +37,7 @@ public class TransferController {
 	private ReportService reportService;
 	
 	@PostMapping
-	public void transferData(@RequestPart("imageFiles") List<MultipartFile> imageFiles, @ModelAttribute  DataRequestList request) {
+	public ResponseEntity<?> transferData(@RequestPart("imageFiles") List<MultipartFile> imageFiles, @ModelAttribute  DataRequestList request) {
 		List<Data.ToShow> savedList = dataService.transferData(imageFiles, request);
 		String farmId = savedList.get(0).getFarm().getFarmId();
 		
@@ -56,6 +57,10 @@ public class TransferController {
 		ReportRequestList requestList = mapper.convertValue(result, ReportRequestList.class);
 		reportService.writeReport(requestList);
 		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(URI.create(String.format("/alert/daily/report?farmId=%s", farmId)));
+		
+		return new ResponseEntity<>(headers, HttpStatus.PERMANENT_REDIRECT);
 	}
 	
 }

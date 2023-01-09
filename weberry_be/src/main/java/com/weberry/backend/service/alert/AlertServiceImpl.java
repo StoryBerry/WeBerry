@@ -25,15 +25,16 @@ public class AlertServiceImpl implements AlertService {
 	private static Map<String, String> sessionAndFarmId = new HashMap<String, String>();
 	
 	@Override
-	public void connectToWebSocket(WebSocketSession session) throws Exception {
-		String token = session.getHandshakeHeaders().get("Authorization").get(0);
+	public void connectToWebSocket(WebSocketSession session, TextMessage message) throws Exception {
+		String token = message.getPayload();
+		System.out.println("token: " + token);
 		String farmId = checkAuthorization(token);
 		
 		if (farmId != null) {
 			sessionAndFarmId.put(session.getId(), farmId);
 			clientsOnFarm.put(farmId, new HashSet<WebSocketSession>());
 			clientsOnFarm.get(farmId).add(session);
-			session.sendMessage(new TextMessage("WeBerry에 오신 것을 환영합니다."));
+			session.sendMessage(new TextMessage("welcome"));
 			System.out.println("Session을 연결합니다: " + session);
 		} else {
 			session.sendMessage(new TextMessage("토큰이 만료되었습니다. 다시 로그인해주세요."));
@@ -45,7 +46,7 @@ public class AlertServiceImpl implements AlertService {
 		String sessionId = session.getId();
 		String farmId = sessionAndFarmId.get(sessionId);
 		sessionAndFarmId.remove(sessionId);
-		clientsOnFarm.get(farmId).remove(session);
+		if (clientsOnFarm != null) clientsOnFarm.get(farmId).remove(session);
 		
 		System.out.printf("Session을 종료합니다: <%s> %s\n", farmId, session);
 	}
@@ -54,7 +55,7 @@ public class AlertServiceImpl implements AlertService {
 	public void alterDailyReport(String farmId) throws Exception {
 		Set<WebSocketSession> clients = clientsOnFarm.get(farmId);
 		for (WebSocketSession client : clients) {
-			client.sendMessage(new TextMessage("데일리 레포트가 작성되었습니다."));
+			client.sendMessage(new TextMessage("report"));
 		}
 	}
 

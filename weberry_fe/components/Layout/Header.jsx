@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo_gub from "./logoimg.svg";
@@ -8,22 +8,28 @@ import { useAtom } from "jotai";
 import Token from "../../atoms/Token";
 export default function Header({}) {
   const [token, setToken] = useAtom(Token);
-
+  const [message, setMessage] = useState(null);
+  const [connected, setConnected] = useState(null);
+  
   const connectToAlert = () => {
-    const url = new URL('wss://localhost:8090/alert');
-    const socket = new WebSocket(url);
-    console.log(socket);
-    console.log("connectToAlert");
+    const socket = new WebSocket('ws://localhost:8090/alert');
     socket.onopen = () => {
-      console.log('connected!');
-      socket.send({'header': {'Authorization': token.token}});
+      console.log('Connected!');
+      socket.send(token.token);
     }
+    socket.onerror = () => console.log('연결안됨');
+    socket.addEventListener('message', (event) => setMessage(event.data));
+  }
+  
+  const alertMessage = (message) => {
+    message === 'welcome' && alert('WeBerry에 오신 것을 환영합니다.')
+    message === 'report' && alert('데일리 레포트가 작성되었습니다.')
   }
 
-  token && connectToAlert();
   useEffect(() => {
-
-  }, [])
+    token && connectToAlert();
+    alertMessage(message);
+  }, [token, message])
 
   return (
     <div>
