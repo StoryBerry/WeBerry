@@ -28,19 +28,21 @@ const CommuItemDetail = (props) => {
   };
   const writeComment = async () => {
     const user = await checkToken();
-    await fetch("http://localhost:8090/comment", {
+    await fetch("http://localhost:8090/post/comment", {
       method: "POST",
       headers: { "Content-Type": "application/json; charset=UTF-8" },
       body: JSON.stringify({
-        content: newComment,
-        userid: user.userid,
-        postid: postId,
+        "content": newComment,
+        "userid": user.userid,
+        "postid": postId,
       }),
     })
       .then((response) => response.json)
       .then((data) => console.log(data))
       .catch((err) => console.error(err));
     await setCommented(!commented);
+    const input_ = document.getElementById("comment")
+    input_.value = null;
   };
 
   useEffect(() => {
@@ -56,7 +58,7 @@ const CommuItemDetail = (props) => {
   return (
     post && (
       <div className="">
-        <div className="flex justify-start items-center mt-3 mb-10">
+        <div className="profile-bar flex justify-start items-center mt-3 mb-4">
           <Image
             className=""
             src="/images/Commu-Img/2.png"
@@ -77,14 +79,16 @@ const CommuItemDetail = (props) => {
         />
 
         <h5 className="text-left text-xl ml-3 mt-3 mb-2">{post.content}</h5>
-        <div className="write-comment flex justify-between">
+        <div className="write-comment flex justify-between mb-1">
           <input
+            className="ml-2"
             type="text"
             placeholder="댓글달기..."
+            id="comment"
             onChange={commentHandler}
           />
           <div
-            className="button w-16 p-2 bg-water text-black font-semibold rounded-lg shadow-md"
+            className="button w-16 p-2 bg-water text-black font-semibold rounded-lg"
             onClick={writeComment}>
             작성
           </div>

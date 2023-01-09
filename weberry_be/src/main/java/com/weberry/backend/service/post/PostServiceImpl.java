@@ -74,7 +74,7 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	private void savePostImage(MultipartFile imageFile, Post post) {
-		String basePath = "C://users/Will.Lee/desktop/WeBerry/weberry_fe/public/images/posts";
+		String basePath = "C://users/playdata/desktop/WeBerry/weberry_fe/public/images/posts";
 		String userid = post.getUser().getUserid();
 		String imageUrl = String.format("%s/%s/%s", basePath, userid, imageFile.getOriginalFilename());
 		String url = String.format("/images/posts/%s/%s", userid, imageFile.getOriginalFilename());

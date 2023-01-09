@@ -16,6 +16,7 @@ const CommuItem = (props) => {
           src="/images/Commu-Img/2.png"
           width="50"
           height="50"
+          alt="image"
         />
         <h5 className="text-center font-semibold text-base text-opacity-5 ">
           {post.user.farm.farmId}{" "}

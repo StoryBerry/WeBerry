@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo_gub from "./logoimg.svg";
 import Sidebar from "./Sidebar";
 import BellWarrn from "./BellWarrn";
+import { useAtom } from "jotai";
+import Token from "../../atoms/Token";
 export default function Header({}) {
+  const [token, setToken] = useAtom(Token);
+
+  const connectToAlert = () => {
+    const url = new URL('wss://localhost:8090/alert');
+    const socket = new WebSocket(url);
+    console.log(socket);
+    console.log("connectToAlert");
+    socket.onopen = () => {
+      console.log('connected!');
+      socket.send({'header': {'Authorization': token.token}});
+    }
+  }
+
+  token && connectToAlert();
+  useEffect(() => {
+
+  }, [])
+
   return (
     <div>
       <div className="bg-white fixed w-full top-0 z-40">

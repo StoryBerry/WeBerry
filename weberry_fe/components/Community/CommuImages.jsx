@@ -14,7 +14,7 @@ const CommuImages = (props) => {
             <Image
               className="object-contain"
               src={image.imageUrl}
-              alt=""
+              alt="image"
               width="175"
               height="75"
             />
@@ -30,7 +30,7 @@ const CommuImages = (props) => {
             <Image
               className="object-contain"
               src={image.imageUrl}
-              alt=""
+              alt="image"
               width="175"
               height="75"
             />
@@ -40,7 +40,7 @@ const CommuImages = (props) => {
             <Image
               className="object-contain"
               src={image.imageUrl}
-              alt=""
+              alt="image"
               width="175"
               height="75"
             />
@@ -55,7 +55,7 @@ const CommuImages = (props) => {
           <Image
             className="object-contain"
             src={image.imageUrl}
-            alt=""
+            alt="image"
             width="175"
             height="150"
           />
@@ -67,7 +67,7 @@ const CommuImages = (props) => {
       <Image
         className="object-contain"
         src={images[0].imageUrl}
-        alt=""
+        alt="image"
         width="175"
         height="150"
       />
