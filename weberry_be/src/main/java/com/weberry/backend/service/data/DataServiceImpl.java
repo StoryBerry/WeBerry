@@ -40,7 +40,7 @@ public class DataServiceImpl implements DataService {
 	
 	private Data.ToShow transferData(MultipartFile imageFile, Request request) {
 //		String basePath = "/home/weberry/Desktop/weberry_fe/public/images/farm";
-		String basePath = "C://users/playdata/desktop/WeBerry/weberry_fe/public/images/farm";
+		String basePath = "C://users/Will.Lee/desktop/WeBerry/weberry_fe/public/images/farm";
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
 		String imageUrl = String.format("%s/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());

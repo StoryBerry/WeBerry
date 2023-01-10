@@ -6,7 +6,6 @@ import styles from "../../../styles/Home.module.css";
 const citemdetail = () => {
   const router = useRouter();
   const { postId } = router.query;
-  console.log("postid:", postId);
 
   return (
     <div className={styles.main}>

@@ -34,7 +34,7 @@ public class AlertServiceImpl implements AlertService {
 			sessionAndFarmId.put(session.getId(), farmId);
 			clientsOnFarm.put(farmId, new HashSet<WebSocketSession>());
 			clientsOnFarm.get(farmId).add(session);
-			session.sendMessage(new TextMessage("welcome"));
+			session.sendMessage(new TextMessage("WeBerry에 오신 것을 환영합니다."));
 			System.out.println("Session을 연결합니다: " + session);
 		} else {
 			session.sendMessage(new TextMessage("토큰이 만료되었습니다. 다시 로그인해주세요."));
@@ -55,7 +55,7 @@ public class AlertServiceImpl implements AlertService {
 	public void alterDailyReport(String farmId) throws Exception {
 		Set<WebSocketSession> clients = clientsOnFarm.get(farmId);
 		for (WebSocketSession client : clients) {
-			client.sendMessage(new TextMessage("report"));
+			client.sendMessage(new TextMessage("데일리 레포트가 작성되었습니다."));
 		}
 	}
 

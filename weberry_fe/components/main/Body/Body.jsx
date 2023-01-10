@@ -27,11 +27,13 @@ const Body = (props) => {
   }
 
   const checkToken = async () => {
-    const user = await (await fetch("http://localhost:8090/auth/check/token", {
-      method: "GET",
-      headers: { Authorization: token.token },
-    })).json();
-    
+    const user = await (
+      await fetch("http://localhost:8090/auth/check/token", {
+        method: "GET",
+        headers: { Authorization: token.token },
+      })
+    ).json();
+
     return user.signIn;
   };
   const getReports = async () => {
@@ -86,14 +88,14 @@ const Body = (props) => {
 
             <div className="flex justify-center">
               <div className="m-2 bg-yello_100  max-w-7xl ml-7 mr-7 rounded-lg">
-                <div className="p-6 box-content relative">
+                <div className="p-6 box-content relative w-64 h-72">
                   <div
-                    className="absolute top-1/2 left-0 border-2"
+                    className="absolute top-32 left-0 font-black text-2xl"
                     onClick={prevImageno}>
                     &#60;
                   </div>
                   <div
-                    className="absolute top-1/2 right-0 border-2"
+                    className="absolute top-32 right-0 font-black text-2xl"
                     onClick={nextImageno}>
                     &#62;
                   </div>
