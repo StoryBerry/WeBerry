@@ -26,7 +26,13 @@ const ImageSlide = (props) => {
           onClick={nextImageno}>
           &#62;
         </div>
-        <Image src={images[imageno]} width="300" height="200" alt="image" />
+        <Image
+          src={images[imageno]}
+          width="300"
+          height="200"
+          alt="image"
+          className="ml-14"
+        />
       </div>
     )
   );

@@ -79,6 +79,8 @@ public class Report {
 		public static ToShow toShow(Report report) {
 			Image analyzedImage = null;
 			if (report.getAnalyezedImageUrl().size() > 0) analyzedImage = report.getAnalyezedImageUrl().get(0);
+			System.out.println("baseImage: " + Image.ToShow.toShow(report.getBaseImageUrl().get(0)));
+			System.out.println("analyzedImage: " + Image.ToShow.toShow(analyzedImage));
 			
 			return ToShow.builder().id(report.getId())
 								   .status(report.getStatus())

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,9 @@ public class DataServiceImpl implements DataService {
 	@Autowired
 	private ImageRepository imageRepository;
 	
+	@Value("${test.baseUrl}")
+	private String baseUrl;
+	
 	@Override
 	public List<Data.ToShow> transferData(List<MultipartFile> imageFiles, DataRequestList request) {
 		List<Data.ToShow> dataList = new ArrayList<Data.ToShow>();
@@ -39,8 +43,7 @@ public class DataServiceImpl implements DataService {
 	}
 	
 	private Data.ToShow transferData(MultipartFile imageFile, Request request) {
-//		String basePath = "/home/weberry/Desktop/weberry_fe/public/images/farm";
-		String basePath = "C://users/Will.Lee/desktop/WeBerry/weberry_fe/public/images/farm";
+		String basePath = baseUrl;
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
 		String imageUrl = String.format("%s/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());

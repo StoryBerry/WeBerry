@@ -3,25 +3,31 @@ import Image from "next/image";
 import { useAtom } from "jotai";
 import Token from "../../../atoms/Token";
 import { list } from "postcss";
+import analyze_status from "../../../public/Analyze";
 const Body = (props) => {
-  const imageList = [];
-
   const [token, setToken] = useAtom(Token);
   const [reports, setReports] = useState({});
   const [imageno, setImageno] = useState(0);
   const [point, setPoint] = useState(0);
 
+  const imageList = [];
+  let status = null;
+
   if (reports.length > 0) {
     if (point === reports.length) {
       for (let report of reports) {
-        imageList.push(report.baseImageUrl.imageUrl);
-        report.analyzedImageUrl.imageUrl &&
-          imageList.push(report.analyzedImageUrl.imageUrl);
+        imageList.push(report.data.imageUrl.imageUrl);
+        report.analyzedImageUrl.imageUrl
+          ? imageList.push(report.analyzedImageUrl.imageUrl)
+          : imageList.push(report.data.imageUrl.imageUrl);
+        status = analyze_status(reports[parseInt(imageno / 2)].status);
       }
     } else {
-      imageList.push(reports[point].baseImageUrl.imageUrl);
-      reports[point].analyzedImageUrl.imageUrl &&
-        imageList.push(reports[point].analyzedImageUrl.imageUrl);
+      imageList.push(reports[point].data.imageUrl.imageUrl);
+      reports[point].analyzedImageUrl.imageUrl
+        ? imageList.push(reports[point].analyzedImageUrl.imageUrl)
+        : imageList.push(report.data.imageUrl.imageUrl);
+      status = analyze_status(reports[point].status);
     }
     console.log(reports);
   }
@@ -47,6 +53,7 @@ const Body = (props) => {
       .then((response) => response.json())
       .then((data) => {
         setReports(data.reverse());
+        setPoint(data.length);
       })
       .catch((err) => console.error(err));
   };
@@ -89,16 +96,20 @@ const Body = (props) => {
             <div className="flex justify-center">
               <div className="m-2 bg-yello_100  max-w-7xl ml-7 mr-7 rounded-lg">
                 <div className="p-6 box-content relative w-64 h-72">
-                  <div
-                    className="absolute top-32 left-0 font-black text-2xl"
-                    onClick={prevImageno}>
-                    &#60;
-                  </div>
-                  <div
-                    className="absolute top-32 right-0 font-black text-2xl"
-                    onClick={nextImageno}>
-                    &#62;
-                  </div>
+                  {reports && reports.length > 0 && (
+                    <>
+                      <div
+                        className="absolute top-32 left-0 font-black text-2xl"
+                        onClick={prevImageno}>
+                        &#60;
+                      </div>
+                      <div
+                        className="absolute top-32 right-0 font-black text-2xl"
+                        onClick={nextImageno}>
+                        &#62;
+                      </div>
+                    </>
+                  )}
                   {reports && reports.length > 0 && (
                     <>
                       <details
@@ -107,12 +118,12 @@ const Body = (props) => {
                         <summary>
                           <span>
                             {point === reports.length ? (
-                              <strong className="text-base mb-2">
+                              <strong className="text-lg mb-2">
                                 {" "}
                                 {reports[0].data.farm.farmId}: 전체
                               </strong>
                             ) : (
-                              <strong className="text-base mb-2">
+                              <strong className="text-lg mb-2">
                                 {" "}
                                 {reports[point].data.farm.farmId}:{" "}
                                 {reports[point].data.point}
@@ -120,27 +131,25 @@ const Body = (props) => {
                             )}
                           </span>
                         </summary>
+                        <strong
+                          className={`text-lg ml-10 mt-1`}
+                          id={reports.length}
+                          onClick={chooseReport}>
+                          {" "}
+                          {reports[0].data.farm.farmId}: 전체
+                        </strong>
                         {reports.map((report, idx) => (
                           <strong
-                            className={`text-base ml-4 mt-1`}
+                            className={`text-lg ml-4 mt-1`}
                             id={idx}
                             onClick={chooseReport}>
                             {" "}
                             {report.data.farm.farmId}: {report.data.point}
                           </strong>
                         ))}
-                        <strong
-                          className={`text-base ml-10 mt-1`}
-                          id={reports.length}
-                          onClick={chooseReport}>
-                          {" "}
-                          {reports[0].data.farm.farmId}: 전체
-                        </strong>
                       </details>
                       <img className="mt-12" src={imageList[imageno]} />
-                      <a className="indent-8">
-                        {reports[parseInt(imageno / 2)].status}
-                      </a>
+                      <div className="mt-4 text-xl font-bold">{status}</div>
                     </>
                   )}
                 </div>

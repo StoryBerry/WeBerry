@@ -54,10 +54,11 @@ public class ReportServiceImpl implements ReportService{
 		imageRepository.save(Image.Request.toBaseImage(savedBaseImageUrl.getImageUrl(), savedReport));
 		savedReport = savedBaseImageUrl.setReportBaseImageUrl(savedReport);
 		
-		
-		imageRepository.save(Image.Request.toAnalyzedImage(analyzedImageUrl.getImageUrl(), savedReport));
-		Image savedAnalyzedImageUrl = imageRepository.findById(analyzedImageUrl.getImageUrl()).get();
-		savedReport = savedAnalyzedImageUrl.setReportAnalyzedImageUrl(savedReport);
+		if (analyzedImageUrl.getImageUrl() != null) {
+			imageRepository.save(Image.Request.toAnalyzedImage(analyzedImageUrl.getImageUrl(), savedReport));
+			Image savedAnalyzedImageUrl = imageRepository.findById(analyzedImageUrl.getImageUrl()).get();
+			savedReport = savedAnalyzedImageUrl.setReportAnalyzedImageUrl(savedReport);
+		}
 		reportRepository.save(savedReport);
 		
 		return Report.ToShow.toShow(reportRepository.findById(request.getId()).get()); 

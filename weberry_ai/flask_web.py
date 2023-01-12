@@ -161,6 +161,9 @@ def analyze_image(farmId):
 		reports['requestList'].append(report)
 		reports['baseImageUrls'].append(base)
 		reports['analyzedImageUrls'].append(analyed)
+
+		analayzedImageUrl = None
+		status = None
 	
 	return jsonify(reports)
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 export default function BellWarrn(props) {
   const messages = props.messages;
 
@@ -61,20 +62,22 @@ export default function BellWarrn(props) {
 
         {messages.map((message, idx) => {
           return (
-            <div className="flex justify-center w-full mt-3 mb-5" key={idx}>
-              <div className="  bg-black_600 bg-opacity-70 rounded-lg shadow-lg flex flex-wrap w-80">
-                <h6 className="text-left pl-4 pt-2 text-xs text-white display flex-auto">
-                  인천_위베리
-                </h6>
-                <h6 className="text-right pr-4 pt-2 text-xs text-white flex-auto">
-                  1분전
-                </h6>
-                <div className="text-left  p-4 text-sm text-white flex justify-end">
-                  {" #"}
-                  {idx + 1}번 알림 | {message}
+            <Link href="/">
+              <div className="flex justify-center w-full mt-3 mb-5" key={idx}>
+                <div className="  bg-black_600 bg-opacity-70 rounded-lg shadow-lg flex flex-wrap w-80">
+                  <h6 className="text-left pl-4 pt-2 text-xs text-white display flex-auto">
+                    인천_위베리
+                  </h6>
+                  <h6 className="text-right pr-4 pt-2 text-xs text-white flex-auto">
+                    1분전
+                  </h6>
+                  <div className="text-left  p-4 text-sm text-white flex justify-end">
+                    {" #"}
+                    {idx + 1}번 알림 | {message}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>
