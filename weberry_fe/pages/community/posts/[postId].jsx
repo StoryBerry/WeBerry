@@ -1,19 +1,17 @@
-import { useRouter } from 'next/router'
-import React from 'react'
-import CommuItemDetail from '../../../components/Community/CommuItemDetail'
-import styles from '../../../styles/Home.module.css'
-
+import { useRouter } from "next/router";
+import React from "react";
+import CommuItemDetail from "../../../components/Community/CommuItemDetail";
+import styles from "../../../styles/Home.module.css";
 
 const citemdetail = () => {
   const router = useRouter();
-  const {postId, postObj} = router.query;
-  const post = JSON.parse(postObj);
+  const { postId } = router.query;
 
   return (
     <div className={styles.main}>
-      <CommuItemDetail post={post}/>
+      <CommuItemDetail postId={postId} />
     </div>
-    )
-}
+  );
+};
 
-export default citemdetail
+export default citemdetail;

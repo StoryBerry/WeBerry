@@ -25,8 +25,9 @@ public class AlertServiceImpl implements AlertService {
 	private static Map<String, String> sessionAndFarmId = new HashMap<String, String>();
 	
 	@Override
-	public void connectToWebSocket(WebSocketSession session) throws Exception {
-		String token = session.getHandshakeHeaders().get("Authorization").get(0);
+	public void connectToWebSocket(WebSocketSession session, TextMessage message) throws Exception {
+		String token = message.getPayload();
+		System.out.println("token: " + token);
 		String farmId = checkAuthorization(token);
 		
 		if (farmId != null) {
@@ -45,7 +46,7 @@ public class AlertServiceImpl implements AlertService {
 		String sessionId = session.getId();
 		String farmId = sessionAndFarmId.get(sessionId);
 		sessionAndFarmId.remove(sessionId);
-		clientsOnFarm.get(farmId).remove(session);
+		if (clientsOnFarm != null) clientsOnFarm.get(farmId).remove(session);
 		
 		System.out.printf("Session을 종료합니다: <%s> %s\n", farmId, session);
 	}

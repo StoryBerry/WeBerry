@@ -4,6 +4,7 @@ import CommuMain from '../../components/Community/CommuMain'
 import CommuWrite from '../../components/Community/CommuWrite';
 import { useAtom } from 'jotai';
 import Token from '../../atoms/Token';
+import Image from 'next/image';
 
 const index = () => {
   const [posts, setPosts] = useState([]);
@@ -22,11 +23,9 @@ const index = () => {
   return (
     <>
     {toWritePost && <CommuWrite setToWritePost={setToWritePost} toWritePost={toWritePost} token={token}/>}
-    <div className={styles.container}>
-      <div className='sticky left-3/4 top-20 py-1 px-1 bg-grey text-berry font-semibold rounded-lg shadow-md w-20'
-           onClick={clickHandler}>글쓰기</div>
-      {posts && <CommuMain posts={posts}/>}
-    </div>
+    
+    <div className='items-center px-8'>{posts && <CommuMain posts={posts}/>}</div>
+    <Image className="fixed bottom-16 right-5 z-30 ali" src='/images/Commu-Img/add-button.png' width='80' height='80' onClick={clickHandler} alt="add-button" />
     </>
   )
 }

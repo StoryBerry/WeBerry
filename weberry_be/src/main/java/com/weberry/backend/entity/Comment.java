@@ -55,21 +55,39 @@ public class Comment {
 	@OneToMany(mappedBy="comment")
 	private List<Comment> reComments;
 	
+	public User setUser(User user) {
+		user.getComments().add(this);
+		
+		return user;
+	}
+	
+	public Post setPost(Post post) {
+		post.getComments().add(this);
+		
+		return post;
+	}
+	
+	public Comment setComment(Comment comment) {
+		comment.getReComments().add(this);
+		
+		return comment;
+	}
+	
 	@Builder @NoArgsConstructor @AllArgsConstructor
 	@Getter @Setter @ToString
 	public static class Request {
 		
 		private String content;
 		private LocalDateTime createdAt;
-		private User.SignIn user;
-		private Post.ToShow post;
+		private String userid;
+		private long postid;
 		
-		public static Comment toCreate(Request request) {
+		public static Comment toCreate(Request request, User user, Post post) {
 			
 			return Comment.builder().content(request.getContent())
 									.createdAt(LocalDateTime.now())
-									.user(User.CommentIn.toUser(request.getUser()))
-									.post(Post.ToShow.toPost(request.getPost()))
+									.user(user)
+									.post(post)
 									.reComments(new ArrayList<Comment>())
 									.build();
 		}
@@ -82,17 +100,17 @@ public class Comment {
 		
 		private String content;
 		private LocalDateTime createdAt;
-		private User.SignIn user;
-		private Post.ToShow post;
-		private Comment.ToShow comment;
+		private String userid;
+		private long postid;
+		private long commentid;
 		
-		public static Comment toCreate(RecommentRequest request) {
+		public static Comment toCreate(RecommentRequest request, User user, Post post, Comment comment) {
 			
 			return Comment.builder().content(request.getContent())
 									.createdAt(LocalDateTime.now())
-									.user(User.CommentIn.toUser(request.getUser()))
-									.post(Post.ToShow.toPost(request.getPost()))
-									.comment(Comment.ToShow.toComment(request.getComment()))
+									.user(user)
+									.post(post)
+									.comment(comment)
 									.build();
 		}
 		

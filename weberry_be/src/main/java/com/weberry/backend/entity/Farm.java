@@ -83,6 +83,15 @@ public class Farm {
 								   .address(farm.getAddress()).build();
 		}
 		
+		public static Farm toFarm(Farm.SignIn farm) {
+			
+			return Farm.builder().farmId(farm.getFarmId())
+								 .farmName(farm.getFarmName())
+								 .local(farm.getLocal())
+								 .city(farm.getCity())
+								 .address(farm.getAddress()).build();
+		}
+		
 	}
 	
 }

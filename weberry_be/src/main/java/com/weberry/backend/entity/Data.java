@@ -32,26 +32,32 @@ public class Data {
 	@Id
 	private String id; 
 	
-	private String imageUrl;
-	
 	private float temperature;
 	
 	private float humidity;
 	
-	private LocalDate mDate;
+	private LocalDate mdate;
 	
 	private int point;
+	
+	@OneToOne(mappedBy="data")
+	private Image imageUrl;
 	
 	@ManyToOne
 	@JoinTable(name="FARM_DATA",
 				joinColumns=@JoinColumn(name="DATA_ID"),
 				inverseJoinColumns=@JoinColumn(name="FARM_ID"))
-	@JsonIgnore
 	private Farm farm;
 	
 	@OneToOne(mappedBy="data")
 	@JsonIgnore
 	private Report report;
+	
+	public Farm setFarm(Farm farm) {
+		farm.getDatas().add(this);
+		
+		return farm;
+	}
 	
 	@Builder @NoArgsConstructor @AllArgsConstructor
 	@Getter @Setter @ToString
@@ -72,7 +78,7 @@ public class Data {
 			return Data.builder().id(id)
 								 .temperature(request.getTemperature())
 								 .humidity(request.getHumidity())
-								 .mDate(request.getMDate())
+								 .mdate(request.getMDate())
 								 .point(request.getPoint())
 								 .farm(request.getFarm()).build();
 		}
@@ -83,7 +89,7 @@ public class Data {
 	public static class ToShow {
 		
 		private String id; 
-		private String imageUrl;
+		private Image.ToShow imageUrl;
 		private float temperature;
 		private float humidity;
 		private LocalDate mDate;
@@ -94,10 +100,22 @@ public class Data {
 			
 			return ToShow.builder()
 						 .id(data.getId())
-						 .imageUrl(data.getImageUrl())
+						 .imageUrl(Image.ToShow.toShow(data.getImageUrl()))
 						 .temperature(data.getTemperature())
 						 .humidity(data.getHumidity())
-						 .mDate(data.getMDate())
+						 .mDate(data.getMdate())
+						 .point(data.getPoint())
+						 .farm(Farm.SignIn.toSignIn(data.getFarm()))
+						 .build();
+		}
+		
+		public static ToShow withoutImage(Data data) {
+			
+			return ToShow.builder()
+						 .id(data.getId())
+						 .temperature(data.getTemperature())
+						 .humidity(data.getHumidity())
+						 .mDate(data.getMdate())
 						 .point(data.getPoint())
 						 .farm(Farm.SignIn.toSignIn(data.getFarm()))
 						 .build();
