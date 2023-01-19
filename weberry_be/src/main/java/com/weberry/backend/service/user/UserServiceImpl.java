@@ -32,11 +32,12 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean checkUser(String userId) {
-		User user = userRepository.findById(userId).get();
-
-		if (user != null) return false;
-		
-		else return true;
+		try {
+			User user = userRepository.findById(userId).get();
+		} catch (Exception e) {
+			return true;
+		}
+		return false;
 	}
 	
 	@Override

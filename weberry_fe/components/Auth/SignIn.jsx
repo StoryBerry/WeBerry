@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import React, { useState } from "react";
 import Token from "../../atoms/Token";
 import Image from "next/image";
+import Link from "next/link";
 const SignIn = () => {
   const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +20,6 @@ const SignIn = () => {
       .then((data) => setToken(data))
       .catch((err) => console.error(err));
   };
-  console.log(token);
 
   return (
     <div className="bg-pink2  overflow-hidden pb-56">
@@ -70,9 +70,11 @@ const SignIn = () => {
             onClick={signinHanlder}>
             로그인
           </div>
-          <div className="border m-1 border-none rounded-md  bg-berry2 p-2 w-20 ">
-            회원가입
-          </div>
+          <Link href="/auth/sign-up">
+            <div className="border m-1 border-none rounded-md  bg-berry2 p-2 w-20 ">
+              회원가입
+            </div>
+          </Link>
         </div>
       </div>{" "}
       <Image
