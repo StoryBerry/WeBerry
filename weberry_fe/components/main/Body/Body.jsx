@@ -16,20 +16,19 @@ const Body = (props) => {
   if (reports.length > 0) {
     if (point === reports.length) {
       for (let report of reports) {
-        imageList.push(report.data.imageUrl.imageUrl);
-        report.analyzedImageUrl.imageUrl
+        imageList.push(report.baseImageUrl.imageUrl);
+        report.analyzedImageUrl
           ? imageList.push(report.analyzedImageUrl.imageUrl)
-          : imageList.push(report.data.imageUrl.imageUrl);
+          : imageList.push(report.baseImageUrl.imageUrl);
         status = analyze_status(reports[parseInt(imageno / 2)].status);
       }
     } else {
-      imageList.push(reports[point].data.imageUrl.imageUrl);
-      reports[point].analyzedImageUrl.imageUrl
+      imageList.push(reports[point].baseImageUrl.imageUrl);
+      reports[point].analyzedImageUrl
         ? imageList.push(reports[point].analyzedImageUrl.imageUrl)
-        : imageList.push(report.data.imageUrl.imageUrl);
+        : imageList.push(reports[point].baseImageUrl.imageUrl);
       status = analyze_status(reports[point].status);
     }
-    console.log(reports);
   }
 
   const checkToken = async () => {

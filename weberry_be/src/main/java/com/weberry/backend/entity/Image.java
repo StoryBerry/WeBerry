@@ -39,10 +39,16 @@ public class Image {
 	private Data data;
 	
 	@ManyToOne
-	@JoinTable(name="REPORT_IMAGE",
+	@JoinTable(name="REPORT_BASEIMAGE",
 			   joinColumns=@JoinColumn(name="IMAGE_URL"),
 			   inverseJoinColumns=@JoinColumn(name="REPORT_ID"))
-	private Report report;
+	private Report reportBase;
+	
+	@ManyToOne
+	@JoinTable(name="REPORT_ANALYZEDIMAGE",
+	joinColumns=@JoinColumn(name="IMAGE_URL"),
+	inverseJoinColumns=@JoinColumn(name="REPORT_ID"))
+	private Report reportAnalyzed;
 	
 	@ManyToOne
 	@JoinTable(name="POST_IMAGE",
@@ -106,14 +112,14 @@ public class Image {
 		public static Image toBaseImage(String url, Report report) {
 			
 			return Image.builder().imageUrl(url)
-								  .report(report)
+								  .reportBase(report)
 								  .data(report.getData()).build();
 		}
 		
 		public static Image toAnalyzedImage(String url, Report report) {
 			
 			return Image.builder().imageUrl(url)
-					.report(report).build();
+					.reportAnalyzed(report).build();
 		}
 		
 		public static Image toImage(String url, Post post) {

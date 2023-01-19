@@ -30,10 +30,10 @@ public class Report {
 	
 	private String status;
 	
-	@OneToMany(mappedBy="report")
+	@OneToMany(mappedBy="reportBase")
 	private List<Image> baseImageUrl;
 	
-	@OneToMany(mappedBy="report")
+	@OneToMany(mappedBy="reportAnalyzed")
 	private List<Image> analyezedImageUrl;
 	
 	@OneToOne
