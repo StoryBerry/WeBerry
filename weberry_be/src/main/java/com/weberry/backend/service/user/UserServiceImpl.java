@@ -41,7 +41,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User.SignIn createUser(Request request, Farm farm) {
+	public User.SignIn createUser(Request request, Farm farmInfo) {
+		Farm farm = farmRepository.findByFarmId(String.format("%s_%s", farmInfo.getCity(), farmInfo.getFarmName()));
 		userRepository.save(User.Request.toCreate(request, farm));
 		User saved = userRepository.findById(request.getUserid()).get();
 		Farm savedFarm = farmRepository.findByFarmId(farm.getFarmId());

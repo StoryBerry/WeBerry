@@ -1,13 +1,18 @@
 import React, { useState } from "react";
+import address from "../../public/Address";
+import Checkbox from "../Common/Checkbox";
 import Input from "../Common/Input";
+import Select from "../Common/Select";
 
 const RegisterFarm = (props) => {
   const register = props.register;
   const getValues = props.getValues;
   const setIsFarmInfo = props.setIsFarmInfo;
+  const setValue = props.setValue;
 
   const [isClicked, setIsClicked] = useState(false);
   const [farms, setFarms] = useState(null);
+  const [local, setLocal] = useState(null);
 
   const checkFarm = async () => {
     const farmName = getValues("farmInfo.farmName");
@@ -18,6 +23,17 @@ const RegisterFarm = (props) => {
       .then((response) => response.json())
       .then((data) => setFarms([...data]))
       .catch(() => setFarms([]));
+  };
+  const registerFarm = async () => {
+    const farm = getValues("farmInfo");
+    console.log(farm);
+    await fetch("http://localhost:8090/auth/sign-up/create/farm", {
+      method: "POST",
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+      body: JSON.stringify(farm),
+    });
+    setIsClicked(!isClicked);
+    setIsFarmInfo(true);
   };
 
   return isClicked ? (
@@ -45,25 +61,34 @@ const RegisterFarm = (props) => {
           <div className="flex flex-col items-center justify-center">
             {farms ? (
               farms.length > 0 ? (
-                <></>
-              ) : (
                 <>
-                  <div className="mt-8 mb-10">등록된 농가가 없습니다.</div>
+                  {farms.map((farm) => (
+                    <Checkbox
+                      key={farm.farmId}
+                      farm={farm}
+                      register={register}
+                    />
+                  ))}
                   <Input
                     name="farmName"
                     koName="농장이름"
                     register={register("farmInfo.farmName")}
                     value={getValues("farmInfo.farmName")}
                   />
-                  <Input
-                    name="local"
-                    koName="지역"
+                  <Select
+                    type="local"
+                    koType="지역"
                     register={register("farmInfo.local")}
+                    setValue={setValue}
+                    options={address.local}
+                    setLocal={setLocal}
                   />
-                  <Input
-                    name="city"
-                    koName="시/군"
+                  <Select
+                    type="city"
+                    koType="시/군"
                     register={register("farmInfo.city")}
+                    setValue={setValue}
+                    options={local && address.city[local]}
                   />
                   <Input
                     name="address"
@@ -75,7 +100,44 @@ const RegisterFarm = (props) => {
                     onClick={() => {
                       setIsClicked(!isClicked);
                       setIsFarmInfo(true);
+                      console.log(getValues("farmInfo"));
                     }}
+                    type="button">
+                    등록하기
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="mt-8 mb-10">등록된 농가가 없습니다.</div>
+                  <Input
+                    name="farmName"
+                    koName="농장이름"
+                    register={register("farmInfo.farmName")}
+                    value={getValues("farmInfo.farmName")}
+                  />
+                  <Select
+                    type="local"
+                    koType="지역"
+                    register={register("farmInfo.local")}
+                    setValue={setValue}
+                    options={address.local}
+                    setLocal={setLocal}
+                  />
+                  <Select
+                    type="city"
+                    koType="시/군"
+                    register={register("farmInfo.city")}
+                    setValue={setValue}
+                    options={local && address.city[local]}
+                  />
+                  <Input
+                    name="address"
+                    koName="상세주소"
+                    register={register("farmInfo.address")}
+                  />
+                  <button
+                    className="rounded-lg bg-green/60 font-bold text-xl p-2 mt-10"
+                    onClick={registerFarm}
                     type="button">
                     등록하기
                   </button>

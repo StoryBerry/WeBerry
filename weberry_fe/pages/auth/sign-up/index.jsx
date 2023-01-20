@@ -16,8 +16,7 @@ const index = () => {
   const [okStatus, setOkStatus] = useState(null);
   const [isFarmInfo, setIsFarmInfo] = useState(false);
   const onSubmit = async (data) => {
-    console.log(getValues("userInfo.password"));
-    console.log(getValues("userInfo.passwordCheck"));
+    console.log(data);
     if (
       getValues("userInfo.password") !== getValues("userInfo.passwordCheck")
     ) {
@@ -27,7 +26,14 @@ const index = () => {
       });
       setValue("userInfo.passwordCheck", "");
     } else {
-      await fetch();
+      delete data.userInfo.passwordCheck;
+      await fetch("http://localhost:8090/auth/sign-up", {
+        method: "POST",
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
     }
   };
   const checkUserId = async () => {
@@ -90,7 +96,7 @@ const index = () => {
         name="name"
         placeholder="이름을 입력해주세요."
         koName="이름"
-        register={register("userInfo.nickName")}
+        register={register("userInfo.name")}
       />
       <Input
         name="nickName"
@@ -105,6 +111,8 @@ const index = () => {
           register={register}
           getValues={getValues}
           setIsFarmInfo={setIsFarmInfo}
+          setValue={setValue}
+          handleSubmit={handleSubmit}
         />
       )}
       <button

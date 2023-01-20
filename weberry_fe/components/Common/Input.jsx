@@ -8,7 +8,7 @@ const Input = ({
   register,
   errors,
   okStatus,
-  value = null,
+  value,
 }) => {
   return (
     <div className="flex flex-col">
