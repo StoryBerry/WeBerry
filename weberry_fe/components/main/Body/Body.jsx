@@ -140,6 +140,7 @@ const Body = (props) => {
                         {reports.map((report, idx) => (
                           <strong
                             className={`text-lg ml-4 mt-1`}
+                            key={idx}
                             id={idx}
                             onClick={chooseReport}>
                             {" "}

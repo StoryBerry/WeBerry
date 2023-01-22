@@ -29,7 +29,7 @@ const Checkbox = (props) => {
           <label className="mr-1 text-sm font-bold w-20 text-left">
             상세주소:
           </label>
-          <div className="mr- text-sm w-96 text-left">{farm.address}</div>
+          <div className="mr-1 text-sm w-96 text-left">{farm.address}</div>
         </div>
       </div>
     </div>

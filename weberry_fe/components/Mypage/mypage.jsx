@@ -33,7 +33,7 @@ const Mypage = () => {
                 {signIn.farm.farmId}@{signIn.nickName}
               </h6>
               <h2 className=" text-xs p-2">
-                "서울에서 싱싱한 딸기 농사를 합니다. 아주 맛있쏘요"
+                서울에서 싱싱한 딸기 농사를 합니다. 아주 맛있쏘요
               </h2>
               <div className="flex justify-center mt-6 text-xs ">
                 <svg
