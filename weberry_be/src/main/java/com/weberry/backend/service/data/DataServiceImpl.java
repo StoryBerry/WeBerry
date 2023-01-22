@@ -28,7 +28,7 @@ public class DataServiceImpl implements DataService {
 	@Autowired
 	private ImageRepository imageRepository;
 	
-	@Value("${test.baseUrl}")
+	@Value("${service.baseUrl}")
 	private String baseUrl;
 	
 	@Override
