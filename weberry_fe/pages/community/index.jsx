@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import Token from "../../atoms/Token";
 import Image from "next/image";
 
-const index = () => {
+const Index = () => {
   const [posts, setPosts] = useState([]);
   const [toWritePost, setToWritePost] = useState(false);
   const [token, setToken] = useAtom(Token);
@@ -45,4 +45,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

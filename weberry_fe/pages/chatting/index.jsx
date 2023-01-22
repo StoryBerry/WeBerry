@@ -1,7 +1,7 @@
 import React from "react";
 import Chatlist from "../../components/Chat/chatlist";
 
-const index = () => {
+const Index = () => {
   return (
     <div>
       <Chatlist />
@@ -9,4 +9,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

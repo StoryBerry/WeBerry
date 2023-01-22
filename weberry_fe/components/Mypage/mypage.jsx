@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Token from "../../atoms/Token";
 
-const mypage = () => {
+const Mypage = () => {
   const [token, setToken] = useAtom(Token);
   const [signIn, setSignIn] = useState(null);
 
@@ -63,4 +63,4 @@ const mypage = () => {
   );
 };
 
-export default mypage;
+export default Mypage;
