@@ -1,14 +1,12 @@
-import React from 'react'
-import Chatlist from '../../components/Chat/chatlist'
-
+import React from "react";
+import Chatlist from "../../components/Chat/chatlist";
 
 const index = () => {
-  
   return (
     <div>
-        <Chatlist />
+      <Chatlist />
     </div>
-  )
-}
+  );
+};
 
-export default index
+export default index;
