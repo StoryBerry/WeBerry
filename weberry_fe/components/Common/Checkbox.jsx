@@ -7,45 +7,29 @@ const Checkbox = (props) => {
   return (
     <div className="flex ">
       <input
-        type="checkbox"
+        type="radio"
         name={farm.farmId}
         id={farm.farmId}
         value={farm.farmId}
         {...register}
         className="mr-4"
       />
-      <div className="w-48 flex-nowrap overflow-x-scroll">
-        <div className="flex flex-nowrap mb-4">
-          <label className="mr-1 text-sm font-bold w-24 h-4">농장명:</label>
-          <input
-            className="mr-2 text-sm w-16"
-            value={farm.farmName}
-            readOnly="readonly"
-            {...register("farmInfo.farmName")}
-          />
-          <label className="mr-1 text-sm font-bold w-24 h-4">지역:</label>
-          <input
-            className="mr-2 text-sm w-16"
-            value={farm.local}
-            readOnly="readonly"
-            {...register("farmInfo.local")}
-          />
-          <label className="mr-1 text-sm font-bold w-24 h-4">시/군:</label>
-          <input
-            className="mr-2 text-sm w-16"
-            value={farm.city}
-            readOnly="readonly"
-            {...register("farmInfo.city")}
-          />
+      <div className="w-48 flex-nowrap overflow-x-scroll h-20 mt-2">
+        <div className="flex w-96 justify-start">
+          <label className="mr-1 text-sm font-bold w-12">농장명:</label>
+          <div className="mr-1 text-sm w-16">{farm.farmName}</div>
         </div>
-        <div className="flex">
-          <label className="mr-1 text-sm font-bold w-20">상세주소:</label>
-          <input
-            className="mr-2 text-sm"
-            value={farm.address}
-            readOnly="readonly"
-            {...register("farmInfo.address")}
-          />
+        <div className="flex w-96 justify-start">
+          <label className="mr-1 text-sm font-bold w-8">지역:</label>
+          <div className="mr-1 text-sm w-12">{farm.local}</div>
+          <label className="mr-1 text-sm font-bold w-10">시/군:</label>
+          <div className="mr-1 text-sm w-16 text-left">{farm.city}</div>
+        </div>
+        <div className="flex w-96 justify-start">
+          <label className="mr-1 text-sm font-bold w-20 text-left">
+            상세주소:
+          </label>
+          <div className="mr- text-sm w-96 text-left">{farm.address}</div>
         </div>
       </div>
     </div>

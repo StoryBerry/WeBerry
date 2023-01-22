@@ -25,7 +25,7 @@ const mypage = () => {
             <img
               className="mt-10 m-4 mb-3 inline-block h-20 w-20 rounded-full ring-2 ring-white border-4  border-grey"
               src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
+              alt="profile"
             />
             <div>
               <h1 className="mt-1 text-base font-black">🍓{signIn.name}🍓</h1>

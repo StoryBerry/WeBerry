@@ -9,9 +9,10 @@ const RegisterFarm = (props) => {
   const getValues = props.getValues;
   const setIsFarmInfo = props.setIsFarmInfo;
   const setValue = props.setValue;
+  const farms = props.farms;
+  const setFarms = props.setFarms;
 
   const [isClicked, setIsClicked] = useState(false);
-  const [farms, setFarms] = useState(null);
   const [local, setLocal] = useState(null);
 
   const checkFarm = async () => {
@@ -26,12 +27,12 @@ const RegisterFarm = (props) => {
   };
   const registerFarm = async () => {
     const farm = getValues("farmInfo");
-    console.log(farm);
-    await fetch("http://localhost:8090/auth/sign-up/create/farm", {
-      method: "POST",
-      headers: { "Content-type": "application/json; charset=UTF-8" },
-      body: JSON.stringify(farm),
-    });
+    farm.farmloal !== "none" &&
+      (await fetch("http://localhost:8090/auth/sign-up/create/farm", {
+        method: "POST",
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+        body: JSON.stringify(farm),
+      }));
     setIsClicked(!isClicked);
     setIsFarmInfo(true);
   };
@@ -62,13 +63,17 @@ const RegisterFarm = (props) => {
             {farms ? (
               farms.length > 0 ? (
                 <>
-                  {farms.map((farm) => (
-                    <Checkbox
-                      key={farm.farmId}
-                      farm={farm}
-                      register={register}
-                    />
-                  ))}
+                  <div className="checkbox h-44 overflow-y-scroll scroll-p-20">
+                    {farms.map((farm) => (
+                      <Checkbox
+                        key={farm.farmId}
+                        farm={farm}
+                        register={register("farmInfo.farmId", {
+                          required: true,
+                        })}
+                      />
+                    ))}
+                  </div>
                   <Input
                     name="farmName"
                     koName="농장이름"
@@ -97,11 +102,7 @@ const RegisterFarm = (props) => {
                   />
                   <button
                     className="rounded-lg bg-green/60 font-bold text-xl p-2 mt-10"
-                    onClick={() => {
-                      setIsClicked(!isClicked);
-                      setIsFarmInfo(true);
-                      console.log(getValues("farmInfo"));
-                    }}
+                    onClick={registerFarm}
                     type="button">
                     등록하기
                   </button>
@@ -153,7 +154,7 @@ const RegisterFarm = (props) => {
   ) : (
     <button
       type="button"
-      className="bg-green/80 rounded-lg text-lg font-bold p-2"
+      className="bg-green/80 rounded-lg text-lg font-bold p-2 mt-5"
       onClick={() => setIsClicked(!isClicked)}>
       농장등록
     </button>

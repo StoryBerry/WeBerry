@@ -1,5 +1,7 @@
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import RegisteredFarm from "../../../components/Auth/RegisteredFarm";
 import RegisterFarm from "../../../components/Auth/RegisterFarm";
 import Input from "../../../components/Common/Input";
 
@@ -15,6 +17,9 @@ const index = () => {
   } = useForm();
   const [okStatus, setOkStatus] = useState(null);
   const [isFarmInfo, setIsFarmInfo] = useState(false);
+  const [farms, setFarms] = useState(null);
+  const router = useRouter();
+
   const onSubmit = async (data) => {
     console.log(data);
     if (
@@ -34,6 +39,7 @@ const index = () => {
       })
         .then((response) => response.json())
         .then((data) => console.log(data));
+      router.push("/");
     }
   };
   const checkUserId = async () => {
@@ -71,7 +77,7 @@ const index = () => {
           okStatus={okStatus}
         />
         <button
-          className="absolute -right-2 -top-1 font-bold w-20 rounded-lg bg-berry/60 text-white p-1"
+          className="absolute -right-2 top-1 font-bold w-20 rounded-lg bg-berry/60 text-white p-1"
           type="button"
           onClick={checkUserId}>
           중복확인
@@ -105,7 +111,7 @@ const index = () => {
         register={register("userInfo.nickName")}
       />
       {isFarmInfo ? (
-        <>ok</>
+        <RegisteredFarm getValues={getValues} farms={farms} />
       ) : (
         <RegisterFarm
           register={register}
@@ -113,11 +119,13 @@ const index = () => {
           setIsFarmInfo={setIsFarmInfo}
           setValue={setValue}
           handleSubmit={handleSubmit}
+          farms={farms}
+          setFarms={setFarms}
         />
       )}
       <button
         type="submit"
-        className="bg-berry/60 text-white text-xl font-bold w-28 rounded-xl p-2">
+        className="bg-berry/60 text-white text-xl font-bold w-28 rounded-xl p-2 mt-5">
         회원가입
       </button>
     </form>
