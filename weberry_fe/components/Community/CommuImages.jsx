@@ -12,6 +12,7 @@ const CommuImages = (props) => {
         ) : (
           <div className="image w-175 h-75 border">
             <Image
+              key={idx}
               className="object-contain"
               src={image.imageUrl}
               alt="image"
@@ -28,6 +29,7 @@ const CommuImages = (props) => {
         idx === 0 ? (
           <div className="row-span-2 image w-175 border">
             <Image
+              key={idx}
               className="object-contain"
               src={image.imageUrl}
               alt="image"
@@ -38,6 +40,7 @@ const CommuImages = (props) => {
         ) : (
           <div className="image w-175 h-75 border">
             <Image
+              key={idx}
               className="object-contain"
               src={image.imageUrl}
               alt="image"
@@ -50,9 +53,10 @@ const CommuImages = (props) => {
     </div>
   ) : images.length === 2 ? (
     <div className="image-frame drop-shadow-xl rounded-xl grid grid-cols-2 w-350 h-150 border">
-      {images.map((image) => (
+      {images.map((image, idx) => (
         <div className="image w-175 border">
           <Image
+            key={idx}
             className="object-contain"
             src={image.imageUrl}
             alt="image"

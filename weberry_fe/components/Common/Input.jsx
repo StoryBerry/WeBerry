@@ -9,6 +9,7 @@ const Input = ({
   errors,
   okStatus,
   value,
+  onChange,
 }) => {
   return (
     <div className="flex flex-col">
@@ -22,6 +23,7 @@ const Input = ({
           className="ml-4 w-48 placeholder:text-xs"
           {...register}
           value={value}
+          onChange={onChange}
         />
       </div>
       {errors && (
