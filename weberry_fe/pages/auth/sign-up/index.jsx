@@ -5,7 +5,7 @@ import RegisteredFarm from "../../../components/Auth/RegisteredFarm";
 import RegisterFarm from "../../../components/Auth/RegisterFarm";
 import Input from "../../../components/Common/Input";
 
-const index = () => {
+const Index = () => {
   const {
     register,
     unregister,
@@ -132,4 +132,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
