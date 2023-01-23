@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Mypage from "../../components/Mypage/Mypage";
+import Mypages from "../../components/Mypage/Mypages";
 
 const Index = () => {
   return (
     <div className="mt-20">
-      <Mypage />
+      <Mypages />
     </div>
   );
 };
