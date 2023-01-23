@@ -8,8 +8,8 @@ const CommuList = (props) => {
   return (
     <>
       {posts.map((post) => (
-        <Link href={{ pathname: `/community/posts/${post.id}` }}>
-          <CommuItem key={post.id} post={post} />
+        <Link key={post.id} href={{ pathname: `/community/posts/${post.id}` }}>
+          <CommuItem post={post} />
         </Link>
       ))}
     </>

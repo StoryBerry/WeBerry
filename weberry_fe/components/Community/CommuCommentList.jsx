@@ -15,7 +15,9 @@ const CommuCommentList = (props) => {
       : commentMap.set(`${comment.commentId}`, [comment])
   );
 
-  return comments.map((comment) => <CommuComment comment={comment} />);
+  return comments.map((comment, idx) => (
+    <CommuComment key={comment.id} comment={comment} />
+  ));
 };
 
 export default CommuCommentList;

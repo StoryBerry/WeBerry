@@ -10,9 +10,8 @@ const CommuImages = (props) => {
         idx > 3 ? (
           <></>
         ) : (
-          <div className="image w-175 h-75 border">
+          <div className="image w-175 h-75 border" key={idx}>
             <Image
-              key={idx}
               className="object-contain"
               src={image.imageUrl}
               alt="image"
@@ -27,9 +26,8 @@ const CommuImages = (props) => {
     <div className="image-frame drop-shadow-xl rounded-xl grid grid-cols-2 w-350 h-150 border">
       {images.map((image, idx) =>
         idx === 0 ? (
-          <div className="row-span-2 image w-175 border">
+          <div className="row-span-2 image w-175 border" key={idx}>
             <Image
-              key={idx}
               className="object-contain"
               src={image.imageUrl}
               alt="image"
@@ -38,9 +36,8 @@ const CommuImages = (props) => {
             />
           </div>
         ) : (
-          <div className="image w-175 h-75 border">
+          <div className="image w-175 h-75 border" key={idx}>
             <Image
-              key={idx}
               className="object-contain"
               src={image.imageUrl}
               alt="image"
@@ -54,9 +51,8 @@ const CommuImages = (props) => {
   ) : images.length === 2 ? (
     <div className="image-frame drop-shadow-xl rounded-xl grid grid-cols-2 w-350 h-150 border">
       {images.map((image, idx) => (
-        <div className="image w-175 border">
+        <div className="image w-175 border" key={idx}>
           <Image
-            key={idx}
             className="object-contain"
             src={image.imageUrl}
             alt="image"

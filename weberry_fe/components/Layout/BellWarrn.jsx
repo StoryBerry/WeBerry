@@ -62,8 +62,8 @@ export default function BellWarrn(props) {
 
         {messages.map((message, idx) => {
           return (
-            <Link href="/">
-              <div className="flex justify-center w-full mt-3 mb-5" key={idx}>
+            <Link key={idx} href="/">
+              <div className="flex justify-center w-full mt-3 mb-5">
                 <div className="  bg-black_600 bg-opacity-70 rounded-lg shadow-lg flex flex-wrap w-80">
                   <h6 className="text-left pl-4 pt-2 text-xs text-white display flex-auto">
                     인천_위베리
