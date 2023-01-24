@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { baseUrl } from "../Constant/baseUrl";
 import ErrorMessage from "../Error/ErrorMessage";
 
 const CommuWrite = (props) => {
@@ -26,7 +27,7 @@ const CommuWrite = (props) => {
     formData.set("content", content);
     formData.set("userid", signIn.userid);
     images.map((image) => formData.append("imageFiles", image));
-    await fetch("http://localhost:8090/post/write", {
+    await fetch(`${baseUrl}/post/write`, {
       method: "POST",
       body: formData,
     });
@@ -34,7 +35,7 @@ const CommuWrite = (props) => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8090/post/check/token", {
+    fetch(`${baseUrl}/post/check/token`, {
       headers: { Authorization: token.token },
     })
       .then((response) => response.json())

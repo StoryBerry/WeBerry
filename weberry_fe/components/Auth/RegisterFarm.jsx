@@ -3,6 +3,7 @@ import address from "../../public/Address";
 import Checkbox from "../Common/Checkbox";
 import Input from "../Common/Input";
 import Select from "../Common/Select";
+import { baseUrl } from "../Constant/baseUrl";
 
 const RegisterFarm = (props) => {
   const register = props.register;
@@ -18,9 +19,7 @@ const RegisterFarm = (props) => {
   const checkFarm = async (event) => {
     const farmName = getValues("farmInfo.farmName");
 
-    await fetch(
-      `http://localhost:8090/auth/sign-up/check/farm?farmName=${farmName}`
-    )
+    await fetch(`${baseUrl}/auth/sign-up/check/farm?farmName=${farmName}`)
       .then((response) => response.json())
       .then((data) => setFarms([...data]))
       .catch(() => setFarms([]));
@@ -28,7 +27,7 @@ const RegisterFarm = (props) => {
   const registerFarm = async () => {
     let farm = getValues("farmInfo");
     !getValues("farmInfo.farmId") &&
-      (await fetch("http://localhost:8090/auth/sign-up/create/farm", {
+      (await fetch(`${baseUrl}/auth/sign-up/create/farm`, {
         method: "POST",
         headers: { "Content-type": "application/json; charset=UTF-8" },
         body: JSON.stringify(farm),
