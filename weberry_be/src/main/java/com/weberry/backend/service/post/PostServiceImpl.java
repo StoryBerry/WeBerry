@@ -80,7 +80,7 @@ public class PostServiceImpl implements PostService {
 	private void savePostImage(MultipartFile imageFile, Post post) {
 		String basePath = baseUrl;
 		String userid = post.getUser().getUserid();
-		String imageUrl = String.format("%s/%s/%s", basePath, userid, imageFile.getOriginalFilename());
+		String imageUrl = String.format("%s/posts/%s/%s", basePath, userid, imageFile.getOriginalFilename());
 		String url = String.format("/images/posts/%s/%s", userid, imageFile.getOriginalFilename());
 		
 		File file = new File(imageUrl);

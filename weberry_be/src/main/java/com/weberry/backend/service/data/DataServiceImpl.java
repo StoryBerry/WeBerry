@@ -46,7 +46,7 @@ public class DataServiceImpl implements DataService {
 		String basePath = baseUrl;
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
-		String imageUrl = String.format("%s/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());
+		String imageUrl = String.format("%s/farm/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());
 		String url = String.format("/images/farm/%s/%s/%s", request.getMDate().format(format), farm, imageFile.getOriginalFilename());
 		
 		File file = new File(imageUrl);
