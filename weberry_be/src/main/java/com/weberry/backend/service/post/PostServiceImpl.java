@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,9 @@ public class PostServiceImpl implements PostService {
 	
 	@Autowired
 	UserRepository userRepository;
+
+	@Value("${service.baseUrl}")
+	private String baseUrl;
 	
 	@Override
 	public List<Post.ToShow> getListOfPosts() {
@@ -74,7 +78,7 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	private void savePostImage(MultipartFile imageFile, Post post) {
-		String basePath = "C://users/Will.Lee/desktop/WeBerry/weberry_fe/public/images/posts";
+		String basePath = baseUrl;
 		String userid = post.getUser().getUserid();
 		String imageUrl = String.format("%s/%s/%s", basePath, userid, imageFile.getOriginalFilename());
 		String url = String.format("/images/posts/%s/%s", userid, imageFile.getOriginalFilename());
