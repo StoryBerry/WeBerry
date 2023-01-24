@@ -5,6 +5,7 @@ import CommuWrite from "../../components/Community/CommuWrite";
 import { useAtom } from "jotai";
 import Token from "../../atoms/Token";
 import Image from "next/image";
+import { baseUrl } from "../../components/Constant/baseUrl";
 
 const Index = () => {
   const [posts, setPosts] = useState([]);
@@ -14,7 +15,7 @@ const Index = () => {
   const clickHandler = () => setToWritePost(!toWritePost);
 
   useEffect(() => {
-    fetch("http://localhost:8090/post")
+    fetch(`${baseUrl}/post`)
       .then((response) => response.json())
       .then((datas) => setPosts(datas))
       .catch((err) => console.error(err));

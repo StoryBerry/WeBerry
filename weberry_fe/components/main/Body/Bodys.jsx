@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import Token from "../../../atoms/Token";
 import { list } from "postcss";
 import analyze_status from "../../../public/Analyze";
+import { baseUrl } from "../../Constant/baseUrl";
 const Body = (props) => {
   const [token, setToken] = useAtom(Token);
   const [reports, setReports] = useState({});
@@ -33,7 +34,7 @@ const Body = (props) => {
 
   const checkToken = async () => {
     const user = await (
-      await fetch("http://localhost:8090/auth/check/token", {
+      await fetch(`${baseUrl}/auth/check/token`, {
         method: "GET",
         headers: { Authorization: token.token },
       })
@@ -44,7 +45,7 @@ const Body = (props) => {
   const getReports = async () => {
     const user = await checkToken();
 
-    await fetch("http://localhost:8090/report", {
+    await fetch(`${baseUrl}/report`, {
       method: "POST",
       headers: { "Content-Type": "application/json; charset=UTF-8" },
       body: user,

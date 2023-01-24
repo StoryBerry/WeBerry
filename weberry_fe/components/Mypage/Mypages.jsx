@@ -2,13 +2,14 @@ import { useAtom } from "jotai";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Token from "../../atoms/Token";
+import { baseUrl } from "../Constant/baseUrl";
 
 const Mypage = () => {
   const [token, setToken] = useAtom(Token);
   const [signIn, setSignIn] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8090/post/check/token", {
+    fetch(`${baseUrl}/post/check/token`, {
       headers: { Authorization: token.token },
     })
       .then((response) => response.json())

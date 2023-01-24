@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 import BellWarrn from "./BellWarrn";
 import { useAtom } from "jotai";
 import Token from "../../atoms/Token";
+import { wsUrl } from "../Constant/wsUrl";
 export default function Header({}) {
   const [token, setToken] = useAtom(Token);
   const [message, setMessage] = useState(null);
@@ -13,7 +14,7 @@ export default function Header({}) {
   const [connected, setConnected] = useState(false);
 
   const connectToAlert = () => {
-    const socket = new WebSocket("ws://localhost:8090/alert");
+    const socket = new WebSocket(`${wsUrl}/alert`);
     socket.onopen = () => {
       console.log("Connected!");
       socket.send(token.token);

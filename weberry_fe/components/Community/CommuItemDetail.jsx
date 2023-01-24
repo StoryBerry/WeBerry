@@ -6,6 +6,7 @@ import Token from "../../atoms/Token";
 import { useAtom } from "jotai";
 import { URLSearchParams } from "next/dist/compiled/@edge-runtime/primitives/url";
 import ImageSlide from "../Common/ImageSlide";
+import { baseUrl } from "../Constant/baseUrl";
 
 const CommuItemDetail = (props) => {
   const [post, setPost] = useState(null);
@@ -20,7 +21,7 @@ const CommuItemDetail = (props) => {
   const commentHandler = (event) => setNewComment(event.target.value);
   const checkToken = async () => {
     let user = null;
-    await fetch("http://localhost:8090/post/check/token", {
+    await fetch(`${baseUrl}/post/check/token`, {
       headers: { Authorization: token.token },
     })
       .then((response) => response.json())
@@ -31,7 +32,7 @@ const CommuItemDetail = (props) => {
   };
   const writeComment = async () => {
     const user = await checkToken();
-    await fetch("http://localhost:8090/post/comment", {
+    await fetch(`${baseUrl}/post/comment`, {
       method: "POST",
       headers: { "Content-Type": "application/json; charset=UTF-8" },
       body: JSON.stringify({
@@ -49,10 +50,7 @@ const CommuItemDetail = (props) => {
   };
 
   useEffect(() => {
-    fetch(
-      "http://localhost:8090/post/detail?" +
-        new URLSearchParams({ postId: postId })
-    )
+    fetch(`${baseUrl}/post/detail?` + new URLSearchParams({ postId: postId }))
       .then((response) => response.json())
       .then((data) => setPost(data))
       .catch((err) => console.error(err));

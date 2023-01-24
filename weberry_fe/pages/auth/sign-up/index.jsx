@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import RegisteredFarm from "../../../components/Auth/RegisteredFarm";
 import RegisterFarm from "../../../components/Auth/RegisterFarm";
 import Input from "../../../components/Common/Input";
+import { baseUrl } from "../../../components/Constant/baseUrl";
 
 const Index = () => {
   const {
@@ -32,7 +33,7 @@ const Index = () => {
       setValue("userInfo.passwordCheck", "");
     } else {
       delete data.userInfo.passwordCheck;
-      await fetch("http://localhost:8090/auth/sign-up", {
+      await fetch(`${baseUrl}/auth/sign-up`, {
         method: "POST",
         headers: { "Content-type": "application/json; charset=UTF-8" },
         body: JSON.stringify(data),
@@ -48,9 +49,7 @@ const Index = () => {
     userid && errors.userInfo && unregister("userInfo.userid");
     userid && okStatus && setOkStatus(null);
     userid &&
-      (await fetch(
-        `http://localhost:8090/auth/sign-up/check/user?userId=${userid}`
-      )
+      (await fetch(`${baseUrl}/auth/sign-up/check/user?userId=${userid}`)
         .then((response) => response.json())
         .then((data) =>
           data === true
