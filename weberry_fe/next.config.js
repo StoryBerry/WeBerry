@@ -14,6 +14,12 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "34.64.90.241:8090",
+      },
+    ],
   },
 };
 
