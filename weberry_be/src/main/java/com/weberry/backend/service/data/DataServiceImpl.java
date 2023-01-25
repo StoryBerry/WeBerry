@@ -31,6 +31,9 @@ public class DataServiceImpl implements DataService {
 	@Value("${service.baseUrl}")
 	private String baseUrl;
 	
+	@Value("${service.port}")
+	private String port;
+	
 	@Override
 	public List<Data.ToShow> transferData(List<MultipartFile> imageFiles, DataRequestList request) {
 		List<Data.ToShow> dataList = new ArrayList<Data.ToShow>();
@@ -47,7 +50,7 @@ public class DataServiceImpl implements DataService {
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
 		String imageUrl = String.format("%s/farm/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());
-		String url = String.format("/images/farm/%s/%s/%s", request.getMDate().format(format), farm, imageFile.getOriginalFilename());
+		String url = String.format("%s/images/farm/%s/%s/%s", port, request.getMDate().format(format), farm, imageFile.getOriginalFilename());
 		
 		File file = new File(imageUrl);
 		file.mkdirs();

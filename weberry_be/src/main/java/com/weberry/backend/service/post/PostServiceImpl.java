@@ -31,6 +31,9 @@ public class PostServiceImpl implements PostService {
 	@Value("${service.baseUrl}")
 	private String baseUrl;
 	
+	@Value("${service.port}")
+	private String port;
+	
 	@Override
 	public List<Post.ToShow> getListOfPosts() {
 		List<Post.ToShow> toShowList = new ArrayList<Post.ToShow>();
@@ -81,7 +84,7 @@ public class PostServiceImpl implements PostService {
 		String basePath = baseUrl;
 		String userid = post.getUser().getUserid();
 		String imageUrl = String.format("%s/posts/%s/%s", basePath, userid, imageFile.getOriginalFilename());
-		String url = String.format("/images/posts/%s/%s", userid, imageFile.getOriginalFilename());
+		String url = String.format("%s/images/posts/%s/%s", port, userid, imageFile.getOriginalFilename());
 		
 		File file = new File(imageUrl);
 		file.mkdirs();
