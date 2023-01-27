@@ -1,7 +1,9 @@
 package com.weberry.backend.service.post;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.cloud.storage.Acl;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
 import com.weberry.backend.entity.Image;
 import com.weberry.backend.entity.Post;
 import com.weberry.backend.entity.User;
@@ -28,8 +33,14 @@ public class PostServiceImpl implements PostService {
 	@Autowired
 	UserRepository userRepository;
 
-	@Value("${service.baseUrl}")
-	private String baseUrl;
+	@Autowired
+	private Storage storage;
+	
+	@Value("${storage.url}")
+	private String storageUrl;
+	
+	@Value("${storage.bucket}")
+	private String bucket;
 	
 	@Override
 	public List<Post.ToShow> getListOfPosts() {
@@ -78,23 +89,23 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	private void savePostImage(MultipartFile imageFile, Post post) {
-		String basePath = baseUrl;
 		String userid = post.getUser().getUserid();
-		String imageUrl = String.format("%s/posts/%s/%s", basePath, userid, imageFile.getOriginalFilename());
-		String url = String.format("/images/posts/%s/%s", userid, imageFile.getOriginalFilename());
+		String toSaveUrl = String.format("posts/%s/%s", userid, imageFile.getOriginalFilename());
+		String asSavedurl = String.format("%s/%s/posts/%s/%s", storageUrl, bucket, userid, imageFile.getOriginalFilename());
 		
-		File file = new File(imageUrl);
-		file.mkdirs();
+		BlobInfo blobInfo = null;
 		try {
-			imageFile.transferTo(file);
-			System.out.println(String.format("imageUrl: %s\n", imageUrl));
-		} catch (Exception e) {
+			System.out.println(imageFile.getOriginalFilename());
+			blobInfo = storage.create(BlobInfo.newBuilder(bucket, toSaveUrl)
+					.setAcl(new ArrayList<Acl>(Arrays.asList(Acl.of(Acl.User.ofAllAuthenticatedUsers(), Acl.Role.READER))))
+					.build(), imageFile.getBytes());
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		Post savedPost = postRepository.findById(post.getId());
-		imageRepository.save(Image.Request.toImage(url, savedPost));
-		Image savedImage = imageRepository.findById(url).get();
+		imageRepository.save(Image.Request.toImage(asSavedurl, savedPost));
+		Image savedImage = imageRepository.findById(asSavedurl).get();
 		postRepository.save(savedImage.setPost(savedPost));
 
 	}
