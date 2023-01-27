@@ -4,6 +4,7 @@ from pathlib import Path
 import os
 import cv2
 import numpy as np
+import gcs_connect as gcs
 
 app = Flask(__name__)
 
@@ -124,38 +125,27 @@ net = cv2.dnn.readNet(modelWeights)
 
 @app.route('/analyze/<farmId>')
 def analyze_image(farmId):
-	mDate = datetime.now().strftime('%y.%m.%d')
+	images, urls = gcs.read_image(farmId)
 	date = datetime.now().strftime('%y%m%d')
-	path = 'C://users/Will.Lee/desktop/WeBerry/weberry_fe/public'
-	input_path = f'{path}/images/farm/{mDate}/{farmId}/'
-	output_path = f'{path}/images/disease/{mDate}/{farmId}'
-	
-	if not Path(output_path).exists():
-		os.makedirs(output_path)
-	images = [input_path + fileName for fileName in os.listdir(input_path)]
 	
 	reports = {'requestList': [], 'baseImageUrls':[], 'analyzedImageUrls': []}
 
 	for idx, image in enumerate(images):
-		decodedImage = np.fromfile(image, np.uint8)
-		img = cv2.imdecode(decodedImage, cv2.IMREAD_COLOR)
+		img = cv2.imdecode(image, cv2.IMREAD_COLOR)
 		detections = pre_process(img, net)
 		output_img, results = post_process(img, detections)
 		
 		if output_img is not None:
 			status = classes[results[0]].replace(" ", "")
-			analayzedImageUrl = f'{output_path}/{status}_{idx + 1}.jpg'
 			result, encoded_img = cv2.imencode('.jpg', output_img)
  
 			if result:
-					with open(analayzedImageUrl, mode='wb') as f:
-							encoded_img.tofile(f)
-							analayzedImageUrl = analayzedImageUrl.replace(path, '')
+				analayzedImageUrl = gcs.upload_image(encoded_img, farmId, idx, status)
 
 		report = {'id': f'{farmId}_{date}_{idx + 1}',
 							'status': locals().get('status', 'Normal')
 						 }
-		base = {'imageUrl': image.replace(path, '')}
+		base = {'imageUrl': urls[idx]}
 		analyed = {'imageUrl': locals().get('analayzedImageUrl', None)}
 		
 		reports['requestList'].append(report)

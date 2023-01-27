@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.cloud.storage.Acl;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
 import com.weberry.backend.entity.Data;
 import com.weberry.backend.entity.Data.Request;
 import com.weberry.backend.entity.DataRequestList;
 import com.weberry.backend.entity.Image;
+import com.weberry.backend.entity.Post;
 import com.weberry.backend.repository.DataRepository;
 import com.weberry.backend.repository.ImageRepository;
 
@@ -27,9 +32,15 @@ public class DataServiceImpl implements DataService {
 	
 	@Autowired
 	private ImageRepository imageRepository;
+
+	@Autowired
+	private Storage storage;
 	
-	@Value("${service.baseUrl}")
-	private String baseUrl;
+	@Value("${storage.url}")
+	private String storageUrl;
+	
+	@Value("${storage.bucket}")
+	private String bucket;	
 	
 	@Override
 	public List<Data.ToShow> transferData(List<MultipartFile> imageFiles, DataRequestList request) {
@@ -43,18 +54,18 @@ public class DataServiceImpl implements DataService {
 	}
 	
 	private Data.ToShow transferData(MultipartFile imageFile, Request request) {
-		String basePath = baseUrl;
 		String farm = request.getFarm().getFarmId();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yy.MM.dd");
-		String imageUrl = String.format("%s/farm/%s/%s/%s", basePath, request.getMDate().format(format), farm, imageFile.getOriginalFilename());
-		String url = String.format("/images/farm/%s/%s/%s", request.getMDate().format(format), farm, imageFile.getOriginalFilename());
+		String toSaveUrl = String.format("farm/%s/%s/%s", request.getMDate().format(format), farm, imageFile.getOriginalFilename());
+		String asSavedurl = String.format("%s/%s/farm/%s/%s/%s", storageUrl, bucket, request.getMDate().format(format), farm, imageFile.getOriginalFilename());
 		
-		File file = new File(imageUrl);
-		file.mkdirs();
+		BlobInfo blobInfo = null;
 		try {
-			imageFile.transferTo(file);
-			System.out.println(String.format("imageUrl: %s 로 저장합니다.\n", imageUrl));
-		} catch (IllegalStateException | IOException e) {
+			System.out.println(imageFile.getOriginalFilename());
+			blobInfo = storage.create(BlobInfo.newBuilder(bucket, toSaveUrl)
+					.setAcl(new ArrayList<Acl>(Arrays.asList(Acl.of(Acl.User.ofAllAuthenticatedUsers(), Acl.Role.READER))))
+					.build(), imageFile.getBytes());
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
@@ -62,7 +73,7 @@ public class DataServiceImpl implements DataService {
 		dataRepository.save(toSaveData);
 		Data savedData = dataRepository.findFirstByMdateAndFarmFarmIdOrderByIdDesc(toSaveData.getMdate(), farm);
 
-		imageRepository.save(Image.Request.toImage(url, toSaveData));
+		imageRepository.save(Image.Request.toImage(asSavedurl, toSaveData));
 		Image savedImage = imageRepository.findByDataId(savedData.getId());
 		dataRepository.save(savedImage.setData(savedData));
 		
