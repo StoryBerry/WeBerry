@@ -58,7 +58,7 @@ const CommuItemDetail = (props) => {
 
   return (
     post && (
-      <div className="">
+      <div className="w-full">
         <div className="profile-bar flex justify-start items-center mt-3 mb-4">
           <Image
             className=""
@@ -74,23 +74,26 @@ const CommuItemDetail = (props) => {
         </div>
         <ImageSlide images={images} />
 
-        <h5 className="text-left text-xl ml-3 mt-3 mb-2">{post.content}</h5>
+        <h5 className="text-left text-xl mx-10 my-5">{post.content}</h5>
         <div className="write-comment flex justify-between mb-1">
           <input
-            className="ml-2"
+            className="ml-10"
             type="text"
             placeholder="댓글달기..."
             id="comment"
             onChange={commentHandler}
           />
           <div
-            className="button w-16 p-2 bg-water text-black font-semibold rounded-lg"
+            className="button w-16 p-2 mr-5 bg-water text-black font-semibold rounded-lg"
             onClick={writeComment}>
             작성
           </div>
         </div>
-        <div className={styles.card_button}>
-          <CommuCommentList comments={post.comments} />
+        <div className={`${styles.card_button}`}>
+          <CommuCommentList
+            comments={post.comments}
+            setCommented={setCommented}
+          />
         </div>
       </div>
     )

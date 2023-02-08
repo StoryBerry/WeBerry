@@ -18,10 +18,7 @@ const SignIn = () => {
       body: JSON.stringify({ userid: userid, password: password }),
     })
       .then((response) => response.json())
-      .then((data) => {
-        setToken(data);
-        console.log(`token: ${JSON.stringify(data)}`);
-      })
+      .then((data) => setToken(data))
       .catch((err) => console.error(err));
   };
 
