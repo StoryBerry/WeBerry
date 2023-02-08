@@ -16,7 +16,7 @@ public interface UserService {
 	
 	Map<String, String> signIn(User user);
 	
-	String updateUser(User.Request request, Farm farmInfo);
+	Map<String, String> updateUser(User.Request request, Farm farmInfo);
 	
 	Map<String, Object> checkToken(String token);
 }
