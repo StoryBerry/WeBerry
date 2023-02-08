@@ -34,7 +34,8 @@ const Index = () => {
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => setToken(data))
+      .catch((err) => console.error(err));
     router.push("/mypage");
   };
   useEffect(() => {

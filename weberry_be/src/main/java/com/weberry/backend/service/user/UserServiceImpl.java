@@ -67,13 +67,13 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public SignIn updateUser(Request request, Farm farmInfo) {
+	public String updateUser(Request request, Farm farmInfo) {
 		Farm farm = farmRepository.findByFarmId(String.format("%s_%s", farmInfo.getCity(), farmInfo.getFarmName()));
 		User user = userRepository.findById(request.getUserid()).get();
 		User saved = userRepository.save(User.Request.toUpdate(user, request, farm));
 		farmRepository.save(saved.setFarm(farm));
 		
-		return User.SignIn.toSignIn(saved);
+		return createToken(User.SignIn.toSignIn(saved));
 	}
 
 	@Override

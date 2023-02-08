@@ -71,7 +71,7 @@ public class AuthController {
 		
 	
 	@PostMapping(path="/update")
-	public User.SignIn update(@RequestBody ObjectNode infos) throws JsonProcessingException, IllegalArgumentException {
+	public String update(@RequestBody ObjectNode infos) throws JsonProcessingException, IllegalArgumentException {
 		ObjectMapper mapper = new ObjectMapper();
 		User.Request userInfo = mapper.treeToValue(infos.get("userInfo"), User.Request.class);
 		Farm farmInfo = mapper.treeToValue(infos.get("farmInfo"), Farm.class);
