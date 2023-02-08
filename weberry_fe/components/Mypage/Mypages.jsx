@@ -49,7 +49,7 @@ const Mypage = () => {
                 {signIn.farm.farmName}
               </div>
               <h5 className=" text-xs">{signIn.farm.address}</h5>
-              <Link href="">
+              <Link href="mypage/update">
                 <button>
                   <div className="mt-10  mb-12 w-52 p-1 text-xs bg-grey  rounded-md  border-2 border-grey">
                     프로필 수정

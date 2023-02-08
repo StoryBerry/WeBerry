@@ -17,10 +17,16 @@ const Index = () => {
     formState: { errors },
   } = useForm();
   const [okStatus, setOkStatus] = useState(null);
-  const [isFarmInfo, setIsFarmInfo] = useState(false);
+  const [updatedFarmInfo, setUpdatedFarmInfo] = useState(false);
   const [farms, setFarms] = useState(null);
   const router = useRouter();
 
+  const registers = {
+    farmName: register("farmInfo.farmName"),
+    local: register("farmInfo.local"),
+    city: register("farmInfo.city"),
+    address: register("farmInfo.address"),
+  };
   const onSubmit = async (data) => {
     console.log(data);
     if (
@@ -60,6 +66,7 @@ const Index = () => {
               })
         ));
   };
+  useEffect(() => {}, [updatedFarmInfo]);
 
   return (
     <form
@@ -109,19 +116,20 @@ const Index = () => {
         koName="닉네임"
         register={register("userInfo.nickName")}
       />
-      {isFarmInfo ? (
-        <RegisteredFarm getValues={getValues} farms={farms} />
-      ) : (
-        <RegisterFarm
-          register={register}
-          getValues={getValues}
-          setIsFarmInfo={setIsFarmInfo}
-          setValue={setValue}
-          handleSubmit={handleSubmit}
-          farms={farms}
-          setFarms={setFarms}
-        />
-      )}
+      <RegisteredFarm
+        farm={updatedFarmInfo ? updatedFarmInfo : null}
+        registers={registers}
+      />
+      <RegisterFarm
+        register={register}
+        getValues={getValues}
+        setUpdatedFarmInfo={setUpdatedFarmInfo}
+        setValue={setValue}
+        handleSubmit={handleSubmit}
+        farms={farms}
+        setFarms={setFarms}
+        unregister={unregister}
+      />
       <button
         type="submit"
         className="bg-berry/60 text-white text-xl font-bold w-28 rounded-xl p-2 mt-5">

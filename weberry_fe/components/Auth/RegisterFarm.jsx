@@ -8,14 +8,27 @@ import { baseUrl } from "../Constant/baseUrl";
 const RegisterFarm = (props) => {
   const register = props.register;
   const getValues = props.getValues;
-  const setIsFarmInfo = props.setIsFarmInfo;
+  const setUpdatedFarmInfo = props.setUpdatedFarmInfo;
   const setValue = props.setValue;
   const farms = props.farms;
   const setFarms = props.setFarms;
+  const unregister = props.unregister;
 
   const [isClicked, setIsClicked] = useState(false);
   const [local, setLocal] = useState(null);
 
+  const setInfo = (farm) => {
+    setValue("farmInfo.farmName", farm.farmName);
+    setValue("farmInfo.local", farm.local);
+    setValue("farmInfo.city", farm.city);
+    setValue("farmInfo.address", farm.address);
+    setUpdatedFarmInfo({
+      farmName: farm.farmName,
+      local: farm.local,
+      city: farm.city,
+      address: farm.address,
+    });
+  };
   const checkFarm = async (event) => {
     const farmName = getValues("farmInfo.farmName");
 
@@ -24,16 +37,26 @@ const RegisterFarm = (props) => {
       .then((data) => setFarms([...data]))
       .catch(() => setFarms([]));
   };
-  const registerFarm = async () => {
+
+  const registerFarm = async (data) => {
     let farm = getValues("farmInfo");
-    !getValues("farmInfo.farmId") &&
+    const farmId = getValues("farmInfo.farmId");
+    !farmId &&
       (await fetch(`${baseUrl}/auth/sign-up/create/farm`, {
         method: "POST",
         headers: { "Content-type": "application/json; charset=UTF-8" },
         body: JSON.stringify(farm),
       }));
+    farmId
+      ? farms.map((farm) => (farm.farmId === farmId ? setInfo(farm) : <></>))
+      : setUpdatedFarmInfo({
+          farmName: getValues("farmInfo.farmName"),
+          local: getValues("farmInfo.local"),
+          city: getValues("farmInfo.city"),
+          address: getValues("farmInfo.address"),
+        });
+    getValues("farmInfo.farmId") && unregister("farmInfo.farmId");
     setIsClicked(!isClicked);
-    setIsFarmInfo(true);
   };
 
   return isClicked ? (
