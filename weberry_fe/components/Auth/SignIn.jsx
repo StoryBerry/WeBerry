@@ -20,7 +20,7 @@ const SignIn = () => {
       .then((response) => response.json())
       .then((data) => {
         setToken(data);
-        JSON.stringify(data);
+        console.log(`token: ${JSON.stringify(data)}`);
       })
       .catch((err) => console.error(err));
   };
