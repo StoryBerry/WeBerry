@@ -38,6 +38,7 @@ public class TransferController {
 	
 	@PostMapping
 	public ResponseEntity<?> transferData(@RequestPart("imageFiles") List<MultipartFile> imageFiles, @ModelAttribute  DataRequestList request) {
+		System.out.println(String.format("\n transferData: %s\n %s\n", imageFiles, request));
 		List<Data.ToShow> savedList = dataService.transferData(imageFiles, request);
 		String farmId = savedList.get(0).getFarm().getFarmId();
 		

@@ -13,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -93,6 +91,20 @@ public class User {
 								 .chatSpaces(new ArrayList<ChatSpace>())
 								 .chats(new ArrayList<Chat>())
 								 .build();
+		}
+		
+		public static User toUpdate(User user, Request request, Farm farm) {
+			
+			return User.builder().userid(user.getUserid())
+					.password(user.getPassword())
+					.name(request.getName())
+					.nickName(request.getNickName())
+					.farm(farm)
+					.posts(user.getPosts())
+					.comments(user.getComments())
+					.chatSpaces(user.getChatSpaces())
+					.chats(user.getChats())
+					.build();
 		}
 		
 	}

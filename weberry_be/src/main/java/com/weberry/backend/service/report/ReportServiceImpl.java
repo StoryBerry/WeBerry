@@ -1,7 +1,6 @@
 package com.weberry.backend.service.report;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.weberry.backend.entity.Data;
 import com.weberry.backend.entity.Image;
 import com.weberry.backend.entity.Report;
-import com.weberry.backend.entity.Report.ToShow;
 import com.weberry.backend.entity.ReportRequestList;
 import com.weberry.backend.entity.User.SignIn;
 import com.weberry.backend.repository.DataRepository;

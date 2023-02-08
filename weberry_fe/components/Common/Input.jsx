@@ -10,6 +10,7 @@ const Input = ({
   okStatus,
   value,
   onChange,
+  readOnly = null,
 }) => {
   return (
     <div className="flex flex-col">
@@ -24,6 +25,7 @@ const Input = ({
           {...register}
           value={value}
           onChange={onChange}
+          readOnly={readOnly}
         />
       </div>
       {errors && (

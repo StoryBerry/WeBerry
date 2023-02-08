@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.weberry.backend.entity.Farm;
 import com.weberry.backend.entity.User;
 import com.weberry.backend.entity.User.Request;
+import com.weberry.backend.entity.User.SignIn;
 import com.weberry.backend.repository.FarmRepository;
 import com.weberry.backend.repository.UserRepository;
 
@@ -65,6 +66,16 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 	
+	@Override
+	public SignIn updateUser(Request request, Farm farmInfo) {
+		Farm farm = farmRepository.findByFarmId(String.format("%s_%s", farmInfo.getCity(), farmInfo.getFarmName()));
+		User user = userRepository.findById(request.getUserid()).get();
+		User saved = userRepository.save(User.Request.toUpdate(user, request, farm));
+		farmRepository.save(saved.setFarm(farm));
+		
+		return User.SignIn.toSignIn(saved);
+	}
+
 	@Override
 	public Map<String, Object> checkToken(String token) {
 		

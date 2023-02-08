@@ -3,7 +3,6 @@ package com.weberry.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,7 @@ public class ReportController {
 	
 	@PostMapping()
 	public List<Report.ToShow> getDailyReports(@RequestBody User.SignIn user) {
-		System.out.println("user: " + user);
+		System.out.println(String.format("\n getDailyReports: %s\n", user));
 		
 		return reportService.getDailyReports(user);
 	}

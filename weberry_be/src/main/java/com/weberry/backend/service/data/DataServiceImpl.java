@@ -1,7 +1,6 @@
 package com.weberry.backend.service.data;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import com.weberry.backend.entity.Data;
 import com.weberry.backend.entity.Data.Request;
 import com.weberry.backend.entity.DataRequestList;
 import com.weberry.backend.entity.Image;
-import com.weberry.backend.entity.Post;
 import com.weberry.backend.repository.DataRepository;
 import com.weberry.backend.repository.ImageRepository;
 
