@@ -44,7 +44,7 @@ public class TransferController {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders header = new HttpHeaders();
 		HttpEntity<?> entity = new HttpEntity<>(header);
-		URI uri = UriComponentsBuilder.fromUriString("http://34.64.90.241:8000")
+		URI uri = UriComponentsBuilder.fromUriString("http://34.64.43.47:8000")
 									  .path("/analyze/{farmId}")
 									  .encode()
 									  .build()

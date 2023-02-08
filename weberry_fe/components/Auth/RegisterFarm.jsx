@@ -42,7 +42,7 @@ const RegisterFarm = (props) => {
         className="bg-grey fixed z-20 w-full h-full -top-20"
         onClick={() => setIsClicked(!isClicked)}
       />
-      <div className="fixed z-30 top-1/5 left-12 w-3/4 h-1/2 bg-white flex flex-col items-center">
+      <div className="absolute z-30 top-1/5 left-12 w-3/4 h-500 bg-white flex flex-col items-center">
         <div className="relative mt-6">
           <Input
             name="farmName"

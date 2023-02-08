@@ -18,7 +18,10 @@ const SignIn = () => {
       body: JSON.stringify({ userid: userid, password: password }),
     })
       .then((response) => response.json())
-      .then((data) => setToken(data))
+      .then((data) => {
+        setToken(data);
+        JSON.stringify(data);
+      })
       .catch((err) => console.error(err));
   };
 

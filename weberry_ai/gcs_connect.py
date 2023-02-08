@@ -8,8 +8,6 @@ import io
 import cv2
 from datetime import datetime
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\\Users\\Will.Lee\\Downloads\\gcspr\\gcspr\\src\\main\\resources\\weberry-372406-837b8f43fdbe.json"
-
 bucket_name = "weberry-storage"
 base_url = "https://storage.googleapis.com/weberry-storage"
 mDate = datetime.now().strftime('%y.%m.%d')
@@ -23,7 +21,7 @@ def upload_image(image, farmId, idx, status):
     image = np.array(image)
     image.tofile(temp)
     blob = bucket.blob(file_name)
-    blob.upload_from_file(temp)
+    blob.upload_from_file(temp, rewind=True)
   url = f'{base_url}/{file_name}'
 
   return url
