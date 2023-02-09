@@ -1,4 +1,7 @@
 ## WeBerry  
+<a href="https://oxidized-sweater-1d3.notion.site/Weberry-4ca4eb31df96441da5b84eebc767af62">
+<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1570106347/noticon/hx52ypkqqdzjdvd8iaid.svg" alt="Notion" width="30" height="30"/>&emsp;WeBerry 설명서
+</a>
 <h3>딸기 농가를 위한 맞춤 솔루션</h3>
 <ul>
 <li><strong>이미지 분석을 통한 성장 관리 시스템</strong></li>  
