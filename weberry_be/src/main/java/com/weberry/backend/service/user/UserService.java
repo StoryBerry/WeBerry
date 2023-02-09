@@ -9,12 +9,14 @@ import com.weberry.backend.entity.User;
 
 @Service
 public interface UserService {
+	
+	boolean checkUser(String userId);
 
 	User.SignIn createUser(User.Request request, Farm farm);
 	
-	void connectUserAndFarm(Farm farmInfo, User user);
+	Map<String, String> signIn(User user);
 	
-	String signIn(User user);
+	Map<String, String> updateUser(User.Request request, Farm farmInfo);
 	
 	Map<String, Object> checkToken(String token);
 }

@@ -1,20 +1,15 @@
 package com.weberry.backend.service.alert;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weberry.backend.entity.User;
 import com.weberry.backend.service.user.UserService;
@@ -30,8 +25,9 @@ public class AlertServiceImpl implements AlertService {
 	private static Map<String, String> sessionAndFarmId = new HashMap<String, String>();
 	
 	@Override
-	public void connectToWebSocket(WebSocketSession session) throws Exception {
-		String token = session.getHandshakeHeaders().get("Authorization").get(0);
+	public void connectToWebSocket(WebSocketSession session, TextMessage message) throws Exception {
+		String token = message.getPayload();
+		System.out.println("token: " + token);
 		String farmId = checkAuthorization(token);
 		
 		if (farmId != null) {
@@ -50,7 +46,7 @@ public class AlertServiceImpl implements AlertService {
 		String sessionId = session.getId();
 		String farmId = sessionAndFarmId.get(sessionId);
 		sessionAndFarmId.remove(sessionId);
-		clientsOnFarm.get(farmId).remove(session);
+		if (clientsOnFarm != null) clientsOnFarm.get(farmId).remove(session);
 		
 		System.out.printf("Session을 종료합니다: <%s> %s\n", farmId, session);
 	}

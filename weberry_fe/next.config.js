@@ -2,14 +2,19 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-}
+  webpack: (config) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      net: false,
+      os: false,
+      tls: false,
+      fs: false,
+    };
+    return config;
+  },
+  images: {
+    unoptimized: true,
+  },
+};
 
-module.exports = nextConfig
-
-
-const withImages = require('next-images')
-module.exports = withImages({
-  webpack(config, options) {
-    return config
-  }
-})
+module.exports = nextConfig;

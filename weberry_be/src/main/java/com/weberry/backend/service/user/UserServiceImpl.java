@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.weberry.backend.entity.Farm;
 import com.weberry.backend.entity.User;
 import com.weberry.backend.entity.User.Request;
+import com.weberry.backend.entity.User.SignIn;
 import com.weberry.backend.repository.FarmRepository;
 import com.weberry.backend.repository.UserRepository;
 
@@ -31,30 +32,52 @@ public class UserServiceImpl implements UserService {
 	private FarmRepository farmRepository;
 	
 	@Override
-	public User.SignIn createUser(Request request, Farm farm) {
-		userRepository.save(User.Request.toCreate(request, farm));
-		
-		return User.SignIn.toSignIn(userRepository.findByUserid(request.getUserid()));
+	public boolean checkUser(String userId) {
+		try {
+			User user = userRepository.findById(userId).get();
+		} catch (Exception e) {
+			return true;
+		}
+		return false;
 	}
 	
-	public void connectUserAndFarm(Farm farmInfo, User user) {
-		Farm toSave = farmRepository.findByFarmId(farmInfo.getFarmId());
-		user.setFarm(toSave);
+	@Override
+	public User.SignIn createUser(Request request, Farm farmInfo) {
+		Farm farm = farmRepository.findByFarmId(String.format("%s_%s", farmInfo.getCity(), farmInfo.getFarmName()));
+		userRepository.save(User.Request.toCreate(request, farm));
+		User saved = userRepository.findById(request.getUserid()).get();
+		Farm savedFarm = farmRepository.findByFarmId(farm.getFarmId());
+		farmRepository.save(saved.setFarm(savedFarm));
+		
+		return User.SignIn.toSignIn(saved);
 	}
 
 	@Override
-	public String signIn(User user) {
-		User toCheck = userRepository.findByUserid(user.getUserid());
+	public Map<String, String> signIn(User user) {
+		User toCheck = userRepository.findById(user.getUserid()).get();
 		
 		if (toCheck.getPassword().equals(user.getPassword())) {
 			User.SignIn signIn = User.SignIn.toSignIn(toCheck);
-			
-			return createToken(signIn);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("token", createToken(signIn));
+			return map;
 		}
 		
 		return null;
 	}
 	
+	@Override
+	public Map<String, String> updateUser(Request request, Farm farmInfo) {
+		Farm farm = farmRepository.findByFarmId(String.format("%s_%s", farmInfo.getCity(), farmInfo.getFarmName()));
+		User user = userRepository.findById(request.getUserid()).get();
+		User saved = userRepository.save(User.Request.toUpdate(user, request, farm));
+		farmRepository.save(saved.setFarm(farm));
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("token", createToken(User.SignIn.toSignIn(saved)));
+		
+		return map;
+	}
+
 	@Override
 	public Map<String, Object> checkToken(String token) {
 		
@@ -71,9 +94,7 @@ public class UserServiceImpl implements UserService {
 		JSONObject jsonObject = new JSONObject(signIn);
 		payloads.put("signIn", jsonObject.toString());
 		
-//		long expirationTime = 1000 * 60 * 60 * 24 * 1l; // 하루
-//		long expirationTime = 1000 * 60 * 10l; // 10분
-		long expirationTime = 1000 * 30l; // 30초
+		long expirationTime = 1000 * 60 * 60 * 24 * 1l; // 하루
 		
 		Date expirationDate = new Date();
 		expirationDate.setTime(expirationDate.getTime() + expirationTime);
