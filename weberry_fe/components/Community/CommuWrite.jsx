@@ -52,11 +52,11 @@ const CommuWrite = (props) => {
   return (
     <>
       <div
-        className="fixed bg-grey/80 z-25 w-full h-full top-10 "
+        className="fixed bg-grey/80 z-25 w-full h-full top-10 left-0"
         onClick={clickHandler}
       />
       {signIn["userid"] ? (
-        <div className="absolute bg-white z-30 top-15 w-4/5 left-9 content-center">
+        <div className="absolute bg-white z-30 top-40 w-4/5 left-10 content-center">
           <textarea
             ref={ref}
             onChange={contentHandler}
