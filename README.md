@@ -124,7 +124,7 @@ IDE : Eclipse, Vscode, GCP_SSH
 Library : Spring(backend_framework)  
 &emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;next.js(frontend_framework), modal, tailwindcss, useform  
 &emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;Flask(ai_framework), YOLOV5, OpenCV, GoogleCloudStorage  
-  
+
 DB : MySQL, H2
 <br></br>
 Dependencies: Spring Data JPA, Spring Web, H2, MySQL Driver, Lombok, JswWebToken
