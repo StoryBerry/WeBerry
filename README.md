@@ -71,10 +71,10 @@
   </ul>
  </li>
  <li>
-  <strong>GCP Server 내 websocket 사용 문제</strong>
+  <strong>빌드 후, websocket 사용 문제</strong>
   <ul>
-   <li>GCP 기본 어플리케이션에서는 ws환경이 불가능.</li>
-   <li>지속적인 공부가 필요하여, 현재로써는 미해결</li>
+   <li>ws연결 실패 문제</li>
+   <li>Backend Server CORS 주소 변경: lcoalhost >> 외부ip</li>
   </ul>
  </li>
 </ul>
