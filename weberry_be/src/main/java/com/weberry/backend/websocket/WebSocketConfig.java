@@ -11,8 +11,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(new WebSocketAlertHandler(), "/alert").setAllowedOrigins("http://localhost:5000");
-		registry.addHandler(new WebSocketAlertHandler(), "/alert").setAllowedOrigins("http://localhost:5000").withSockJS();
+		registry.addHandler(new WebSocketAlertHandler(), "/alert").setAllowedOrigins("http://34.64.43.47:5000");
 	}
 	
 }
