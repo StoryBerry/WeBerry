@@ -1,0 +1,214 @@
+import sys
+import Adafruit_DHT
+import datetime
+import requests
+import json
+import os
+import picamera
+import json
+from turtle import delay
+import RPi.GPIO as GPIO          
+import time
+
+in1 = 12
+in2 = 16
+ena = 23
+in3 = 20
+in4 = 21
+enb = 24
+temp1=1
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(in1,GPIO.OUT)
+GPIO.setup(in2,GPIO.OUT)
+GPIO.setup(in3,GPIO.OUT)
+GPIO.setup(in4,GPIO.OUT)
+GPIO.setup(ena,GPIO.OUT)
+GPIO.setup(enb,GPIO.OUT)
+GPIO.output(in1,GPIO.LOW)
+GPIO.output(in2,GPIO.LOW)
+GPIO.output(in3,GPIO.LOW)
+GPIO.output(in4,GPIO.LOW)
+pa=GPIO.PWM(ena,1000)
+pb=GPIO.PWM(enb,1000)
+
+pa.start(60)
+pb.start(60)
+
+
+def move():
+
+   
+    # 농장 정보
+    mDate = datetime.datetime.now().strftime("%Y-%m-%d")
+    fileDate = datetime.datetime.now().strftime("%y%m%d")
+    folderDate = datetime.datetime.now().strftime("%y.%m.%d")
+    farm = '인천_위베리'
+
+    # 카메라 구동
+    camera = picamera.PiCamera()
+    camera.resolution = (640, 640)
+    time.sleep(5)
+
+
+    # 센서 정보
+    sensor_args = { '11': Adafruit_DHT.DHT11,
+                    '22': Adafruit_DHT.DHT22,
+                    '2302': Adafruit_DHT.AM2302 }
+                
+        # 센서 등록
+    print(len(sys.argv))
+    if len(sys.argv) == 3 and sys.argv[1] in sensor_args:
+        sensor = sensor_args[sys.argv[1]]
+        pin = sys.argv[2]
+
+
+    else:
+        print('Usage: sudo ./Adafruit_DHT.py [11|22|2302] <GPIO pin number>')
+        print('Example: sudo ./Adafruit_DHT.py 2302 4 - Read from an AM2302 connected to GPIO pin #4')
+        sys.exit(1)
+
+    # 센서 분리
+    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+
+    # 이미지 파일 및 데이터 변수
+    path = f'/home/storyberry/WeBerry/images/{folderDate}/'
+    os.makedirs(path)
+    data = {}
+
+    # 5번 동작
+    for count in range(5):
+        
+        while(1):
+            for i in range(100):
+                print("stop")
+                GPIO.output(in1,GPIO.LOW)
+                GPIO.output(in2,GPIO.LOW)
+                GPIO.output(in3,GPIO.LOW)
+                GPIO.output(in4,GPIO.LOW)
+                time.sleep(0.1)
+                temp1 =1
+
+            camera.capture(path + f'{farm}_{fileDate}_{count+1}.jpg')
+            time.sleep(2)
+
+            for i in range(100):
+                print("forward")
+                GPIO.output(in1, GPIO.LOW)
+                GPIO.output(in2, GPIO.HIGH)
+                GPIO.output(in3, GPIO.HIGH)
+                GPIO.output(in4, GPIO.LOW)
+                time.sleep(0.8)
+
+        if humidity is not None and temperature is not None:
+            data[f'requestList[{count}].temperature'] = '{0:0.1f}'.format(temperature)
+            data[f'requestList[{count}].humidity'] = '{0:0.1f}'.format(humidity)
+            data[f'requestList[{count}].mDate'] = mDate
+            data[f'requestList[{count}].point'] = count + 1
+            data[f'requestList[{count}].farm.farmId'] = farm
+
+        else:
+            print('Failed to get reading. Try again!')
+            sys.exit(1)
+
+    # 저장된 이미지 정보 불러오기
+    files = []
+    for file in os.listdir(path):
+        files.append(('imageFile', (file, open(path + file, 'rb'), 'image/jpg')))
+
+    res = requests.post('http://34.64.90.241:8090/transfer', files=files,data=data)
+
+    return(res)
+
+
+
+while(1):
+    for i in range(100):
+        print("forward")
+        GPIO.output(in1, GPIO.LOW)
+        GPIO.output(in2, GPIO.HIGH)
+        GPIO.output(in3, GPIO.HIGH)
+        GPIO.output(in4, GPIO.LOW)
+        time.sleep(0.01)
+    temp1=0
+
+    
+    for i in range(100):
+        print("right")
+        GPIO.output(in1,GPIO.HIGH)
+        GPIO.output(in2,GPIO.LOW)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
+        time.sleep(0.01)
+    temp1=0
+   
+
+    for i in range(100):
+        print("forward")
+        GPIO.output(in1,GPIO.LOW)
+        GPIO.output(in2,GPIO.HIGH)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
+        time.sleep(0.01)
+    temp1=0
+
+    
+    for i in range(100):
+        print("right")
+        GPIO.output(in1,GPIO.HIGH)
+        GPIO.output(in2,GPIO.LOW)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
+        time.sleep(0.01)
+    temp1=0
+
+    for i in range(100):
+        print("forward")
+        GPIO.output(in1,GPIO.LOW)
+        GPIO.output(in2,GPIO.HIGH)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
+        time.sleep(0.03)
+    temp1=0
+
+    for i in range(100):
+        print("right")
+        GPIO.output(in1,GPIO.HIGH)
+        GPIO.output(in2,GPIO.LOW)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
+        time.sleep(0.01)
+    temp1=0
+
+    for i in range(100):
+        print("forward")
+        GPIO.output(in1,GPIO.LOW)
+        GPIO.output(in2,GPIO.HIGH)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
+        time.sleep(0.01)
+    temp1=0
+    
+    for i in range(100):
+        print("right")
+        GPIO.output(in1,GPIO.HIGH)
+        GPIO.output(in2,GPIO.LOW)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
+        time.sleep(0.01)
+    temp1=0
+
+    for i in range(100):
+        print("forward")
+        GPIO.output(in1,GPIO.LOW)
+        GPIO.output(in2,GPIO.HIGH)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
+        time.sleep(0.05)
+    temp1=0
+
+
+    move()
+    print('move worked')
+    time.sleep(0.01)
+    temp1=0
